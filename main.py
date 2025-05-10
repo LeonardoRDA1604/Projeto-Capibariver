@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import os
+import sys
 import random
 from settings import *                                                          ################ MAYBE INUTIL?
 
@@ -106,23 +107,6 @@ rio = Rio()
 
 
 
-# Classe dos itens
-# class Item:
-#     def __init__(self, y):
-#         self.rect = pygame.Rect(random.randint(-100, -50), ALTURA_TELA-500, 30, 30)
-#         self.cor = AMARELO
-
-#     def mover(self):
-#         self.rect.x += VEL_ITEM
-
-#     def desenhar(self):
-#         pygame.draw.rect(TELA, self.cor, self.rect)
-
-
-
-
-# def desenhar_objetos(self, ):
-
 class Item:
     def __init__(self):
         y_positions = list(range(ALTURA_TELA - 300, ALTURA_TELA - 700, -50)) # Posições y dos objetos do rio
@@ -137,8 +121,13 @@ class Item:
         pygame.draw.rect(TELA, self.cor, self.rect)
 
 # Criar itens
-itens = [Item() for _ in range(9)]
+ 
+# itens = [Item() for _ in range(5)] 
+# Defina um evento personalizado para criar itens
+CRIAR_ITEM_EVENTO = pygame.USEREVENT + 1
+pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
 
+itens = []
 
 
 
@@ -153,7 +142,7 @@ itens = [Item() for _ in range(9)]
 
 # Criar jogadores
 jogador1 = Jogador(300, ALTURA_TELA-100, VERDE)  # Verde
-jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, AZUL)  # Azul
+jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
 
 
 
@@ -214,25 +203,21 @@ jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, AZUL)  # Azul
 
 
 
+def tela_vitoria():
+    vitoria_jogadores = True
+    while vitoria_jogadores:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if evento.type == pygame.KEYDOWN:
+                vitoria_jogadores = False  # Sai da tela de vitória com qualquer tecla
+                
+        TELA.fill((PRETO))
+        texto = fonte.render('Parabéns, vocês ajudaram na limpeza do rio!', True, BRANCO)
+        TELA.blit(texto, (LARGURA_TELA // 2 - texto.get_width() // 2, ALTURA_TELA // 2 - 50))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        pygame.display.update()
 
 
 
@@ -247,16 +232,8 @@ JOGO_RODANDO = True
 while JOGO_RODANDO:
     clock.tick(FPS) # velocidade de atualização da tela ou FPS(Frames por segundo)
     TELA.fill(PRETO)    # cor do background sem imagem
-# JOGO_RODANDO = True
-# while JOGO_RODANDO:
-#     pygame.time.Clock().tick(FPS)          # controla o FPS corretamente (ex: 60 FPS)
-#     TELA.fill(PRETO)
-#     Opção mudar a lógica Frames Por Segundo
 
 
-    # Movimentação dos itens
-    for item in itens:
-        item.mover()
 
     teclas = pygame.key.get_pressed()
     jogador1.mover(teclas, K_w, K_s, K_a, K_d)
@@ -274,6 +251,7 @@ while JOGO_RODANDO:
     # Desenhar na tela
     rio.desenhar()
     for item in itens:
+        item.mover() # Movimentação dos itens
         item.desenhar()
     jogador1.desenhar()
     jogador2.desenhar()
@@ -286,11 +264,24 @@ while JOGO_RODANDO:
     TELA.blit(texto1, (10, 10))
     TELA.blit(texto2, (LARGURA_TELA-largura_texto2-10, 10))
 
+    # Exibir vencedor
+    if (jogador1.itens_coletados + jogador2.itens_coletados) >= OBJETIVO:
+        tela_vitoria()
+        rodando = False
+
+
+
+
+
     pygame.display.update()
 
     for event in pygame.event.get():
         if event.type == QUIT:
             JOGO_RODANDO = False
+        elif event.type == CRIAR_ITEM_EVENTO:
+            for _ in range(5):
+                itens.append(Item())
+
 
 # Finaliza o Pygame
 pygame.quit()
