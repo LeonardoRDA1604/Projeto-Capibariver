@@ -58,6 +58,7 @@ class Jogador:
         if teclas[direita]:
             self.rect.x += VEL_JOGADOR
 
+    
 
 
 
@@ -107,7 +108,7 @@ rio = Rio()
 
 
 
-class Item:
+class Item_agua:
     def __init__(self):
         y_positions = list(range(ALTURA_TELA - 300, ALTURA_TELA - 700, -50)) # Posições y dos objetos do rio
 #        [ALTURA_TELA - 300, ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650]
@@ -120,14 +121,46 @@ class Item:
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, self.rect)
 
-# Criar itens
- 
-# itens = [Item() for _ in range(5)] 
-# Defina um evento personalizado para criar itens
+# Evento para criar itens
 CRIAR_ITEM_EVENTO = pygame.USEREVENT + 1
 pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
-
+CRIAR_ITEM_EVENTO_2 = pygame.USEREVENT + 1
+pygame.time.set_timer(CRIAR_ITEM_EVENTO_2, 1000)  # 1000 ms = 1 segundo
 itens = []
+
+
+
+
+class Item_terra:
+    def __init__(self):
+        self.rect = pygame.Rect(random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), random.randint(ALTURA_TELA - 100, ALTURA_TELA - TAMANHO_ITEM[1]), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
+        self.cor = VERMELHO
+
+    def mover(self):
+        pass
+
+    def desenhar(self):
+        pygame.draw.rect(TELA, self.cor, self.rect)
+
+
+
+
+#ALTURA_TELA, ALTURA_TELA*2-(ALTURA_TELA/3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -143,7 +176,7 @@ itens = []
 # Criar jogadores
 jogador1 = Jogador(300, ALTURA_TELA-100, VERDE)  # Verde
 jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
-
+     
 
 
 
@@ -251,8 +284,8 @@ while JOGO_RODANDO:
     # Desenhar na tela
     rio.desenhar()
     for item in itens:
-        item.mover() # Movimentação dos itens
         item.desenhar()
+        item.mover() # Movimentação dos itens
     jogador1.desenhar()
     jogador2.desenhar()
 
@@ -279,8 +312,11 @@ while JOGO_RODANDO:
         if event.type == QUIT:
             JOGO_RODANDO = False
         elif event.type == CRIAR_ITEM_EVENTO:
-            for _ in range(5):
-                itens.append(Item())
+            for _ in range(3):
+                itens.append(Item_agua())
+            for _ in range(1):
+                itens.append(Item_terra())
+            
 
 
 # Finaliza o Pygame

@@ -17,7 +17,7 @@ ROXO = (67, 18, 135)
 
 # Velocidade do jogador
 VEL_JOGADOR = 10
-VEL_ITEM = 5
+VEL_ITEM = 3
 
 
 TAMANHO_JOGADOR = 30, 30
