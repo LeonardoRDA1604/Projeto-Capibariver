@@ -49,14 +49,16 @@ class Jogador:
         pygame.draw.rect(TELA, self.cor, self.rect)
 
     def mover(self, teclas, cima, baixo, esquerda, direita):
-        if teclas[cima]:
+        if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
             self.rect.y -= VEL_JOGADOR
-        if teclas[baixo]:
+        if teclas[baixo] and self.rect.bottom < ALTURA_TELA-int(ALTURA_TELA/20):
             self.rect.y += VEL_JOGADOR
-        if teclas[esquerda]:
+        if teclas[esquerda] and self.rect.left > 0:
             self.rect.x -= VEL_JOGADOR
-        if teclas[direita]:
+        if teclas[direita] and self.rect.right < LARGURA_TELA:
             self.rect.x += VEL_JOGADOR
+
+
 
     
 
@@ -171,12 +173,11 @@ class Item_terra:
 
 
 
-
-
 # Criar jogadores
 jogador1 = Jogador(300, ALTURA_TELA-100, VERDE)  # Verde
 jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
-     
+
+
 
 
 
@@ -295,10 +296,10 @@ while JOGO_RODANDO:
         item.desenhar()
         item.mover() # Movimentação dos itens
     
-
     for item in itens_terra:
         item.desenhar()
         item.mover()
+
 
     jogador1.desenhar()
     jogador2.desenhar()
