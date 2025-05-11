@@ -122,18 +122,23 @@ class Item_agua:
         pygame.draw.rect(TELA, self.cor, self.rect)
 
 # Evento para criar itens
-CRIAR_ITEM_EVENTO = pygame.USEREVENT + 1
+CRIAR_ITEM_EVENTO = pygame.USEREVENT + 2
 pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
+itens_agua = []
 CRIAR_ITEM_EVENTO_2 = pygame.USEREVENT + 1
 pygame.time.set_timer(CRIAR_ITEM_EVENTO_2, 1000)  # 1000 ms = 1 segundo
-itens = []
+itens_terra = []
 
 
 
 
 class Item_terra:
     def __init__(self):
-        self.rect = pygame.Rect(random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), random.randint(ALTURA_TELA - 100, ALTURA_TELA - TAMANHO_ITEM[1]), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
+        self.rect = pygame.Rect(
+            random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), 
+            random.randint(int(2*(ALTURA_TELA/3)), ALTURA_TELA-int(ALTURA_TELA/20)-TAMANHO_ITEM[1]), 
+            TAMANHO_ITEM[0], 
+            TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
         self.cor = VERMELHO
 
     def mover(self):
@@ -141,11 +146,6 @@ class Item_terra:
 
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, self.rect)
-
-
-
-
-#ALTURA_TELA, ALTURA_TELA*2-(ALTURA_TELA/3)
 
 
 
@@ -273,7 +273,15 @@ while JOGO_RODANDO:
     jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
 
     # Verificar colisão (coleta de itens)
-    for item in itens:
+    for item in itens_agua:
+        if jogador1.rect.colliderect(item.rect):
+            jogador1.itens_coletados += 1
+            item.rect.x = LARGURA_TELA  # Reposiciona o item
+        elif jogador2.rect.colliderect(item.rect):
+            jogador2.itens_coletados += 1
+            item.rect.x = LARGURA_TELA
+            
+    for item in itens_terra:
         if jogador1.rect.colliderect(item.rect):
             jogador1.itens_coletados += 1
             item.rect.x = LARGURA_TELA  # Reposiciona o item
@@ -283,12 +291,18 @@ while JOGO_RODANDO:
 
     # Desenhar na tela
     rio.desenhar()
-    for item in itens:
+    for item in itens_agua:
         item.desenhar()
         item.mover() # Movimentação dos itens
+    
+
+    for item in itens_terra:
+        item.desenhar()
+        item.mover()
+
     jogador1.desenhar()
     jogador2.desenhar()
-
+    
     # Exibir pontuação
     fonte = pygame.font.SysFont('Arial', 24)
     texto1 = fonte.render(f'Jogador 1: {jogador1.itens_coletados}', True, VERMELHO)
@@ -311,11 +325,13 @@ while JOGO_RODANDO:
     for event in pygame.event.get():
         if event.type == QUIT:
             JOGO_RODANDO = False
-        elif event.type == CRIAR_ITEM_EVENTO:
+        if event.type == CRIAR_ITEM_EVENTO:
             for _ in range(3):
-                itens.append(Item_agua())
+                itens_agua.append(Item_agua())
+                
+        if event.type == CRIAR_ITEM_EVENTO_2:
             for _ in range(1):
-                itens.append(Item_terra())
+                itens_terra.append(Item_terra())
             
 
 
