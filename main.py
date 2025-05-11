@@ -44,6 +44,7 @@ class Jogador:
         self.rect = pygame.Rect(x, y, TAMANHO_JOGADOR[0], TAMANHO_JOGADOR[1])
         self.cor = cor
         self.itens_coletados = 0  # Contador de itens coletados
+        self.rede = None
 
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, self.rect)
@@ -59,10 +60,25 @@ class Jogador:
             self.rect.x += VEL_JOGADOR
 
 
+    def coletar_item(self):
+        # Coletar item diretamente abaixo do jogador 1
+        for item in itens_agua:
+            if self.rect.colliderect(item.rect):
+                self.itens_coletados += 1
+                itens_terra.remove(item)  # Remove o item da lista
+                break
 
-    
+    def lançar_rede(self):
+        # Verifica se o jogador 2 clicou e cria a rede
+        self.pos_mouse = pygame.mouse.get_pos()
+        self.rede_rect = pygame.Rect(300,200,30,30)
+        self.rede = pygame.Rect(self.rect[0] - 15, self.rect.centery - 15, 30, 30)
+        self.rede.center = self.pos_mouse
+            
 
-
+    def desenhar_rede(self):
+        if self.rede:
+            pygame.draw.circle(TELA, BRANCO, self.rede.center, 30)
 
 
 
@@ -123,6 +139,18 @@ class Item_agua:
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, self.rect)
 
+class Item_terra:
+    def __init__(self):
+        self.rect = pygame.Rect(random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), random.randint(2*(ALTURA_TELA//3), ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
+        self.cor = VERMELHO
+
+    def mover(self):
+        pass
+
+    def desenhar(self):
+        pygame.draw.rect(TELA, self.cor, self.rect)
+
+
 # Evento para criar itens
 CRIAR_ITEM_EVENTO = pygame.USEREVENT + 2
 pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
@@ -134,20 +162,6 @@ itens_terra = []
 
 
 
-class Item_terra:
-    def __init__(self):
-        self.rect = pygame.Rect(
-            random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), 
-            random.randint(int(2*(ALTURA_TELA/3)), ALTURA_TELA-int(ALTURA_TELA/20)-TAMANHO_ITEM[1]), 
-            TAMANHO_ITEM[0], 
-            TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
-        self.cor = VERMELHO
-
-    def mover(self):
-        pass
-
-    def desenhar(self):
-        pygame.draw.rect(TELA, self.cor, self.rect)
 
 
 
@@ -235,8 +249,6 @@ jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
 
 
 
-
-
 def tela_vitoria():
     vitoria_jogadores = True
     while vitoria_jogadores:
@@ -257,12 +269,22 @@ def tela_vitoria():
 
 
 
-
+def circle_colide(objeto:list,circulo:list,raio):
+    # Definir a colisão com a esquerda e direita do circulo
+    coli_x_esquerda = objeto[0] >= circulo[0] - raio
+    coli_x_direita = objeto[0] <= circulo[0] + raio
+    # Se o objeto está entre circulo -30 e circulo + 30
+    coli_y_topo = objeto[1] >= circulo[1] - raio
+    coli_y_baixo = objeto[1] <= circulo[1] + raio
+    
+    colide = [coli_x_esquerda,coli_x_direita,coli_y_topo,coli_y_baixo]
+    return colide
 
 clock = pygame.time.Clock()  # criando o relógio antes do loop
 
 # Loop principal
 JOGO_RODANDO = True
+rede_circle = [999,999]
 while JOGO_RODANDO:
     clock.tick(FPS) # velocidade de atualização da tela ou FPS(Frames por segundo)
     TELA.fill(PRETO)    # cor do background sem imagem
@@ -273,22 +295,41 @@ while JOGO_RODANDO:
     jogador1.mover(teclas, K_w, K_s, K_a, K_d)
     jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
 
-    # Verificar colisão (coleta de itens)
-    for item in itens_agua:
-        if jogador1.rect.colliderect(item.rect):
-            jogador1.itens_coletados += 1
-            item.rect.x = LARGURA_TELA  # Reposiciona o item
-        elif jogador2.rect.colliderect(item.rect):
-            jogador2.itens_coletados += 1
-            item.rect.x = LARGURA_TELA
-            
+
+
     for item in itens_terra:
-        if jogador1.rect.colliderect(item.rect):
+        if jogador1.rect.colliderect(item.rect) and teclas[K_SPACE]:
             jogador1.itens_coletados += 1
             item.rect.x = LARGURA_TELA  # Reposiciona o item
-        elif jogador2.rect.colliderect(item.rect):
+
+
+    for item in itens_agua:
+        pos = item.rect[0],item.rect[1]
+        if jogador2.rect.colliderect(item.rect):
             jogador2.itens_coletados += 1
             item.rect.x = LARGURA_TELA
+        if False not in circle_colide(pos,rede_circle,60):
+            jogador2.itens_coletados += 1
+            item.rect.x = LARGURA_TELA
+
+    # Verificar colisão (coleta de itens)
+    # for item in itens_agua:
+    #     if jogador1.rect.colliderect(item.rect):
+    #         jogador1.itens_coletados += 1
+    #         item.rect.x = LARGURA_TELA  # Reposiciona o item
+    #     elif jogador2.rect.colliderect(item.rect):
+    #         jogador2.itens_coletados += 1
+    #         item.rect.x = LARGURA_TELA
+            
+    # for item in itens_terra:
+    #     if jogador1.rect.colliderect(item.rect):
+    #         jogador1.itens_coletados += 1
+    #         item.rect.x = LARGURA_TELA  # Reposiciona o item
+    #     elif jogador2.rect.colliderect(item.rect):
+    #         jogador2.itens_coletados += 1
+    #         item.rect.x = LARGURA_TELA
+
+
 
     # Desenhar na tela
     rio.desenhar()
@@ -321,7 +362,6 @@ while JOGO_RODANDO:
 
 
 
-    pygame.display.update()
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -329,12 +369,25 @@ while JOGO_RODANDO:
         if event.type == CRIAR_ITEM_EVENTO:
             for _ in range(3):
                 itens_agua.append(Item_agua())
-                
         if event.type == CRIAR_ITEM_EVENTO_2:
             for _ in range(1):
                 itens_terra.append(Item_terra())
+        if event.type == MOUSEBUTTONDOWN and event.button == 1:  # Ação com botão esquerdo do mouse
+            # jogador2.lançar_rede()
+            # print(f'{jogador2.rede_rect=}')
+            # pygame.draw.rect(TELA,BRANCO,jogador2.rede_rect)
+            # pygame.blit()
+            pos_mouse = pygame.mouse.get_pos()
+            rede_circle = [pos_mouse[0], pos_mouse[1]]
             
+        if event.type == KEYDOWN and event.key == K_SPACE: # Ação com botão Espaço
+            jogador2.coletar_item()
 
+    try:
+        pygame.draw.circle(TELA, BRANCO, (rede_circle[0], rede_circle[1]), 50)
+    except:
+        pass
 
+    pygame.display.update()
 # Finaliza o Pygame
 pygame.quit()
