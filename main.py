@@ -8,18 +8,17 @@ from settings import *                                                          
 # Inicialização do Pygame
 pygame.init()
 
-# clock = pygame.time.Clock()  # criar o relógio antes do loop
-
 
 
 # Inicialização do Game
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 pygame.display.set_caption(NOME_DO_JOGO)
-# pygame.font.SysFont(FONT_1)                                                     ################ MAYBE INUTIL?
 
 
-
-
+FONTE_TEXTO = pygame.font.SysFont(*FONTES["texto"])
+FONTE_TEXTO_NEGRITO = pygame.font.SysFont(*FONTES["texto"], bold=True)
+FONTE_TITULO = pygame.font.SysFont(*FONTES["titulo"])
+FONTE_TITULO_NEGRITO = pygame.font.SysFont(*FONTES["titulo"], bold=True)
 
 
 
@@ -78,7 +77,7 @@ class Jogador:
 
     def desenhar_rede(self):
         if self.rede:
-            pygame.draw.circle(TELA, BRANCO, self.rede.center, 30)
+            pygame.draw.circle(TELA, CORES["BRANCO"], self.rede.center, 30)
 
 
 
@@ -110,7 +109,7 @@ class Rio:
         self.x2 = LARGURA_TELA  # começa fora da tela à esquerda
         self.y = 0  # posição vertical do rio visível na parte inferior
         self.altura = ALTURA_TELA-(ALTURA_TELA/3) # altura do retângulo do rio
-        self.cor = AZUL
+        self.cor = CORES["AZUL"]
 
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, (self.x1, self.y, LARGURA_TELA, self.altura))
@@ -125,13 +124,13 @@ rio = Rio()
 
 
 
-
+# Classes Item (Água e Terra)
 class Item_agua:
     def __init__(self):
         y_positions = list(range(ALTURA_TELA - 300, ALTURA_TELA - 700, -50)) # Posições y dos objetos do rio
 #        [ALTURA_TELA - 300, ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650]
         self.rect = pygame.Rect(random.randint(-100, -50), random.choice(y_positions), TAMANHO_ITEM[0], TAMANHO_ITEM[1])
-        self.cor = AMARELO
+        self.cor = CORES["AMARELO"]
 
     def mover(self):
         self.rect.x += VEL_ITEM
@@ -142,7 +141,7 @@ class Item_agua:
 class Item_terra:
     def __init__(self):
         self.rect = pygame.Rect(random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), random.randint(2*(ALTURA_TELA//3), ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
-        self.cor = VERMELHO
+        self.cor = CORES["VERMELHO"]
 
     def mover(self):
         pass
@@ -156,7 +155,7 @@ CRIAR_ITEM_EVENTO = pygame.USEREVENT + 2
 pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
 itens_agua = []
 CRIAR_ITEM_EVENTO_2 = pygame.USEREVENT + 1
-pygame.time.set_timer(CRIAR_ITEM_EVENTO_2, 1000)  # 1000 ms = 1 segundo
+pygame.time.set_timer(CRIAR_ITEM_EVENTO_2, 3000)  # 1000 ms = 1 segundo
 itens_terra = []
 
 
@@ -188,8 +187,8 @@ itens_terra = []
 
 
 # Criar jogadores
-jogador1 = Jogador(300, ALTURA_TELA-100, VERDE)  # Verde
-jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
+jogador1 = Jogador(300, ALTURA_TELA-100, CORES["VERDE"])  # Verde
+jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"])  # Roxo
 
 
 
@@ -231,13 +230,26 @@ jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, ROXO)  # Roxo
 
 
 
+def desenhar_barra_progresso(TELA, x, y, largura, altura):
+    # Fundo da barra
+    pygame.draw.rect(TELA, CORES["CINZA_CLARO"], (x, y, largura, altura))
 
+    # Calcular largura da barra preenchida
+    preenchimento_barra = int((progresso / OBJETIVO) * largura)
+    # Preenchimento proporcional / Barra preenchida
+    pygame.draw.rect(TELA, CORES["VERDE"], (x, y, preenchimento_barra, altura))  # Barra verde de progressão
 
+    # Borda da barra (contorno)
+    pygame.draw.rect(TELA, CORES["PRETO"], (x, y, largura, altura), 2)  # Preto, contorno
 
-
-
-
-
+    # Texto centralizado
+    texto = f"{progresso}/{OBJETIVO}"
+    superficie_texto = FONTE_TITULO.render(texto, True, CORES["PRETO"])
+    largura_texto = superficie_texto.get_width()
+    altura_texto = superficie_texto.get_height()
+    pos_texto_x = x + (largura - largura_texto) // 2
+    pos_texto_y = y + (altura - altura_texto) // 2
+    TELA.blit(superficie_texto, (pos_texto_x, pos_texto_y))
 
 
 
@@ -259,9 +271,9 @@ def tela_vitoria():
             if evento.type == pygame.KEYDOWN:
                 vitoria_jogadores = False  # Sai da tela de vitória com qualquer tecla
                 
-        TELA.fill((PRETO))
-        texto = fonte.render('Parabéns, vocês ajudaram na limpeza do rio!', True, BRANCO)
-        TELA.blit(texto, (LARGURA_TELA // 2 - texto.get_width() // 2, ALTURA_TELA // 2 - 50))
+        TELA.fill((CORES["PRETO"]))
+        TEXTO = FONTE_TITULO_NEGRITO.render('Parabéns, vocês ajudaram na limpeza do rio!', True, CORES["BRANCO"])
+        TELA.blit(TEXTO, (LARGURA_TELA // 2 - TEXTO.get_width() // 2, ALTURA_TELA // 2 - 50))
 
         pygame.display.update()
 
@@ -287,7 +299,8 @@ JOGO_RODANDO = True
 rede_circle = [999,999]
 while JOGO_RODANDO:
     clock.tick(FPS) # velocidade de atualização da tela ou FPS(Frames por segundo)
-    TELA.fill(PRETO)    # cor do background sem imagem
+    TELA.fill(CORES["PRETO"])    # cor do background sem imagem
+    progresso = jogador1.itens_coletados + jogador2.itens_coletados # Progresso geral
 
 
 
@@ -344,19 +357,37 @@ while JOGO_RODANDO:
 
     jogador1.desenhar()
     jogador2.desenhar()
-    
+
+
+
+
+
+
+
+    desenhar_barra_progresso(
+        TELA,
+        LARGURA_TELA//2-(LARGURA_BARRA//2),         # Posição x na tela
+        10,                                                     # Posição y na tela
+        LARGURA_BARRA, ALTURA_BARRA                             # Tamanho da barra
+    )
+
     # Exibir pontuação
-    fonte = pygame.font.SysFont('Arial', 24)
-    texto1 = fonte.render(f'Jogador 1: {jogador1.itens_coletados}', True, VERMELHO)
-    texto2 = fonte.render(f'Jogador 2: {jogador2.itens_coletados}', True, VERMELHO)
-    largura_texto2 = texto2.get_width()
-    TELA.blit(texto1, (10, 10))
-    TELA.blit(texto2, (LARGURA_TELA-largura_texto2-10, 10))
+    TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1: {jogador1.itens_coletados}', True, CORES["VERDE"])
+    TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2: {jogador2.itens_coletados}', True, CORES["VERDE"])
+    TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["VERDE_CLARO"])
+    largura_texto2 = TEXTO2.get_width()
+    largura_texto3 = TEXTO3.get_width()
+    TELA.blit(TEXTO1, (10, 10))
+    TELA.blit(TEXTO2, (LARGURA_TELA-largura_texto2-10, 10))
+    TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
+
+
+
 
     # Exibir vencedor
-    if (jogador1.itens_coletados + jogador2.itens_coletados) >= OBJETIVO:
+    if (progresso) >= OBJETIVO:
         tela_vitoria()
-        rodando = False
+        JOGO_RODANDO = False
 
 
 
@@ -375,19 +406,21 @@ while JOGO_RODANDO:
         if event.type == MOUSEBUTTONDOWN and event.button == 1:  # Ação com botão esquerdo do mouse
             # jogador2.lançar_rede()
             # print(f'{jogador2.rede_rect=}')
-            # pygame.draw.rect(TELA,BRANCO,jogador2.rede_rect)
+            # pygame.draw.rect(TELA,CORES["BRANCO"],jogador2.rede_rect)
             # pygame.blit()
             pos_mouse = pygame.mouse.get_pos()
             rede_circle = [pos_mouse[0], pos_mouse[1]]
             
         if event.type == KEYDOWN and event.key == K_SPACE: # Ação com botão Espaço
             jogador2.coletar_item()
-
     try:
-        pygame.draw.circle(TELA, BRANCO, (rede_circle[0], rede_circle[1]), 50)
+        pygame.draw.circle(TELA, CORES["BRANCO"], (rede_circle[0], rede_circle[1]), 50)
     except:
         pass
 
+
+# Atualiza a tela
     pygame.display.update()
+
 # Finaliza o Pygame
 pygame.quit()
