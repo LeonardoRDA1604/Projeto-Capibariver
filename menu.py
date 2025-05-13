@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import os
+from configs import *
 
 class Menu:
     def __init__(self, tela):
@@ -93,10 +94,11 @@ class Menu:
             self.tela.blit(self.background, (0, 0))
         else:
             self.tela.fill(self.cores["AZUL"])
-        
+# ----------------------------------------------------------------------------------------------------------
         # Desenha o título
-        titulo = self.fonte_titulo.render("Capibariver", True, self.cores["BRANCO"])
-        self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
+        # titulo = self.fonte_titulo.render("Capibariver", True, self.cores["BRANCO"])
+        # self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
+# ----------------------------------------------------------------------------------------------------------
         
         # Desenha os botões
         pos_mouse = pygame.mouse.get_pos()
@@ -160,15 +162,15 @@ class Menu:
         # Desenha o título
         titulo = self.fonte_titulo.render("GUIA DO JOGO", True, self.cores["BRANCO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
-        
+        # ----------------------------------------------------------------------------------------------------------
         # Instruções
         instrucoes = [
-            "Jogador 1 (Verde): Use WASD para mover e ESPAÇO para coletar",
-            "Jogador 2 (Roxo): Use setas para mover e clique do mouse para lançar rede",
+            f"Jogador 1 (Verde): Use as teclas 'W', 'A', 'S' e 'D' para mover o personagem e ESPAÇO para coletar os resíduos da margem",
+            "Jogador 2 (Roxo): Use setas direcionais do teclado para mover o personagem e clique com o botão direito do mouse para lançar rede e coletar os resíduos do rio",
             "Colete itens para limpar o rio e atingir o objetivo!",
             "Trabalhem juntos para conseguir o melhor resultado!"
         ]
-        
+        # ----------------------------------------------------------------------------------------------------------
         for i, texto in enumerate(instrucoes):
             linha = self.fonte_botao.render(texto, True, self.cores["BRANCO"])
             self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
@@ -195,19 +197,21 @@ class Menu:
             self.tela.fill(self.cores["AZUL"])
         
         # Desenha o título
-        titulo = self.fonte_titulo.render("CRÉDITOS", True, self.cores["BRANCO"])
+        titulo = self.fonte_titulo.render("CRÉDITOS", True, self.cores["PRETO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
         
         # Créditos
         creditos = [
-            "Desenvolvido por: [Seu Nome]",
+            "Desenvolvido por: Leonardo Rafael e Gabriel Lucas",
+            "Arte por: Guilherme Enrique, Yasmim Victória",
+            "Documentado por: Wesley Luiz e Brenda Rafaelly",
             "Versão: 9.4.4",
-            "Música: [Fonte da Música]",
-            "Agradecimentos especiais: [Agradecimentos]"
+            "Agradecimentos especiais: Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Camila Moura e Davi Wanderley",
+            "Música: ????",
         ]
         
         for i, texto in enumerate(creditos):
-            linha = self.fonte_botao.render(texto, True, self.cores["BRANCO"])
+            linha = self.fonte_botao.render(texto, True, self.cores["PRETO"])
             self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
         
         # Botão voltar
