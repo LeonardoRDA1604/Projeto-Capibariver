@@ -1,3 +1,5 @@
+import pygame
+
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 NOME_DO_JOGO = "Capibariver v9.4.4"
@@ -54,3 +56,4 @@ ALTURA_BARRA = 30
 # === Áudio ===
 SOM_ATIVADO = True
 VOLUME_GERAL = 0.5
+
