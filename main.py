@@ -64,15 +64,16 @@ class Jogador:
             self.rect.x -= VEL_JOGADOR
         if teclas[direita] and self.rect.right < LARGURA_TELA:
             self.rect.x += VEL_JOGADOR
-
+        
     def coletar_item(self):
         # Coletar item diretamente abaixo do jogador 1
-        for item in itens_agua:
+        for item in itens_terra:
             if self.rect.colliderect(item.rect):
                 self.itens_coletados += 1
                 itens_terra.remove(item)  # Remove o item da lista
                 break
-
+    
+# todo ---------------------------------------------------------------------------------------------------
     def lançar_rede(self):
         # Verifica se o jogador 2 clicou e cria a rede
         self.pos_mouse = pygame.mouse.get_pos()
@@ -85,7 +86,7 @@ class Jogador:
             pygame.draw.circle(TELA, CORES["BRANCO"], self.rede.center, 30)
 
 
-
+# todo ---------------------------------------------------------------------------------------------------
 
 
 
@@ -469,10 +470,8 @@ while JOGO_RODANDO:
             if evento.type == CRIAR_ITEM_EVENTO_2:
                 for _ in range(1):
                     itens_terra.append(Item_terra())
-
-
-
-                    
+# todo ---------------------------------------------------------------------------------------------------
+            # Colisão e coleta do jogador 2
             if evento.type == MOUSEBUTTONDOWN and evento.button == 1:  # Ação com botão esquerdo do mouse
                 # jogador2.lançar_rede()
                 # print(f'{jogador2.rede_rect=}')
@@ -480,8 +479,16 @@ while JOGO_RODANDO:
                 # pygame.blit()
                 pos_mouse = pygame.mouse.get_pos()
                 rede_circle = [pos_mouse[0], pos_mouse[1]]
-            if evento.type == KEYDOWN and evento.key == K_SPACE: # Ação com botão Espaço
-                jogador2.coletar_item()
+# todo ---------------------------------------------------------------------------------------------------
+            # Colisão e coleta do jogador 1
+            for item in itens_terra:
+                if jogador1.rect.colliderect(item.rect):
+                    if evento.type ==  pygame.KEYDOWN and evento.key == pygame.K_SPACE:
+                        jogador1.coletar_item()
+                        break
+
+
+
     
     # Processar eventos do menu
     menu.eventos(eventos)
@@ -504,15 +511,33 @@ while JOGO_RODANDO:
         
         # Movimentação dos jogadores
         teclas = pygame.key.get_pressed()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
-        
-        # Coleta de itens
-        for item in itens_terra:
-            if jogador1.rect.colliderect(item.rect) and teclas[K_SPACE]:
-                jogador1.itens_coletados += 1
-                item.rect.x = LARGURA_TELA  # Reposiciona o item
-        
+
+# todo ---------------------------------------------------------------------------------------------------
+       
         for item in itens_agua:
             pos = item.rect[0], item.rect[1]
             if jogador2.rect.colliderect(item.rect):
@@ -521,23 +546,8 @@ while JOGO_RODANDO:
             if False not in circle_colide(pos, rede_circle, 60):
                 jogador2.itens_coletados += 1
                 item.rect.x = LARGURA_TELA
-        # Verificar colisão (coleta de itens)
-        # for item in itens_agua:
-        #     if jogador1.rect.colliderect(item.rect):
-        #         jogador1.itens_coletados += 1
-        #         item.rect.x = LARGURA_TELA  # Reposiciona o item
-        #     elif jogador2.rect.colliderect(item.rect):
-        #         jogador2.itens_coletados += 1
-        #         item.rect.x = LARGURA_TELA
-                
-        # for item in itens_terra:
-        #     if jogador1.rect.colliderect(item.rect):
-        #         jogador1.itens_coletados += 1
-        #         item.rect.x = LARGURA_TELA  # Reposiciona o item
-        #     elif jogador2.rect.colliderect(item.rect):
-        #         jogador2.itens_coletados += 1
-        #         item.rect.x = LARGURA_TELA
 
+# todo ---------------------------------------------------------------------------------------------------
 
         # Desenhar elementos do jogo
         rio.desenhar()

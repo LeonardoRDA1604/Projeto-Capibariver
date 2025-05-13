@@ -5,11 +5,7 @@ import os
 from configs import *
 
 class Menu:
-    def __init__(self, tela):
-        """
-        Inicializa o menu do jogo.
-        :param tela: Superfície do pygame onde o menu será desenhado
-        """
+    def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
         self.tela = tela
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
@@ -21,18 +17,11 @@ class Menu:
         # Fontes
         self.fonte_titulo = pygame.font.SysFont('Arial', 48, bold=True)
         self.fonte_botao = pygame.font.SysFont('Arial', 30)
-        
+
+# ! ####################################################################################################################
         # Cores
-        self.cores = {
-            "BRANCO": (255, 255, 255),
-            "PRETO": (0, 0, 0),
-            "VERDE": (0, 200, 0),
-            "VERDE_CLARO": (100, 255, 100),
-            "VERMELHO": (200, 0, 0),
-            "AZUL": (0, 0, 200),
-            "CINZA": (150, 150, 150),
-            "CINZA_CLARO": (200, 200, 200)
-        }
+        self.cores = CORES
+# ! ####################################################################################################################
         
         # Configurações de áudio
         self.som_ativado = True
@@ -50,8 +39,7 @@ class Menu:
         self.botoes = []
         self.criar_botoes()
 
-    def criar_botoes(self):
-        """Cria os botões do menu principal"""
+    def criar_botoes(self): #Cria os botões do menu principal
         opcoes = ["INICIAR", "GUIA", "CRÉDITOS", "OPÇÕES", "SAIR"]
         for i, opcao in enumerate(opcoes):
             largura_botao = 200
@@ -67,8 +55,7 @@ class Menu:
                 "acao": self.get_acao(opcao)
             })
     
-    def get_acao(self, opcao):
-        """Retorna a ação associada a cada botão"""
+    def get_acao(self, opcao): # Retorna a ação associada a cada botão
         if opcao == "INICIAR":
             return lambda: self.mudar_estado("JOGO")
         elif opcao == "GUIA":
@@ -82,21 +69,18 @@ class Menu:
         else:
             return lambda: None
     
-    def mudar_estado(self, novo_estado):
-        """Muda o estado do menu"""
+    def mudar_estado(self, novo_estado):                    # Muda o estado do menu
         if novo_estado in self.estados:
             self.estado = novo_estado
     
-    def desenhar(self):
-        """Desenha o menu principal"""
-        # Desenha o fundo
+    def desenhar(self):                                     # Desenha o menu principal
         if self.background:
-            self.tela.blit(self.background, (0, 0))
+            self.tela.blit(self.background, (0, 0))         # Desenha o fundo
         else:
             self.tela.fill(self.cores["AZUL"])
 # ----------------------------------------------------------------------------------------------------------
         # Desenha o título
-        # titulo = self.fonte_titulo.render("Capibariver", True, self.cores["BRANCO"])
+        # titulo = self.fonte_titulo.render("Capibariver", True, self.cores["BRANCO"])                # Desenha o título
         # self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
 # ----------------------------------------------------------------------------------------------------------
         
@@ -116,11 +100,9 @@ class Menu:
                 botao["rect"].centery - texto.get_height() // 2
             ))
     
-    def desenhar_opcoes(self):
-        """Desenha o menu de opções"""
-        # Desenha o fundo
+    def desenhar_opcoes(self): # Desenha o menu de opções
         if self.background:
-            self.tela.blit(self.background, (0, 0))
+            self.tela.blit(self.background, (0, 0)) # Desenha o fundo
         else:
             self.tela.fill(self.cores["AZUL"])
         
@@ -151,11 +133,9 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
-    def desenhar_guia(self):
-        """Desenha a tela de guia"""
-        # Desenha o fundo
+    def desenhar_guia(self): # Desenha a tela de guia        
         if self.background:
-            self.tela.blit(self.background, (0, 0))
+            self.tela.blit(self.background, (0, 0)) # Desenha o fundo
         else:
             self.tela.fill(self.cores["AZUL"])
         

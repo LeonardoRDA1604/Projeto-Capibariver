@@ -18,11 +18,17 @@ CORES = {
     "VERMELHO": (255, 0, 0),
     "VERDE_LIMÃO": (0, 255, 0),
     "VERDE": (0, 200, 0),
-    "VERDE_CLARO": (0, 200, 0),
+    "VERDE_CLARO": (0, 150, 0),
     "AZUL": (0, 0, 255),
     "AMARELO": (255, 255, 0),
     "ROXO": (67, 18, 135),
     "CINZA_CLARO": (200, 200, 200),
+
+    "TUA MÃE": (100, 255, 100),
+    "VERMELHO": (200, 0, 0),
+    "AZUL": (0, 0, 200),
+    "CINZA": (150, 150, 150),
+    "CINZA_CLARO": (200, 200, 200)
 }
 
 # === Velocidade do jogador e dos itens ===
@@ -40,7 +46,7 @@ TAMANHOS = {
 
 
 # === Objetivo do jogo ===
-OBJETIVO = 20
+OBJETIVO = 200
 
 
 # === Barra de progressão de objetivo do jogo ===
