@@ -40,7 +40,7 @@ TAMANHOS = {
 
 
 # === Objetivo do jogo ===
-OBJETIVO = 200
+OBJETIVO = 20
 
 
 # === Barra de progressão de objetivo do jogo ===

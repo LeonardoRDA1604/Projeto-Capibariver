@@ -481,7 +481,7 @@ while JOGO_RODANDO:
                 pos_mouse = pygame.mouse.get_pos()
                 rede_circle = [pos_mouse[0], pos_mouse[1]]
             if evento.type == KEYDOWN and evento.key == K_SPACE: # Ação com botão Espaço
-                jogador2.coletar_item()            
+                jogador2.coletar_item()
     
     # Processar eventos do menu
     menu.eventos(eventos)
@@ -582,7 +582,9 @@ while JOGO_RODANDO:
         if progresso >= OBJETIVO:
             tela_vitoria()
             menu.estado = "MENU"  # Volta para o menu após a vitória
-            # JOGO_RODANDO = False
+            if menu.estado == "MENU" and iniciar_jogo() == True:
+                menu.estado = "JOGO"
+            # elif teclas[K_ESC] == (JOGO_RODANDO == False)
             # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
