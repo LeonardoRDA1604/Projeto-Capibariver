@@ -479,6 +479,14 @@ while JOGO_RODANDO:
                 # pygame.blit()
                 pos_mouse = pygame.mouse.get_pos()
                 rede_circle = [pos_mouse[0], pos_mouse[1]]
+                for item in itens_agua:
+                    pos = item.rect[0], item.rect[1]
+                    if jogador2.rect.colliderect(item.rect):
+                        jogador2.itens_coletados += 1
+                        item.rect.x = LARGURA_TELA
+                    if False not in circle_colide(pos, rede_circle, 60):
+                        jogador2.itens_coletados += 1
+                        item.rect.x = LARGURA_TELA
 # todo ---------------------------------------------------------------------------------------------------
             # Colisão e coleta do jogador 1
             for item in itens_terra:
@@ -532,22 +540,9 @@ while JOGO_RODANDO:
 
 
 
-
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
 
-# todo ---------------------------------------------------------------------------------------------------
-       
-        for item in itens_agua:
-            pos = item.rect[0], item.rect[1]
-            if jogador2.rect.colliderect(item.rect):
-                jogador2.itens_coletados += 1
-                item.rect.x = LARGURA_TELA
-            if False not in circle_colide(pos, rede_circle, 60):
-                jogador2.itens_coletados += 1
-                item.rect.x = LARGURA_TELA
-
-# todo ---------------------------------------------------------------------------------------------------
 
         # Desenhar elementos do jogo
         rio.desenhar()
