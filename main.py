@@ -225,7 +225,11 @@ class Item_agua:
 
 class Item_terra:
     def __init__(self):
-        self.rect = pygame.Rect(random.randint(0, LARGURA_TELA - TAMANHO_ITEM[0]), random.randint(2*(ALTURA_TELA//3), ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (X, Y, TAMANHO_ITEM, TAMANHO_ITEM)
+        x1_margem = 5*(LARGURA_TELA//40) # antes era 0
+        x2_margem = 37*(LARGURA_TELA//40) - TAMANHO_ITEM[0] # antes era LARGURA_TELA - TAMANHO_ITEM[0]
+        y1_margem = 2*(ALTURA_TELA//3)
+        y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
+        self.rect = pygame.Rect(random.randint(x1_margem, x2_margem), random.randint(y1_margem, y2_margem), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (x(x1, x2), y(y1, y2), TAMANHO_ITEM, TAMANHO_ITEM)
         self.cor = CORES["VERMELHO"]
 
     def mover(self):
@@ -555,7 +559,7 @@ while JOGO_RODANDO:
                 for _ in range(3):
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(1):
+                for _ in range(99):
                     itens_terra.append(Item_terra())
 # todo ---------------------------------------------------------------------------------------------------
             # Colisão e coleta do jogador 2
