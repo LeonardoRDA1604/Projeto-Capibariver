@@ -20,6 +20,8 @@ FONTE_TEXTO = pygame.font.SysFont(*FONTES["texto"])
 FONTE_TEXTO_NEGRITO = pygame.font.SysFont(*FONTES["texto"], bold=True)
 FONTE_TITULO = pygame.font.SysFont(*FONTES["titulo"])
 FONTE_TITULO_NEGRITO = pygame.font.SysFont(*FONTES["titulo"], bold=True)
+FONTE_CONCLUSAO = pygame.font.SysFont(*FONTES["conclusao"])
+FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
 
@@ -31,6 +33,43 @@ FONTE_TITULO_NEGRITO = pygame.font.SysFont(*FONTES["titulo"], bold=True)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Jogo:
+    def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
+        self.tela = tela
+        self.largura_tela = tela.get_width()
+        self.altura_tela = tela.get_height()
+
+        # Carregar imagem de fundo
+        try:
+            self.background = pygame.image.load(os.path.join('assets', 'tela_jogo_capibariver.png'))
+            self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+        except:
+            print("Imagem de fundo não encontrada. Usando cor sólida.")
+            self.background = None
+    
+    def desenhar(self):                                     # Desenha o menu principal
+        if self.background:
+            self.tela.blit(self.background, (0, 0))         # Desenha o fundo
+        else:
+            pass
 
 
 
@@ -176,7 +215,7 @@ class Item_agua:
         y_positions = list(range(ALTURA_TELA - 300, ALTURA_TELA - 700, -50)) # Posições y dos objetos do rio
                     # [ALTURA_TELA - 300, ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650]
         self.rect = pygame.Rect(random.randint(-100, -50), random.choice(y_positions), TAMANHO_ITEM[0], TAMANHO_ITEM[1])
-        self.cor = CORES["AMARELO"]
+        self.cor = CORES["LARANJA"]
 
     def mover(self):
         self.rect.x += VEL_ITEM
@@ -212,6 +251,27 @@ class Item_terra:
 
 
 
+class Conclusao:
+    def __init__(self, tela): # Inicializa o background da tela de conclusão do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
+        self.tela = tela
+        self.largura_tela = tela.get_width()
+        self.altura_tela = tela.get_height()
+
+        # Carregar imagem de fundo
+        try:
+            self.background = pygame.image.load(os.path.join('assets', 'tela_conclusao_capibariver.png'))
+            self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+        except:
+            print("Imagem de fundo não encontrada. Usando cor sólida.")
+            self.background = None
+    
+    def desenhar(self):                                     # Desenha o menu principal
+        if self.background:
+            self.tela.blit(self.background, (0, 0))         # Desenha o fundo
+        else:
+            pass
+
+
 
 
 
@@ -227,7 +287,7 @@ def iniciar_jogo():
     global jogador1, jogador2, itens_agua, itens_terra, CRIAR_ITEM_EVENTO, CRIAR_ITEM_EVENTO_2
     
     # Criar jogadores
-    jogador1 = Jogador(300, ALTURA_TELA-100, CORES["VERDE"])  # Verde
+    jogador1 = Jogador(300, ALTURA_TELA-100, CORES["AMARELO"])  # Amarelo
     jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"])  # Roxo
     
     # Evento para criar itens
@@ -331,12 +391,22 @@ def tela_vitoria():
                 vitoria_jogadores = False  # Sai da tela de vitória com qualquer tecla
                 
         TELA.fill((CORES["PRETO"]))
-        TEXTO = FONTE_TITULO_NEGRITO.render('Parabéns, vocês ajudaram na limpeza do rio!', True, CORES["BRANCO"])
-        TELA.blit(TEXTO, (LARGURA_TELA // 2 - TEXTO.get_width() // 2, ALTURA_TELA // 2 - 50))
+# !!!!!!!!! ----------------------------------------------------- ALERTA ARRUMAR DEPOIS, NÃO ESTÁ RESPONSIVO ----------------------------------------------------------------
+        Conclusao(TELA).desenhar()
+        TEXTO1 = FONTE_CONCLUSAO_NEGRITO.render('Parabéns!', True, CORES["CIANO"], 1)
+        TEXTO2 = FONTE_CONCLUSAO_NEGRITO.render('Vocês ajudaram na limpeza do rio.', True, CORES["VERDE"], 1)
+        TEXTO3 = FONTE_CONCLUSAO_NEGRITO.render('Graças aos seus esforços, o rio foi salvo.', True, CORES["VERDE"], 1)
+        TEXTO4 = FONTE_CONCLUSAO_NEGRITO.render('Continue com o bom trabalho!', True, CORES["VERDE"], 1)
+
+        TELA.blit(TEXTO1, (LARGURA_TELA // 2 - TEXTO1.get_width() // 2, ALTURA_TELA // 5 - ALTURA_TELA // 10))
+        TELA.blit(TEXTO2, (LARGURA_TELA // 2 - TEXTO2.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 - 50))
+        TELA.blit(TEXTO3, (LARGURA_TELA // 2 - TEXTO3.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 50))
+        TELA.blit(TEXTO4, (LARGURA_TELA // 2 - TEXTO4.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 150))
+# !!!!!!!!! ----------------------------------------------------- ALERTA ARRUMAR DEPOIS, NÃO ESTÁ RESPONSIVO ----------------------------------------------------------------
+
+        # TELA.blit(TEXTO1, (LARGURA_TELA // 2 - TEXTO1.get_width() // 2, ALTURA_TELA // 2 - 50))
 
         pygame.display.update()
-
-
 
 
 
@@ -413,6 +483,23 @@ rede_circle = [999, 999]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Inicializar o jogo
 iniciar_jogo()
 
@@ -477,7 +564,7 @@ while JOGO_RODANDO:
                 # print(f'{jogador2.rede_rect=}')
                 # pygame.draw.rect(TELA,CORES["BRANCO"],jogador2.rede_rect)
                 # pygame.blit()
-                pos_mouse = pygame.mouse.get_pos()
+                pos_mouse = pygame.mouse.get_pos() 
                 rede_circle = [pos_mouse[0], pos_mouse[1]]
                 for item in itens_agua:
                     pos = item.rect[0], item.rect[1]
@@ -546,6 +633,9 @@ while JOGO_RODANDO:
 
         # Desenhar elementos do jogo
         rio.desenhar()
+
+        # desenhando o background do jogo
+        Jogo(TELA).desenhar()
         
         for item in itens_agua:
             item.desenhar()
@@ -558,6 +648,9 @@ while JOGO_RODANDO:
         # Desenhar jogadores
         jogador1.desenhar()
         jogador2.desenhar()
+
+
+
         
         # Desenhar rede
         try:
@@ -574,9 +667,9 @@ while JOGO_RODANDO:
     )
         
         # Exibir pontuação
-        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1: {jogador1.itens_coletados}', True, CORES["VERDE"])
-        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2: {jogador2.itens_coletados}', True, CORES["VERDE"])
-        TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["VERDE_CLARO"])
+        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1: {jogador1.itens_coletados}', True, CORES["AMARELO"])
+        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2: {jogador2.itens_coletados}', True, CORES["ROXO"])
+        TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
         largura_texto2 = TEXTO2.get_width()
         largura_texto3 = TEXTO3.get_width()
         TELA.blit(TEXTO1, (10, 10))

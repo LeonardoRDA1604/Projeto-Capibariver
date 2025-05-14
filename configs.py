@@ -8,7 +8,8 @@ FPS = 30
 
 FONTES = {
     "titulo": ('Arial', 30),
-    "texto": ('Arial', 24)
+    "texto": ('Arial', 24),
+    "conclusao": ('Arial', 50),
 }
 
 # === Cores ===
@@ -23,12 +24,15 @@ CORES = {
     "AMARELO": (255, 255, 0),
     "ROXO": (67, 18, 135),
     "CINZA_CLARO": (200, 200, 200),
+    "CIANO": (0, 255, 255),
+    "LARANJA": (255, 165, 0),
+    "AZUL_ESCURO": (17, 13, 120),
 
-    "TUA MÃE": (100, 255, 100),
-    "VERMELHO": (200, 0, 0),
-    "AZUL": (0, 0, 200),
-    "CINZA": (150, 150, 150),
-    "CINZA_CLARO": (200, 200, 200)
+#    "TUA MÃE": (100, 255, 100),
+#    "VERMELHO": (200, 0, 0),
+#    "AZUL": (0, 0, 200),
+#    "CINZA": (150, 150, 150),
+#    "CINZA_CLARO": (200, 200, 200)
 }
 
 # === Velocidade do jogador e dos itens ===
@@ -46,7 +50,8 @@ TAMANHOS = {
 
 
 # === Objetivo do jogo ===
-OBJETIVO = 200
+OBJETIVO = 50
+# 200 objetivo ideal
 
 
 # === Barra de progressão de objetivo do jogo ===

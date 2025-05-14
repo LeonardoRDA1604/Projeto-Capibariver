@@ -17,11 +17,6 @@ class Menu:
         # Fontes
         self.fonte_titulo = pygame.font.SysFont('Arial', 48, bold=True)
         self.fonte_botao = pygame.font.SysFont('Arial', 30)
-
-# ! ####################################################################################################################
-        # Cores
-        self.cores = CORES
-# ! ####################################################################################################################
         
         # Configurações de áudio
         self.som_ativado = True
@@ -50,8 +45,8 @@ class Menu:
             self.botoes.append({
                 "texto": opcao,
                 "rect": pygame.Rect(x, y, largura_botao, altura_botao),
-                "cor": self.cores["VERDE"],
-                "cor_hover": self.cores["VERDE_CLARO"],
+                "cor": CORES["VERDE"],
+                "cor_hover": CORES["VERDE_CLARO"],
                 "acao": self.get_acao(opcao)
             })
     
@@ -77,10 +72,10 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0))         # Desenha o fundo
         else:
-            self.tela.fill(self.cores["AZUL"])
+            self.tela.fill(CORES["AZUL"])
 # ----------------------------------------------------------------------------------------------------------
         # Desenha o título
-        # titulo = self.fonte_titulo.render("Capibariver", True, self.cores["BRANCO"])                # Desenha o título
+        # titulo = self.fonte_titulo.render("Capibariver", True, CORES["BRANCO"])                # Desenha o título
         # self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
 # ----------------------------------------------------------------------------------------------------------
         
@@ -91,10 +86,10 @@ class Menu:
             
             # Retângulo do botão
             pygame.draw.rect(self.tela, cor, botao["rect"])
-            pygame.draw.rect(self.tela, self.cores["PRETO"], botao["rect"], 2)  # Borda
+            pygame.draw.rect(self.tela, CORES["PRETO"], botao["rect"], 2)  # Borda
             
             # Texto do botão
-            texto = self.fonte_botao.render(botao["texto"], True, self.cores["PRETO"])
+            texto = self.fonte_botao.render(botao["texto"], True, CORES["PRETO"])
             self.tela.blit(texto, (
                 botao["rect"].centerx - texto.get_width() // 2,
                 botao["rect"].centery - texto.get_height() // 2
@@ -104,28 +99,28 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
         else:
-            self.tela.fill(self.cores["AZUL"])
+            self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        titulo = self.fonte_titulo.render("OPÇÕES", True, self.cores["BRANCO"])
+        titulo = self.fonte_titulo.render("OPÇÕES", True, CORES["BRANCO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
         
         # Opção de Som
         som_texto = self.fonte_botao.render("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
-                                            True, self.cores["BRANCO"])
+                                            True, CORES["BRANCO"])
         self.tela.blit(som_texto, (self.largura_tela // 2 - som_texto.get_width() // 2, 250))
         
         # Opção de Efeitos
         efeitos_texto = self.fonte_botao.render("Efeitos (tecla 2): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
-                                               True, self.cores["BRANCO"])
+                                               True, CORES["BRANCO"])
         self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
         
         # Botão voltar
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
-        pygame.draw.rect(self.tela, self.cores["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, self.cores["PRETO"], voltar_rect, 2)
+        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, self.cores["PRETO"])
+        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
@@ -137,10 +132,10 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
         else:
-            self.tela.fill(self.cores["AZUL"])
+            self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        titulo = self.fonte_titulo.render("GUIA DO JOGO", True, self.cores["BRANCO"])
+        titulo = self.fonte_titulo.render("GUIA DO JOGO", True, CORES["BRANCO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
         # ----------------------------------------------------------------------------------------------------------
         # Instruções
@@ -152,15 +147,15 @@ class Menu:
         ]
         # ----------------------------------------------------------------------------------------------------------
         for i, texto in enumerate(instrucoes):
-            linha = self.fonte_botao.render(texto, True, self.cores["BRANCO"])
+            linha = self.fonte_botao.render(texto, True, CORES["BRANCO"])
             self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
         
         # Botão voltar
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
-        pygame.draw.rect(self.tela, self.cores["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, self.cores["PRETO"], voltar_rect, 2)
+        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, self.cores["PRETO"])
+        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
@@ -174,10 +169,10 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0))
         else:
-            self.tela.fill(self.cores["AZUL"])
+            self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        titulo = self.fonte_titulo.render("CRÉDITOS", True, self.cores["PRETO"])
+        titulo = self.fonte_titulo.render("CRÉDITOS", True, CORES["PRETO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
         
         # Créditos
@@ -191,15 +186,15 @@ class Menu:
         ]
         
         for i, texto in enumerate(creditos):
-            linha = self.fonte_botao.render(texto, True, self.cores["PRETO"])
+            linha = self.fonte_botao.render(texto, True, CORES["PRETO"])
             self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
         
         # Botão voltar
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
-        pygame.draw.rect(self.tela, self.cores["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, self.cores["PRETO"], voltar_rect, 2)
+        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, self.cores["PRETO"])
+        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
