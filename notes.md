@@ -23,7 +23,11 @@
 
 # botoes menu (creditos, opcoes e etc sem hover e posicao nao centralizada)
 
-# arrumar posição dos plaeyrs 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra)
+# arrumar posição dos players 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra)
+
+# colocar sprites dos lixos
+
+# maybe, colocar sprites dos personagens
 #################################################################################################################################################################################################
 
 
