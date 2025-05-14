@@ -559,7 +559,7 @@ while JOGO_RODANDO:
                 for _ in range(3):
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(99):
+                for _ in range(1):
                     itens_terra.append(Item_terra())
 # todo ---------------------------------------------------------------------------------------------------
             # Colisão e coleta do jogador 2
