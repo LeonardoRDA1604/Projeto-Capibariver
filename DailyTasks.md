@@ -23,10 +23,6 @@
 # tela de conclusão
 - brenda
 
-# objetos
-- 
-
-
 
 ------------------------------------------------------------------------
 parte 2
@@ -51,3 +47,17 @@ cortados
 - ecobarco
 - animacoes dos animais
 - tela responsiva
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+Concluidos
+
+
+# Objetos (leo) --------------------------- Concluido

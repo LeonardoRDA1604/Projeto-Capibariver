@@ -3,7 +3,7 @@ import pygame
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 60
+FPS = 150
 
 
 FONTES = {
@@ -49,9 +49,9 @@ TAMANHO_ITEM = 40, 40
 # }
 
 
-# === Objetivo do jogo ===
-OBJETIVO = 50
-# 200 objetivo ideal
+# === Objetivo do jogo ===                 # 200 objetivo ideal
+OBJETIVO = 200
+
 
 
 # === Barra de progressão de objetivo do jogo ===

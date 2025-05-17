@@ -70,6 +70,8 @@ class Jogo:
         else:
             pass
 
+jogo = Jogo(TELA)
+
 
 
 
@@ -220,15 +222,15 @@ class Item_agua:
                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
         # Lista de imagens disponíveis para os itens de água
         self.imagens = [
-                    pygame.image.load('./assets/items/amaciante.png'),
-                    pygame.image.load('./assets/items/garrafa_plastica.png'),
+                    # pygame.image.load('./assets/items/amaciante.png'),
+                    # pygame.image.load('./assets/items/garrafa_plastica.png'),
                     pygame.image.load('./assets/items/lata_de_cerveja.png'),
-                    pygame.image.load('./assets/items/lata_de_sardinha.png'),
+                    # pygame.image.load('./assets/items/lata_de_sardinha.png'),
                     pygame.image.load('./assets/items/lata.png'),
-                    pygame.image.load('./assets/items/lixo_azul.png'),
+                    # pygame.image.load('./assets/items/lixo_azul.png'),
                     pygame.image.load('./assets/items/lixo_verde.png'),
-                    pygame.image.load('./assets/items/lixo.png'),
-                    pygame.image.load('./assets/items/sapato.png'),
+                    # pygame.image.load('./assets/items/lixo.png'),
+                    # pygame.image.load('./assets/items/sapato.png'),
                 ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -263,17 +265,17 @@ class Item_terra:
         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
 # Lista de imagens disponíveis para os itens da terra
         self.imagens = [
-                    pygame.image.load('./assets/items/amaciante.png'),
-                    pygame.image.load('./assets/items/coco.png'),
-                    pygame.image.load('./assets/items/garrafa_plastica.png'),
+                    # pygame.image.load('./assets/items/amaciante.png'),
+                    # pygame.image.load('./assets/items/coco.png'),
+                    # pygame.image.load('./assets/items/garrafa_plastica.png'),
+                    # pygame.image.load('./assets/items/lata_de_sardinha.png'),
+                    # pygame.image.load('./assets/items/lixo_azul.png'),
+                    # pygame.image.load('./assets/items/lixo.png'),
                     pygame.image.load('./assets/items/lata_de_cerveja.png'),
-                    pygame.image.load('./assets/items/lata_de_sardinha.png'),
                     pygame.image.load('./assets/items/lata.png'),
-                    pygame.image.load('./assets/items/lixo_azul.png'),
                     pygame.image.load('./assets/items/lixo_verde.png'),
-                    pygame.image.load('./assets/items/lixo.png'),
                     pygame.image.load('./assets/items/pneu-1.png'),
-                    pygame.image.load('./assets/items/sapato.png'),
+                    # pygame.image.load('./assets/items/sapato.png'),
         ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -606,7 +608,7 @@ clock = pygame.time.Clock()  # criando o relógio antes do loop
 JOGO_RODANDO = True
 while JOGO_RODANDO:
     clock.tick(FPS) # velocidade de atualização da tela ou FPS(Frames por segundo)
-    
+    # print(clock.get_fps())
     # Processar eventos
     eventos = pygame.event.get()
     for evento in eventos:
@@ -616,7 +618,7 @@ while JOGO_RODANDO:
         # Eventos específicos do jogo
         if menu.estado == "JOGO":
             if evento.type == CRIAR_ITEM_EVENTO:
-                for _ in range(3):
+                for _ in range(2):
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
                 for _ in range(1):
@@ -698,14 +700,12 @@ while JOGO_RODANDO:
 
         # Desenhar elementos do jogo
         rio.desenhar()
-
         # desenhando o background do jogo
-        Jogo(TELA).desenhar()
+        jogo.desenhar()
         
         for item in itens_agua:
             item.desenhar()
             item.mover() # Movimentação dos itens
-        
         for item in itens_terra:
             item.desenhar()
             item.mover() # Movimentação dos itens
@@ -713,8 +713,6 @@ while JOGO_RODANDO:
         # Desenhar jogadores
         jogador1.desenhar()
         jogador2.desenhar()
-
-
 
         
         # Desenhar rede
@@ -735,11 +733,14 @@ while JOGO_RODANDO:
         TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1: {jogador1.itens_coletados}', True, CORES["AMARELO"])
         TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2: {jogador2.itens_coletados}', True, CORES["ROXO"])
         TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
+        TEXTO_FPS = FONTE_TITULO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["VERMELHO"])
         largura_texto2 = TEXTO2.get_width()
         largura_texto3 = TEXTO3.get_width()
+        altura_texto_fps = TEXTO_FPS.get_height()
         TELA.blit(TEXTO1, (10, 10))
         TELA.blit(TEXTO2, (LARGURA_TELA-largura_texto2-10, 10))
         TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
+        TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
         
         # # Verificador para validar se o objetivo foi alcançado
         # if progresso < (OBJETIVO/4):
