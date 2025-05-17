@@ -3,7 +3,7 @@ import pygame
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 150
+FPS = 30
 
 
 FONTES = {

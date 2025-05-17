@@ -50,34 +50,117 @@ FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
 
+# class Jogo:
+#     def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
+#         self.tela = tela
+#         self.largura_tela = tela.get_width()
+#         self.altura_tela = tela.get_height()
+
+#         # Carregar imagem de fundo
+
+#         try:
+#             self.background1 = pygame.image.load(os.path.join('assets', 'Background4 1280x720 rio-imundo.png'))
+#             self.background1 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+#         except:
+#             print("Imagem de fundo não encontrada. Usando cor sólida.")
+#             self.background1 = None
+
+#         try:
+#             self.background2 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-meio-sujo.png'))
+#             self.background2 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+#         except:
+#             print("Imagem de fundo não encontrada. Usando cor sólida.")
+#             self.background2 = None
+
+#         try:
+#             self.background3 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-pouco-sujo.png'))
+#             self.background3 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+#         except:
+#             print("Imagem de fundo não encontrada. Usando cor sólida.")
+#             self.background3 = None
+
+#         try:
+#             self.background4 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-limpo.png'))
+#             self.background4 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
+#         except:
+#             print("Imagem de fundo não encontrada. Usando cor sólida.")
+#             self.background4 = None
+    
+#     def desenhar1(self):                                     # Desenha o menu principal
+#         if self.background1:
+#             self.tela.blit(self.background1, (0, 0))         # Desenha o fundo
+#         else:
+#             pass
+
+#     def desenhar2(self):                                     # Desenha o menu principal
+#         if self.background2:
+#             self.tela.blit(self.background2, (0, 0))         # Desenha o fundo
+#         else:
+#             pass
+    
+#     def desenhar3(self):                                     # Desenha o menu principal
+#         if self.background3:
+#             self.tela.blit(self.background3, (0, 0))         # Desenha o fundo
+#         else:
+#             pass
+
+#     def desenhar4(self):                                     # Desenha o menu principal
+#         if self.background4:
+#             self.tela.blit(self.background4, (0, 0))         # Desenha o fundo
+#         else:
+#             pass
+
+
+
+
+
+
+
 class Jogo:
-    def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
+    def __init__(self, tela):
         self.tela = tela
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
 
-        # Carregar imagem de fundo
-        try:
-            self.background = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-limpo.png'))
-            self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-        except:
-            print("Imagem de fundo não encontrada. Usando cor sólida.")
-            self.background = None
-    
-    def desenhar(self):                                     # Desenha o menu principal
-        if self.background:
-            self.tela.blit(self.background, (0, 0))         # Desenha o fundo
+        # Lista com os caminhos dos fundos
+        self.background_paths = [
+            'Background4 1280x720 rio-imundo.png',
+            'Background3 1280x720 rio-meio-sujo.png',
+            'Background2 1280x720 rio-pouco-sujo.png',
+            'Background1 1280x720 rio-limpo.png'
+        ]
+
+        # Carrega todos os fundos redimensionados
+        self.backgrounds = []
+        for path in self.background_paths:
+            try:
+                imagem = pygame.image.load(os.path.join('assets', path)).convert()
+                imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
+                self.backgrounds.append(imagem)
+            except:
+                print(f"Imagem '{path}' não encontrada. Usando None.")
+                self.backgrounds.append(None)
+
+    def desenhar_fundo(self, nivel):  # Desenha o fundo correspondente ao nível (0 a 3).
+        if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
+            self.tela.blit(self.backgrounds[nivel], (0, 0))
         else:
-            pass
+            self.tela.fill((0, 0, 0))  # fallback: fundo preto
+
+
+    def desenhar_fundo_por_progresso(self, progresso, objetivo):
+        if progresso <= objetivo / 4:
+            nivel = 0
+        elif progresso <= objetivo / 2:
+            nivel = 1
+        elif progresso <= (3 * objetivo) / 4:
+            nivel = 2
+        else:
+            nivel = 3
+
+        self.desenhar_fundo(nivel)
 
 jogo = Jogo(TELA)
-
-
-
-
-
-
-
 
 
 
@@ -618,7 +701,7 @@ while JOGO_RODANDO:
         # Eventos específicos do jogo
         if menu.estado == "JOGO":
             if evento.type == CRIAR_ITEM_EVENTO:
-                for _ in range(2):
+                for _ in range(8):
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
                 for _ in range(1):
@@ -700,9 +783,21 @@ while JOGO_RODANDO:
 
         # Desenhar elementos do jogo
         rio.desenhar()
+        # desenhar o fundo do jogo conforme o nível de limpeza 
+        if progresso >= 0:
+            nivel = 0  # rio imundo
+        elif progresso <= OBJETIVO / 2:
+            nivel = 1  # meio sujo
+        elif progresso <= 2*(OBJETIVO/4):
+            nivel = 2  # pouco sujo
+        elif progresso > 3*(OBJETIVO/4):
+            nivel = 3  # rio limpo
         # desenhando o background do jogo
-        jogo.desenhar()
+        jogo.desenhar_fundo_por_progresso(progresso, OBJETIVO)
         
+
+
+
         for item in itens_agua:
             item.desenhar()
             item.mover() # Movimentação dos itens
