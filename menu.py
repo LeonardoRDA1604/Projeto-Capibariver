@@ -163,8 +163,7 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
-    def desenhar_creditos(self):
-        """Desenha a tela de créditos"""
+    def desenhar_creditos(self): # Desenha a tela de créditos
         # Desenha o fundo
         if self.background:
             self.tela.blit(self.background, (0, 0))
@@ -178,7 +177,7 @@ class Menu:
         # Créditos
         creditos = [
             "Desenvolvido por: Leonardo Rafael, Gabriel Lucas, Heitor da Silva e Brenno Rodrigues",
-            "Arte por: Guilherme Enrique, Yasmim Victória",
+            "Arte por: Guilherme Enrique e Yasmim Victória",
             "Documentado por: Wesley Luiz e Brenda Rafaelly",
             "Versão: 9.4.4",
             "Agradecimentos especiais: Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Camila Moura e Davi Wanderley",
@@ -202,8 +201,7 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
-    def eventos(self, eventos):
-        """Processa os eventos do pygame"""
+    def eventos(self, eventos): # Processa os eventos do pygame
         for evento in eventos:
             if evento.type == QUIT:
                 pygame.quit()

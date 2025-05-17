@@ -3,7 +3,7 @@ import pygame
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 30
+FPS = 60
 
 
 FONTES = {
@@ -41,12 +41,12 @@ VEL_ITEM = 3
 
 # === Tamanho do jogador e do itens ===
 TAMANHO_JOGADOR = 30, 30
-TAMANHO_ITEM = 20, 20
+TAMANHO_ITEM = 40, 40
 
-TAMANHOS = {
-    "jogador": (30, 30),
-    "item": (20, 20)
-}
+# TAMANHOS = { 
+#     "jogador": (30, 30),
+#     "item": (590, 500)
+# }
 
 
 # === Objetivo do jogo ===

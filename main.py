@@ -50,7 +50,6 @@ FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
 
-
 class Jogo:
     def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
         self.tela = tela
@@ -59,7 +58,7 @@ class Jogo:
 
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets', 'tela_jogo_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-limpo.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")
@@ -123,7 +122,12 @@ class Jogador:
     def desenhar_rede(self):
         if self.rede:
             pygame.draw.circle(TELA, CORES["BRANCO"], self.rede.center, 30)
-
+    # def limit_range(self):
+    #     self.pos_player = self.rect
+    #     #delimitar a área de criação da rede de acordo com a posição do player
+    #     # pegar posição do jogador
+    #     # criar retângulo que pegue a largura do player e a altura de metade da tela , a partir da posição do player
+    #     self.pos_rede = pygame.rect(self.pos_player[0], self.pos_player[1], self.pos_player[0]+ 30, self.pos_player[1] - 100)
 
 # todo ---------------------------------------------------------------------------------------------------
 
@@ -212,16 +216,44 @@ rio = Rio()
 # Classes Item (Água e Terra)
 class Item_agua:
     def __init__(self):
-        y_positions = list(range(ALTURA_TELA - 300, ALTURA_TELA - 700, -50)) # Posições y dos objetos do rio
-                    # [ALTURA_TELA - 300, ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650]
-        self.rect = pygame.Rect(random.randint(-100, -50), random.choice(y_positions), TAMANHO_ITEM[0], TAMANHO_ITEM[1])
+        y_positions = list(range(ALTURA_TELA - 350, ALTURA_TELA - 750, -50)) # Posições y dos objetos do rio
+                    # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
+        # Lista de imagens disponíveis para os itens de água
+        self.imagens = [
+                    pygame.image.load('./assets/items/amaciante.png'),
+                    pygame.image.load('./assets/items/garrafa_plastica.png'),
+                    pygame.image.load('./assets/items/lata_de_cerveja.png'),
+                    pygame.image.load('./assets/items/lata_de_sardinha.png'),
+                    pygame.image.load('./assets/items/lata.png'),
+                    pygame.image.load('./assets/items/lixo_azul.png'),
+                    pygame.image.load('./assets/items/lixo_verde.png'),
+                    pygame.image.load('./assets/items/lixo.png'),
+                    pygame.image.load('./assets/items/sapato.png'),
+                ]
+        # Escolher uma imagem aleatória da lista
+        self.imagem = random.choice(self.imagens)
+        # Redimensionar a imagem para o tamanho do item (opcional)
+        self.imagem = pygame.transform.scale(self.imagem, TAMANHO_ITEM)
+        # self.rect = pygame.Rect(random.randint(-100, -50), random.choice(y_positions), TAMANHO_ITEM[0], TAMANHO_ITEM[1])
+        # Criar o retângulo baseado na imagem
+        self.rect = self.imagem.get_rect()
+        self.rect.x = random.randint(-100, -50)
+        self.rect.y = random.choice(y_positions)
+        # Manter a cor se a imagem não carregar
         self.cor = CORES["LARANJA"]
 
     def mover(self):
         self.rect.x += VEL_ITEM
 
+    # def desenhar(self):
+    #     pygame.draw.rect(TELA, self.cor, self.rect)
     def desenhar(self):
-        pygame.draw.rect(TELA, self.cor, self.rect)
+        try:
+            # Tentar desenhar a imagem
+            TELA.blit(self.imagem, self.rect)
+        except:
+            # Fallback para o retângulo colorido se a imagem falhar
+            pygame.draw.rect(TELA, self.cor, self.rect)
 
 class Item_terra:
     def __init__(self):
@@ -229,15 +261,43 @@ class Item_terra:
         x2_margem = 37*(LARGURA_TELA//40) - TAMANHO_ITEM[0] # antes era LARGURA_TELA - TAMANHO_ITEM[0]
         y1_margem = 2*(ALTURA_TELA//3)
         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
-        self.rect = pygame.Rect(random.randint(x1_margem, x2_margem), random.randint(y1_margem, y2_margem), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (x(x1, x2), y(y1, y2), TAMANHO_ITEM, TAMANHO_ITEM)
+# Lista de imagens disponíveis para os itens da terra
+        self.imagens = [
+                    pygame.image.load('./assets/items/amaciante.png'),
+                    pygame.image.load('./assets/items/coco.png'),
+                    pygame.image.load('./assets/items/garrafa_plastica.png'),
+                    pygame.image.load('./assets/items/lata_de_cerveja.png'),
+                    pygame.image.load('./assets/items/lata_de_sardinha.png'),
+                    pygame.image.load('./assets/items/lata.png'),
+                    pygame.image.load('./assets/items/lixo_azul.png'),
+                    pygame.image.load('./assets/items/lixo_verde.png'),
+                    pygame.image.load('./assets/items/lixo.png'),
+                    pygame.image.load('./assets/items/pneu-1.png'),
+                    pygame.image.load('./assets/items/sapato.png'),
+        ]
+        # Escolher uma imagem aleatória da lista
+        self.imagem = random.choice(self.imagens)
+        self.imagem = pygame.transform.scale(self.imagem, TAMANHO_ITEM)
+        # Criar o retângulo baseado na imagem
+        self.rect = self.imagem.get_rect()
+        self.rect.x = random.randint(x1_margem, x2_margem)
+        self.rect.y = random.randint(y1_margem, y2_margem)
+        # self.rect = pygame.Rect(random.randint(x1_margem, x2_margem), random.randint(y1_margem, y2_margem), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (x(x1, x2), y(y1, y2), TAMANHO_ITEM, TAMANHO_ITEM)
+        # Manter a cor se a imagem não carregar
         self.cor = CORES["VERMELHO"]
 
     def mover(self):
         pass
 
+    # def desenhar(self):
+    #     pygame.draw.rect(TELA, self.cor, self.rect)
     def desenhar(self):
-        pygame.draw.rect(TELA, self.cor, self.rect)
-
+        try:
+            # Tentar desenhar a imagem
+            TELA.blit(self.imagem, self.rect)
+        except:
+            # Fallback para o retângulo colorido se a imagem falhar
+            pygame.draw.rect(TELA, self.cor, self.rect)
 
 
 
@@ -633,6 +693,7 @@ while JOGO_RODANDO:
 
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
+        # jogador2.limit_range()
 
 
         # Desenhar elementos do jogo
@@ -680,7 +741,18 @@ while JOGO_RODANDO:
         TELA.blit(TEXTO2, (LARGURA_TELA-largura_texto2-10, 10))
         TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
         
-        # Verificador para validar se o objetivo foi alcançado
+        # # Verificador para validar se o objetivo foi alcançado
+        # if progresso < (OBJETIVO/4):
+        #     TELA_inicio = pygame.image.load('./assets/Background4 1280x720 rio-imundo.png')
+        # if progresso <= (2*OBJETIVO/4):
+        #     TELA_evo1 = pygame.image.load('./assets/Background3 1280x720 rio-meio-sujo.png')
+        #     # pygame.remove(TELA_inicio)
+        # if progresso < (3*OBJETIVO/4):
+        #     TELA_evo2 = pygame.image.load('./assets/Background2 1280x720 rio-pouco-sujo.png')
+        #     # pygame.remove(TELA_evo1)
+        # if progresso > ((3*OBJETIVO/4)+ 1):
+        #     TELA_evo3 = pygame.image.load('./assets/Background1 1280x720 rio-limpo.png')
+        #     # pygame.remove(TELA_evo3)   
         if progresso >= OBJETIVO:
             tela_vitoria()
             menu.estado = "MENU"  # Volta para o menu após a vitória
