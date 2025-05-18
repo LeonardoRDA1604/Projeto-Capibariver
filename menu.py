@@ -24,7 +24,7 @@ class Menu:
         
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets', 'tela_menu_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets/sprites', 'tela_menu_capibariver.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")

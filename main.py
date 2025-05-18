@@ -9,6 +9,9 @@ from menu import Menu
 # Inicialização do Pygame
 pygame.init()
 
+pygame.mixer.init()
+
+
 # Inicialização do Game
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 pygame.display.set_caption(NOME_DO_JOGO)
@@ -24,6 +27,23 @@ FONTE_CONCLUSAO = pygame.font.SysFont(*FONTES["conclusao"])
 FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
+try:
+    # Caminho para o som ambiente
+    caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+
+    # Carrega e toca o som em loop infinito
+    pygame.mixer.music.load(caminho_som)
+    pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
+    pygame.mixer.music.play(-1)  # -1 = loop infinito
+except pygame.error as e:
+    print(f"Erro ao carregar trilha sonora: {e}")
+
+
+
+
+
+
+# pygame.mixer.music.stop() # to stop
 
 
 
@@ -36,79 +56,6 @@ FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# class Jogo:
-#     def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
-#         self.tela = tela
-#         self.largura_tela = tela.get_width()
-#         self.altura_tela = tela.get_height()
-
-#         # Carregar imagem de fundo
-
-#         try:
-#             self.background1 = pygame.image.load(os.path.join('assets', 'Background4 1280x720 rio-imundo.png'))
-#             self.background1 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-#         except:
-#             print("Imagem de fundo não encontrada. Usando cor sólida.")
-#             self.background1 = None
-
-#         try:
-#             self.background2 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-meio-sujo.png'))
-#             self.background2 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-#         except:
-#             print("Imagem de fundo não encontrada. Usando cor sólida.")
-#             self.background2 = None
-
-#         try:
-#             self.background3 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-pouco-sujo.png'))
-#             self.background3 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-#         except:
-#             print("Imagem de fundo não encontrada. Usando cor sólida.")
-#             self.background3 = None
-
-#         try:
-#             self.background4 = pygame.image.load(os.path.join('assets', 'Background1 1280x720 rio-limpo.png'))
-#             self.background4 = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-#         except:
-#             print("Imagem de fundo não encontrada. Usando cor sólida.")
-#             self.background4 = None
-    
-#     def desenhar1(self):                                     # Desenha o menu principal
-#         if self.background1:
-#             self.tela.blit(self.background1, (0, 0))         # Desenha o fundo
-#         else:
-#             pass
-
-#     def desenhar2(self):                                     # Desenha o menu principal
-#         if self.background2:
-#             self.tela.blit(self.background2, (0, 0))         # Desenha o fundo
-#         else:
-#             pass
-    
-#     def desenhar3(self):                                     # Desenha o menu principal
-#         if self.background3:
-#             self.tela.blit(self.background3, (0, 0))         # Desenha o fundo
-#         else:
-#             pass
-
-#     def desenhar4(self):                                     # Desenha o menu principal
-#         if self.background4:
-#             self.tela.blit(self.background4, (0, 0))         # Desenha o fundo
-#         else:
-#             pass
 
 
 
@@ -134,7 +81,7 @@ class Jogo:
         self.backgrounds = []
         for path in self.background_paths:
             try:
-                imagem = pygame.image.load(os.path.join('assets', path)).convert()
+                imagem = pygame.image.load(os.path.join('assets/sprites', path)).convert()
                 imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
                 self.backgrounds.append(imagem)
             except:
@@ -181,13 +128,14 @@ class Jogador:
     def mover(self, teclas, cima, baixo, esquerda, direita):
         if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
             self.rect.y -= VEL_JOGADOR
-        if teclas[baixo] and self.rect.bottom < ALTURA_TELA-int(ALTURA_TELA/20):
+        if teclas[baixo] and self.rect.bottom < ALTURA_TELA-ALTURA_TELA//20:
             self.rect.y += VEL_JOGADOR
-        if teclas[esquerda] and self.rect.left > 0:
+        if teclas[esquerda] and self.rect.left > 5*(LARGURA_TELA//40):
             self.rect.x -= VEL_JOGADOR
-        if teclas[direita] and self.rect.right < LARGURA_TELA:
+        if teclas[direita] and self.rect.right < 37*(LARGURA_TELA//40):
             self.rect.x += VEL_JOGADOR
-        
+
+
     def coletar_item(self):
         # Coletar item diretamente abaixo do jogador 1
         for item in itens_terra:
@@ -207,13 +155,27 @@ class Jogador:
     def desenhar_rede(self):
         if self.rede:
             pygame.draw.circle(TELA, CORES["BRANCO"], self.rede.center, 30)
+    
+    def limit_range(pos_rede , pos_player2):    
+        pos_player2 = jogador2.rect.topleft
+        pos_rede = pygame.rect(pos_player2[0], pos_player2[1] - (ALTURA_TELA//6), pos_player2[0]+ 100, pos_player2[1] - 100)
+    
+    def hitbox_rede():
+        
+        pos_player2 = jogador2.rect.topleft
+        pos_mouse = pygame.mouse.get_pos()
+        pygame.rect(pos_player2[0], pos_player2[1], pos_player2[0], pos_player2[1])
+        Dist_rede_player = abs((pos_mouse[1] - pos_player2[1])**1/2) + abs((pos_player2[0] - pos_mouse[0])**1/2 )
+        print(Dist_rede_player)
+    
+
+
     # def limit_range(self):
     #     self.pos_player = self.rect
     #     #delimitar a área de criação da rede de acordo com a posição do player
     #     # pegar posição do jogador
     #     # criar retângulo que pegue a largura do player e a altura de metade da tela , a partir da posição do player
     #     self.pos_rede = pygame.rect(self.pos_player[0], self.pos_player[1], self.pos_player[0]+ 30, self.pos_player[1] - 100)
-
 # todo ---------------------------------------------------------------------------------------------------
 
 
@@ -305,15 +267,15 @@ class Item_agua:
                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
         # Lista de imagens disponíveis para os itens de água
         self.imagens = [
-                    # pygame.image.load('./assets/items/amaciante.png'),
-                    # pygame.image.load('./assets/items/garrafa_plastica.png'),
-                    pygame.image.load('./assets/items/lata_de_cerveja.png'),
-                    # pygame.image.load('./assets/items/lata_de_sardinha.png'),
-                    pygame.image.load('./assets/items/lata.png'),
-                    # pygame.image.load('./assets/items/lixo_azul.png'),
-                    pygame.image.load('./assets/items/lixo_verde.png'),
-                    # pygame.image.load('./assets/items/lixo.png'),
-                    # pygame.image.load('./assets/items/sapato.png'),
+                    # pygame.image.load('./assets/sprites/items/amaciante.png'),
+                    # pygame.image.load('./assets/sprites/items/garrafa_plastica.png'),
+                    pygame.image.load('./assets/sprites/items/lata_de_cerveja.png'),
+                    # pygame.image.load('./assets/sprites/items/lata_de_sardinha.png'),
+                    pygame.image.load('./assets/sprites/items/lata.png'),
+                    # pygame.image.load('./assets/sprites/items/lixo_azul.png'),
+                    pygame.image.load('./assets/sprites/items/lixo_verde.png'),
+                    # pygame.image.load('./assets/sprites/items/lixo.png'),
+                    # pygame.image.load('./assets/sprites/items/sapato.png'),
                 ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -348,17 +310,17 @@ class Item_terra:
         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
 # Lista de imagens disponíveis para os itens da terra
         self.imagens = [
-                    # pygame.image.load('./assets/items/amaciante.png'),
-                    # pygame.image.load('./assets/items/coco.png'),
-                    # pygame.image.load('./assets/items/garrafa_plastica.png'),
-                    # pygame.image.load('./assets/items/lata_de_sardinha.png'),
-                    # pygame.image.load('./assets/items/lixo_azul.png'),
-                    # pygame.image.load('./assets/items/lixo.png'),
-                    pygame.image.load('./assets/items/lata_de_cerveja.png'),
-                    pygame.image.load('./assets/items/lata.png'),
-                    pygame.image.load('./assets/items/lixo_verde.png'),
-                    pygame.image.load('./assets/items/pneu-1.png'),
-                    # pygame.image.load('./assets/items/sapato.png'),
+                    # pygame.image.load('./assets/sprites/items/amaciante.png'),
+                    # pygame.image.load('./assets/sprites/items/coco.png'),
+                    # pygame.image.load('./assets/sprites/items/garrafa_plastica.png'),
+                    # pygame.image.load('./assets/sprites/items/lata_de_sardinha.png'),
+                    # pygame.image.load('./assets/sprites/items/lixo_azul.png'),
+                    # pygame.image.load('./assets/sprites/items/lixo.png'),
+                    pygame.image.load('./assets/sprites/items/lata_de_cerveja.png'),
+                    pygame.image.load('./assets/sprites/items/lata.png'),
+                    pygame.image.load('./assets/sprites/items/lixo_verde.png'),
+                    pygame.image.load('./assets/sprites/items/pneu-1.png'),
+                    # pygame.image.load('./assets/sprites/items/sapato.png'),
         ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -408,7 +370,7 @@ class Conclusao:
 
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets', 'tela_conclusao_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets/sprites', 'tela_conclusao_capibariver.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")
@@ -587,6 +549,7 @@ def tela_vitoria():
 
 
 
+# todo ---------------------------------------------------------------------------------------------------
 
 
 def circle_colide(objeto:list, circulo:list, raio):
@@ -599,6 +562,7 @@ def circle_colide(objeto:list, circulo:list, raio):
     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
     return colide
 
+# todo ---------------------------------------------------------------------------------------------------
 
 
 
@@ -760,26 +724,29 @@ while JOGO_RODANDO:
 
 
 
+# todo ---------------------------------------------------------------------------------------------------
+
+
+        # Dist_rede_player = abs((pos_mouse[1] - pos_player2[1])**1/2) + abs((pos_player2[0] - pos_mouse[0])**1/2 )
 
 
 
 
 
 
+        # pos_jogador2 = jogador2.get_pos()
+        # print(pos_player2)
 
+        # circle = [jogador2.desenhar_rede()]
 
-
-
-
-
-
-
+        
+        # if pos_mouse[1] <= ALTURA_TELA//2 and pos_player2[1] >= 580 :
+        #     jogador2.itens_coletados -= 1
+# todo ---------------------------------------------------------------------------------------------------
 
 
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
-        # jogador2.limit_range()
-
 
         # Desenhar elementos do jogo
         rio.desenhar()
@@ -809,7 +776,6 @@ while JOGO_RODANDO:
         jogador1.desenhar()
         jogador2.desenhar()
 
-        
         # Desenhar rede
         try:
             pygame.draw.circle(TELA, CORES["BRANCO"], (rede_circle[0], rede_circle[1]), 50)
@@ -838,17 +804,6 @@ while JOGO_RODANDO:
         TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
         
         # # Verificador para validar se o objetivo foi alcançado
-        # if progresso < (OBJETIVO/4):
-        #     TELA_inicio = pygame.image.load('./assets/Background4 1280x720 rio-imundo.png')
-        # if progresso <= (2*OBJETIVO/4):
-        #     TELA_evo1 = pygame.image.load('./assets/Background3 1280x720 rio-meio-sujo.png')
-        #     # pygame.remove(TELA_inicio)
-        # if progresso < (3*OBJETIVO/4):
-        #     TELA_evo2 = pygame.image.load('./assets/Background2 1280x720 rio-pouco-sujo.png')
-        #     # pygame.remove(TELA_evo1)
-        # if progresso > ((3*OBJETIVO/4)+ 1):
-        #     TELA_evo3 = pygame.image.load('./assets/Background1 1280x720 rio-limpo.png')
-        #     # pygame.remove(TELA_evo3)   
         if progresso >= OBJETIVO:
             tela_vitoria()
             menu.estado = "MENU"  # Volta para o menu após a vitória

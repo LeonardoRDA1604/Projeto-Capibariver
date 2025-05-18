@@ -3,22 +3,14 @@
 
 # Arrumar logica de movimento e ação do jogador 2, range para jogar a rede para o movimento fazer sentido
 ********************************
-- gabriel e heitor
+- gabriel e heitor / brenno
 
-# arrumar backgrounds com animações do rio
-- leo
+
 
 # arrumar animações
-- leo
+- leo / brenno
 *
 
-# arrumar trilha sonora
-- heitor
-*
-
-# arrumar efeitos sonoros
-- heitor
-*
 
 # tela de conclusão
 - brenda
@@ -47,6 +39,7 @@ cortados
 - ecobarco
 - animacoes dos animais
 - tela responsiva
+- arrumar efeitos sonoros
 
 
 
@@ -60,4 +53,6 @@ cortados
 Concluidos
 
 
-# Objetos (leo) --------------------------- Concluido
+# Objetos (leo) ------------------------------------------------------------ Concluido
+# arrumar backgrounds com animações do rio (leo) --------------------------- Concluido
+# arrumar trilha sonora (leo) ---------------------------------------------- Concluído
