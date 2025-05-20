@@ -267,15 +267,22 @@ class Item_agua:
                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
         # Lista de imagens disponíveis para os itens de água
         self.imagens = [
-                    # pygame.image.load('./assets/sprites/items/amaciante.png'),
-                    # pygame.image.load('./assets/sprites/items/garrafa_plastica.png'),
-                    pygame.image.load('./assets/sprites/items/lata_de_cerveja.png'),
-                    # pygame.image.load('./assets/sprites/items/lata_de_sardinha.png'),
-                    pygame.image.load('./assets/sprites/items/lata.png'),
-                    # pygame.image.load('./assets/sprites/items/lixo_azul.png'),
-                    pygame.image.load('./assets/sprites/items/lixo_verde.png'),
-                    # pygame.image.load('./assets/sprites/items/lixo.png'),
-                    # pygame.image.load('./assets/sprites/items/sapato.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
+########################### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
                 ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -310,17 +317,24 @@ class Item_terra:
         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
 # Lista de imagens disponíveis para os itens da terra
         self.imagens = [
-                    # pygame.image.load('./assets/sprites/items/amaciante.png'),
-                    # pygame.image.load('./assets/sprites/items/coco.png'),
-                    # pygame.image.load('./assets/sprites/items/garrafa_plastica.png'),
-                    # pygame.image.load('./assets/sprites/items/lata_de_sardinha.png'),
-                    # pygame.image.load('./assets/sprites/items/lixo_azul.png'),
-                    # pygame.image.load('./assets/sprites/items/lixo.png'),
-                    pygame.image.load('./assets/sprites/items/lata_de_cerveja.png'),
-                    pygame.image.load('./assets/sprites/items/lata.png'),
-                    pygame.image.load('./assets/sprites/items/lixo_verde.png'),
-                    pygame.image.load('./assets/sprites/items/pneu-1.png'),
-                    # pygame.image.load('./assets/sprites/items/sapato.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto5_pneu.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
+############################ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
+                    pygame.image.load('./assets/sprites/items/Objeto18_coco.png'),
         ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
