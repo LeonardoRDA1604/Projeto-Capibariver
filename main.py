@@ -4,17 +4,17 @@ import os
 import sys
 from configs import *
 from menu import Menu
-from players import Jogador
+from entities.players import Jogador
 # from sprite_manager import SpriteSheet
-from item import *
+from entities.items import *
 
 # Inicialização do Pygame
 pygame.init()
 
+# Inicialização da Música no Pygame
 pygame.mixer.init()
 
-
-# Inicialização do Game
+# Inicialização da tela do Game
 pygame.display.set_caption(NOME_DO_JOGO)
 
 # Inicializar o menu
@@ -118,7 +118,7 @@ class Jogo:
         # Nomes das pastas dos fundos animados
         self.background_folders = [
             'background4_rio-imundo',  # rio imundo
-            'background3-rio-meio-sujo',  # meio sujo
+            'background3_rio-meio-sujo',  # meio sujo
             'background2_rio-pouco-sujo',  # pouco sujo
             'background1_rio-limpo'   # limpo
         ]
@@ -140,7 +140,7 @@ class Jogo:
             self.backgrounds.append(frames)
 
         self.frame_index = 0
-        self.frame_delay = 150  # milissegundos entre frames
+        self.frame_delay = 500 # milissegundos entre frames #!padrão 150ms
         self.ultimo_update = pygame.time.get_ticks()
 
     def atualizar_frame(self):
