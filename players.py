@@ -19,7 +19,7 @@ class Jogador:
         self.animation_speed = 0.10  # Velocidade da animação (quanto menor, mais rápido)
         self.animation_timer = 0
         self.is_moving = False
-        
+                
         # Carregar o spritesheet
         if spritesheet_path and os.path.exists(spritesheet_path):
             self.spritesheet = SpriteSheet(spritesheet_path)
@@ -87,7 +87,9 @@ class Jogador:
         self.is_moving = False  # Assume que o jogador não está se movendo
         moveu_x = False
         moveu_y = False
-        
+            # Prioridade de movimento:
+                # 1. Direita/Esquerda
+                # 2. Cima/Baixo
         # Verifica movimentos e atualiza direção
         if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
             self.rect.y -= VEL_JOGADOR
@@ -95,24 +97,24 @@ class Jogador:
             self.is_moving = True
             moveu_y = True
             
-        if teclas[baixo] and self.rect.bottom < ALTURA_TELA-ALTURA_TELA//20: #!!!!!!!!!!!!!
+        elif teclas[baixo] and self.rect.bottom < ALTURA_TELA-ALTURA_TELA//20:
             self.rect.y += VEL_JOGADOR
             self.direction = "down"
             self.is_moving = True
             moveu_y = True
             
-        if teclas[esquerda] and self.rect.left > 5*(LARGURA_TELA//40): #!!!!!!!!!!!!!
+        elif teclas[esquerda] and self.rect.left > 5*(LARGURA_TELA//40):
             self.rect.x -= VEL_JOGADOR
             self.direction = "left"
             self.is_moving = True
             moveu_x = True
             
-        if teclas[direita] and self.rect.right < 37*(LARGURA_TELA//40): #!!!!!!!!!!!!!
+        elif teclas[direita] and self.rect.right < 37*(LARGURA_TELA//40):
             self.rect.x += VEL_JOGADOR
             self.direction = "right"
             self.is_moving = True
             moveu_x = True
-            
+
         # Evitar que a direção mude quando se pressiona teclas opostas simultaneamente
         if moveu_x and moveu_y:
             # Priorizar o último movimento
