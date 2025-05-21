@@ -64,37 +64,102 @@ except pygame.error as e:
 
 
 
+# class Jogo:
+#     def __init__(self, tela):
+#         self.tela = tela
+#         self.largura_tela = tela.get_width()
+#         self.altura_tela = tela.get_height()
+
+#         # Lista com os caminhos dos fundos
+#         self.background_paths = [
+#             'Background4 1280x720 rio-imundo.png',
+#             'Background3 1280x720 rio-meio-sujo.png',
+#             'Background2 1280x720 rio-pouco-sujo.png',
+#             'Background1 1280x720 rio-limpo.png'
+#         ]
+
+#         # Carrega todos os fundos redimensionados
+#         self.backgrounds = []
+#         for path in self.background_paths:
+#             try:
+#                 imagem = pygame.image.load(os.path.join('assets/sprites/backgrounds', path)).convert()
+#                 imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
+#                 self.backgrounds.append(imagem)
+#             except:
+#                 print(f"Imagem '{path}' não encontrada. Usando None.")
+#                 self.backgrounds.append(None)
+
+#     def desenhar_fundo(self, nivel):  # Desenha o fundo correspondente ao nível (0 a 3).
+#         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
+#             self.tela.blit(self.backgrounds[nivel], (0, 0))
+#         else:
+#             self.tela.fill((0, 0, 0))  # fallback: fundo preto
+
+
+#     def desenhar_fundo_por_progresso(self, progresso, objetivo):
+#         if progresso <= objetivo / 4:
+#             nivel = 0
+#         elif progresso <= objetivo / 2:
+#             nivel = 1
+#         elif progresso <= (3 * objetivo) / 4:
+#             nivel = 2
+#         else:
+#             nivel = 3
+
+#         self.desenhar_fundo(nivel)
+
+
 class Jogo:
     def __init__(self, tela):
         self.tela = tela
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
 
-        # Lista com os caminhos dos fundos
-        self.background_paths = [
-            'Background4 1280x720 rio-imundo.png',
-            'Background3 1280x720 rio-meio-sujo.png',
-            'Background2 1280x720 rio-pouco-sujo.png',
-            'Background1 1280x720 rio-limpo.png'
+        # Nomes das pastas dos fundos animados
+        self.background_folders = [
+            'background4_rio-imundo',  # rio imundo
+            'background3-rio-meio-sujo',  # meio sujo
+            'background2_rio-pouco-sujo',  # pouco sujo
+            'background1_rio-limpo'   # limpo
         ]
 
-        # Carrega todos os fundos redimensionados
+        # Carrega os frames animados de cada fundo
         self.backgrounds = []
-        for path in self.background_paths:
+        for folder in self.background_folders:
+            frames = []
+            folder_path = os.path.join('assets/sprites/backgrounds', folder)
             try:
-                imagem = pygame.image.load(os.path.join('assets/sprites/backgrounds', path)).convert()
-                imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
-                self.backgrounds.append(imagem)
-            except:
-                print(f"Imagem '{path}' não encontrada. Usando None.")
-                self.backgrounds.append(None)
+                for file in sorted(os.listdir(folder_path)):
+                    if file.endswith(".png") or file.endswith(".jpg"):
+                        img_path = os.path.join(folder_path, file)
+                        imagem = pygame.image.load(img_path).convert()
+                        imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
+                        frames.append(imagem)
+            except Exception as e:
+                print(f"Erro ao carregar {folder}: {e}")
+            self.backgrounds.append(frames)
 
-    def desenhar_fundo(self, nivel):  # Desenha o fundo correspondente ao nível (0 a 3).
+        self.frame_index = 0
+        self.frame_delay = 150  # milissegundos entre frames
+        self.ultimo_update = pygame.time.get_ticks()
+
+    def atualizar_frame(self):
+        agora = pygame.time.get_ticks()
+        if agora - self.ultimo_update > self.frame_delay:
+            self.frame_index = (self.frame_index + 1) % self.get_max_frames()
+            self.ultimo_update = agora
+
+    def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados.
+        return max(len(frames) for frames in self.backgrounds if frames)
+
+    def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível.
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
-            self.tela.blit(self.backgrounds[nivel], (0, 0))
+            frames = self.backgrounds[nivel]
+            if frames:
+                frame = frames[self.frame_index % len(frames)]
+                self.tela.blit(frame, (0, 0))
         else:
-            self.tela.fill((0, 0, 0))  # fallback: fundo preto
-
+            self.tela.fill((0, 0, 0))
 
     def desenhar_fundo_por_progresso(self, progresso, objetivo):
         if progresso <= objetivo / 4:
@@ -106,9 +171,53 @@ class Jogo:
         else:
             nivel = 3
 
+        self.atualizar_frame()
         self.desenhar_fundo(nivel)
 
+
+
 jogo = Jogo(TELA)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -760,14 +869,14 @@ while JOGO_RODANDO:
         # Desenhar elementos do jogo
         rio.desenhar()
         # desenhar o fundo do jogo conforme o nível de limpeza 
-        if progresso >= 0:
-            nivel = 0  # rio imundo
-        elif progresso <= OBJETIVO / 2:
-            nivel = 1  # meio sujo
-        elif progresso <= 2*(OBJETIVO/4):
-            nivel = 2  # pouco sujo
-        elif progresso > 3*(OBJETIVO/4):
-            nivel = 3  # rio limpo
+        # if progresso >= 0:
+        #     nivel = 0  # rio imundo
+        # elif progresso <= OBJETIVO / 2:
+        #     nivel = 1  # meio sujo
+        # elif progresso <= 2*(OBJETIVO/4):
+        #     nivel = 2  # pouco sujo
+        # elif progresso > 3*(OBJETIVO/4):
+        #     nivel = 3  # rio limpo
         # desenhando o background do jogo
         jogo.desenhar_fundo_por_progresso(progresso, OBJETIVO)
         
