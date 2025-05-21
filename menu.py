@@ -15,8 +15,9 @@ class Menu:
         self.estado = "MENU"  # Estado inicial
         
         # Fontes
-        self.fonte_titulo = pygame.font.SysFont('Arial', 48, bold=True)
-        self.fonte_botao = pygame.font.SysFont('Arial', 30)
+        self.fonte_titulo = pygame.font.SysFont('Arial', 56, bold=True)
+        self.fonte_botao = pygame.font.SysFont('Arial', 32, bold=True)
+        self.fonte_texto = pygame.font.SysFont('Arial', 24)
         
         # Configurações de áudio
         self.som_ativado = True
@@ -24,7 +25,7 @@ class Menu:
         
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets/sprites', 'tela_menu_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_menu_capibariver.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")
@@ -33,6 +34,24 @@ class Menu:
         # Botões
         self.botoes = []
         self.criar_botoes()
+
+
+    def texto_com_sombra(self, texto, fonte, cor, cor_sombra=(30, 30, 30), deslocamento=2):
+        # Renderiza a sombra
+        superficie_sombra = fonte.render(texto, True, cor_sombra)
+        # Renderiza o texto principal
+        superficie_texto = fonte.render(texto, True, cor)
+        # Cria uma superfície que comporta texto e sombra
+        superficie_final = pygame.Surface((superficie_texto.get_width() + deslocamento, 
+                                          superficie_texto.get_height() + deslocamento), 
+                                          pygame.SRCALPHA)
+        # Posiciona sombra e texto
+        superficie_final.blit(superficie_sombra, (deslocamento, deslocamento))
+        superficie_final.blit(superficie_texto, (0, 0))
+        return superficie_final
+
+
+
 
     def criar_botoes(self): #Cria os botões do menu principal
         opcoes = ["INICIAR", "GUIA", "CRÉDITOS", "OPÇÕES", "SAIR"]
@@ -78,7 +97,7 @@ class Menu:
         # titulo = self.fonte_titulo.render("Capibariver", True, CORES["BRANCO"])                # Desenha o título
         # self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
 # ----------------------------------------------------------------------------------------------------------
-        
+
         # Desenha os botões
         pos_mouse = pygame.mouse.get_pos()
         for botao in self.botoes:
@@ -101,22 +120,28 @@ class Menu:
         else:
             self.tela.fill(CORES["AZUL"])
         
-        # Desenha o título
-        titulo = self.fonte_titulo.render("OPÇÕES", True, CORES["BRANCO"])
+        # Desenha o título com sombra
+        titulo = self.texto_com_sombra("OPÇÕES", self.fonte_titulo, CORES["BRANCO"], CORES["PRETO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
-        
-        # Opção de Som
-        som_texto = self.fonte_botao.render("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
-                                            True, CORES["BRANCO"])
+
+        # Criando um painel semi-transparente para os textos
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        painel = pygame.Surface((400, 200), pygame.SRCALPHA)
+        painel.fill((0, 0, 0, 150))  # Preto semi-transparente
+        self.tela.blit(painel, (self.largura_tela // 2 - 200, 230))
+
+        # Opção de Som com sombra no texto
+        som_texto = self.texto_com_sombra("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
+                                        self.fonte_botao, CORES["BRANCO"])
         self.tela.blit(som_texto, (self.largura_tela // 2 - som_texto.get_width() // 2, 250))
         
-        # Opção de Efeitos
-        efeitos_texto = self.fonte_botao.render("Efeitos (tecla 2): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
-                                               True, CORES["BRANCO"])
+        # Opção de Efeitos com sombra
+        efeitos_texto = self.texto_com_sombra("Efeitos (tecla 2): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
+                                            self.fonte_botao, CORES["BRANCO"])
         self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
         
         # Botão voltar
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 450, 200, 50)
         pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         

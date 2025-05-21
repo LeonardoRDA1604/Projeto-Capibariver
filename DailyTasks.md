@@ -7,11 +7,6 @@
 
 
 
-# arrumar animações
-- leo / brenno
-*
-
-
 # tela de conclusão
 - brenda
 
@@ -19,7 +14,6 @@
 ------------------------------------------------------------------------
 parte 2
 
-# modularizar o codigo
 
 # comentar
 
@@ -53,6 +47,12 @@ cortados
 Concluidos
 
 
-# Objetos (leo) ------------------------------------------------------------ Concluido
-# arrumar backgrounds com animações do rio (leo) --------------------------- Concluido
-# arrumar trilha sonora (leo) ---------------------------------------------- Concluído
+# Objetos ----------------------------------------------------------------------------------------------------------- Concluido    -    (Leo)
+# arrumar backgrounds com animações do rio -------------------------------------------------------------------------- Concluido    -    (Leo)
+# arrumar trilha sonora --------------------------------------------------------------------------------------------- Concluído    -    (Leo)
+# arrumar posição dos players 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra) -------------- Concluído    -    (Leo)
+# colocar sprites dos lixos ----------------------------------------------------------------------------------------- Concluído    -    (Leo)
+# arrumar animações ------------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
+
+
+# modularizar o codigo ---------------------------------------------------------------------------------------------- Em Progresso -    (Leo)

@@ -2,8 +2,9 @@ import pygame
 
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
+TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 30
+FPS = 30 #! os frames do personagem tão organizados para 6 fps
 
 
 FONTES = {
@@ -36,11 +37,11 @@ CORES = {
 }
 
 # === Velocidade do jogador e dos itens ===
-VEL_JOGADOR = 10
+VEL_JOGADOR = 5
 VEL_ITEM = 3
 
 # === Tamanho do jogador e do itens ===
-TAMANHO_JOGADOR = 30, 30
+TAMANHO_JOGADOR = 64, 64
 TAMANHO_ITEM = 40, 40
 
 # TAMANHOS = { 
@@ -68,3 +69,18 @@ ALTURA_BARRA = 30
 SOM_ATIVADO = True
 VOLUME_GERAL = 0.5
 
+
+
+
+
+
+
+# Variáveis globais
+jogador1 = None
+jogador2 = None
+itens_agua = []
+itens_terra = []
+CRIAR_ITEM_EVENTO = None
+CRIAR_ITEM_EVENTO_2 = None
+progresso = 0
+rede_circle = [999, 999]
