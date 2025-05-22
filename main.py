@@ -100,10 +100,15 @@ class Jogo:
         # Carrega os frames animados das margens
         self.margens = self.carregar_frames_animados(self.margem_folders)
 
-        # Controle de animação
-        self.frame_index = 0
-        self.frame_delay = 1  # milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou multiplos de 2
-        self.ultimo_update = pygame.time.get_ticks()
+        # Controle de animação do rio (não afetado pelo scroll)
+        self.rio_frame_index = 0
+        self.rio_frame_delay = 1  # milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou multiplos de 2
+        self.ultimo_update_rio = pygame.time.get_ticks()
+
+        # Controle de animação da margem (independente do rio)
+        self.margem_frame_index = 0
+        self.margem_frame_delay = 1000  # milissegundos entre frames #!padrão 150ms
+        self.ultimo_update_margem = pygame.time.get_ticks()
 
         # Controle de scroll (apenas para backgrounds, não afeta animação)
         self.scroll_x = 0
@@ -126,11 +131,21 @@ class Jogo:
             animacoes.append(frames)
         return animacoes
 
-    def atualizar_frame(self):
+    def atualizar_frame_rio(self):
+        # Atualiza o frame da animação do rio (independente do scroll)
         agora = pygame.time.get_ticks()
-        if agora - self.ultimo_update > self.frame_delay:
-            self.frame_index = (self.frame_index + 1) % self.get_max_frames()
-            self.ultimo_update = agora
+        if agora - self.ultimo_update_rio > self.rio_frame_delay:
+            max_frames_rio = max((len(f) for f in self.backgrounds if f), default=1)
+            self.rio_frame_index = (self.rio_frame_index + 1) % max_frames_rio
+            self.ultimo_update_rio = agora
+
+    def atualizar_frame_margem(self):
+        # Atualiza o frame da animação da margem (independente do rio)
+        agora = pygame.time.get_ticks()
+        if agora - self.ultimo_update_margem > self.margem_frame_delay:
+            max_frames_margem = max((len(f) for f in self.margens if f), default=1)
+            self.margem_frame_index = (self.margem_frame_index + 1) % max_frames_margem
+            self.ultimo_update_margem = agora
 
     def atualizar_scroll(self):
         # Atualiza a posição do scroll (independente da animação)
@@ -146,7 +161,7 @@ class Jogo:
     def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível.
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
             frames = self.backgrounds[nivel]
-            frame_atual = frames[self.frame_index % len(frames)]
+            frame_atual = frames[self.rio_frame_index % len(frames)]
             
             # Desenha o background com scroll (duas vezes para criar loop infinito)
             self.tela.blit(frame_atual, (self.scroll_x, 0))
@@ -154,10 +169,12 @@ class Jogo:
         else:
             self.tela.fill((0, 0, 0))
 
+
         # Desenha margem por cima (fixa, usa sempre o índice 0 para aplicar em todos os backgrounds.)
+        # A margem NÃO tem scroll, apenas animação
         if self.margens and self.margens[0]:
             frames_margem = self.margens[0]
-            frame_margem = frames_margem[self.frame_index % len(frames_margem)]
+            frame_margem = frames_margem[self.margem_frame_index % len(frames_margem)]
             self.tela.blit(frame_margem, (0, 0))
 
     def desenhar_fundo_por_progresso(self, progresso, objetivo):
@@ -171,7 +188,8 @@ class Jogo:
             nivel = 3
 
         # Atualiza animação e scroll independentemente
-        self.atualizar_frame()
+        self.atualizar_frame_rio()
+        self.atualizar_frame_margem()
         self.atualizar_scroll()
         self.desenhar_fundo(nivel)
 
