@@ -73,6 +73,7 @@ FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
 
+# ???????????????????????????????????????????????????????????????????????????????????????????????????????
 
 class Jogo:
     def __init__(self, tela):
@@ -104,6 +105,10 @@ class Jogo:
         self.frame_delay = 1  # milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou multiplos de 2
         self.ultimo_update = pygame.time.get_ticks()
 
+        # Controle de scroll (apenas para backgrounds, não afeta animação)
+        self.scroll_x = 0
+        self.scroll_speed = VEL_ITEM # velocidade do scroll (pixels por frame) #! +1 + VEL_ITEM  
+
     def carregar_frames_animados(self, lista_de_pastas):
         animacoes = []
         for folder in lista_de_pastas:
@@ -127,6 +132,12 @@ class Jogo:
             self.frame_index = (self.frame_index + 1) % self.get_max_frames()
             self.ultimo_update = agora
 
+    def atualizar_scroll(self):
+        # Atualiza a posição do scroll (independente da animação)
+        self.scroll_x += self.scroll_speed
+        if self.scroll_x >= self.largura_tela:
+            self.scroll_x = 0
+
     def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados. (backgrounds e margens)
         max_background = max((len(f) for f in self.backgrounds if f), default=1) # backgrounds
         max_margem = max((len(f) for f in self.margens if f), default=1) # margens
@@ -135,8 +146,11 @@ class Jogo:
     def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível.
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
             frames = self.backgrounds[nivel]
-            frame = frames[self.frame_index % len(frames)]
-            self.tela.blit(frame, (0, 0))
+            frame_atual = frames[self.frame_index % len(frames)]
+            
+            # Desenha o background com scroll (duas vezes para criar loop infinito)
+            self.tela.blit(frame_atual, (self.scroll_x, 0))
+            self.tela.blit(frame_atual, (self.scroll_x - self.largura_tela, 0))
         else:
             self.tela.fill((0, 0, 0))
 
@@ -156,12 +170,14 @@ class Jogo:
         else:
             nivel = 3
 
+        # Atualiza animação e scroll independentemente
         self.atualizar_frame()
+        self.atualizar_scroll()
         self.desenhar_fundo(nivel)
 
 
 
-
+# ???????????????????????????????????????????????????????????????????????????????????????????????????????
 
 
 
