@@ -28,16 +28,16 @@ FONTE_CONCLUSAO = pygame.font.SysFont(*FONTES["conclusao"])
 FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
-try:
-    # Caminho para o som ambiente
-    caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+# try:
+#     # Caminho para o som ambiente
+#     caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
 
-    # Carrega e toca o som em loop infinito
-    pygame.mixer.music.load(caminho_som)
-    pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
-    pygame.mixer.music.play(-1)  # -1 = loop infinito
-except pygame.error as e:
-    print(f"Erro ao carregar trilha sonora: {e}")
+#     # Carrega e toca o som em loop infinito
+#     pygame.mixer.music.load(caminho_som)
+#     pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
+#     pygame.mixer.music.play(-1)  # -1 = loop infinito
+# except pygame.error as e:
+#     print(f"Erro ao carregar trilha sonora: {e}")
 
 
 
@@ -64,49 +64,14 @@ except pygame.error as e:
 
 
 
-# class Jogo:
-#     def __init__(self, tela):
-#         self.tela = tela
-#         self.largura_tela = tela.get_width()
-#         self.altura_tela = tela.get_height()
-
-#         # Lista com os caminhos dos fundos
-#         self.background_paths = [
-#             'Background4 1280x720 rio-imundo.png',
-#             'Background3 1280x720 rio-meio-sujo.png',
-#             'Background2 1280x720 rio-pouco-sujo.png',
-#             'Background1 1280x720 rio-limpo.png'
-#         ]
-
-#         # Carrega todos os fundos redimensionados
-#         self.backgrounds = []
-#         for path in self.background_paths:
-#             try:
-#                 imagem = pygame.image.load(os.path.join('assets/sprites/backgrounds', path)).convert()
-#                 imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
-#                 self.backgrounds.append(imagem)
-#             except:
-#                 print(f"Imagem '{path}' não encontrada. Usando None.")
-#                 self.backgrounds.append(None)
-
-#     def desenhar_fundo(self, nivel):  # Desenha o fundo correspondente ao nível (0 a 3).
-#         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
-#             self.tela.blit(self.backgrounds[nivel], (0, 0))
-#         else:
-#             self.tela.fill((0, 0, 0))  # fallback: fundo preto
 
 
-#     def desenhar_fundo_por_progresso(self, progresso, objetivo):
-#         if progresso <= objetivo / 4:
-#             nivel = 0
-#         elif progresso <= objetivo / 2:
-#             nivel = 1
-#         elif progresso <= (3 * objetivo) / 4:
-#             nivel = 2
-#         else:
-#             nivel = 3
 
-#         self.desenhar_fundo(nivel)
+
+
+
+
+
 
 
 class Jogo:
@@ -115,33 +80,46 @@ class Jogo:
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
 
-        # Nomes das pastas dos fundos animados
+        # Nomes das pastas com frames animados de cada background do rio
         self.background_folders = [
-            'background4_rio-imundo',  # rio imundo
-            'background3_rio-meio-sujo',  # meio sujo
-            'background2_rio-pouco-sujo',  # pouco sujo
-            'background1_rio-limpo'   # limpo
+            'background4_rio-imundo',        # rio imundo
+            'background3_rio-muito-sujo',    # rio muito sujo
+            'background2_rio-pouco-sujo',    # rio pouco sujo
+            'background1_rio-limpo'          # rio limpo
         ]
 
-        # Carrega os frames animados de cada fundo
-        self.backgrounds = []
-        for folder in self.background_folders:
+        # Nomes das pastas com frames animados da margem do rio
+        self.margem_folders = [
+            'background5_margem-do-rio-fixa',
+        ]
+
+        # Carrega os frames animados dos backgrounds
+        self.backgrounds = self.carregar_frames_animados(self.background_folders)
+
+        # Carrega os frames animados das margens
+        self.margens = self.carregar_frames_animados(self.margem_folders)
+
+        # Controle de animação
+        self.frame_index = 0
+        self.frame_delay = 1  # milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou multiplos de 2
+        self.ultimo_update = pygame.time.get_ticks()
+
+    def carregar_frames_animados(self, lista_de_pastas):
+        animacoes = []
+        for folder in lista_de_pastas:
             frames = []
             folder_path = os.path.join('assets/sprites/backgrounds', folder)
             try:
                 for file in sorted(os.listdir(folder_path)):
                     if file.endswith(".png") or file.endswith(".jpg"):
                         img_path = os.path.join(folder_path, file)
-                        imagem = pygame.image.load(img_path).convert()
+                        imagem = pygame.image.load(img_path).convert_alpha()
                         imagem = pygame.transform.scale(imagem, (self.largura_tela, self.altura_tela))
                         frames.append(imagem)
             except Exception as e:
                 print(f"Erro ao carregar {folder}: {e}")
-            self.backgrounds.append(frames)
-
-        self.frame_index = 0
-        self.frame_delay = 500 # milissegundos entre frames #!padrão 150ms
-        self.ultimo_update = pygame.time.get_ticks()
+            animacoes.append(frames)
+        return animacoes
 
     def atualizar_frame(self):
         agora = pygame.time.get_ticks()
@@ -149,17 +127,24 @@ class Jogo:
             self.frame_index = (self.frame_index + 1) % self.get_max_frames()
             self.ultimo_update = agora
 
-    def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados.
-        return max(len(frames) for frames in self.backgrounds if frames)
+    def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados. (backgrounds e margens)
+        max_background = max((len(f) for f in self.backgrounds if f), default=1) # backgrounds
+        max_margem = max((len(f) for f in self.margens if f), default=1) # margens
+        return max(max_background, max_margem)
 
     def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível.
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
             frames = self.backgrounds[nivel]
-            if frames:
-                frame = frames[self.frame_index % len(frames)]
-                self.tela.blit(frame, (0, 0))
+            frame = frames[self.frame_index % len(frames)]
+            self.tela.blit(frame, (0, 0))
         else:
             self.tela.fill((0, 0, 0))
+
+        # Desenha margem por cima (fixa, usa sempre o índice 0 para aplicar em todos os backgrounds.)
+        if self.margens and self.margens[0]:
+            frames_margem = self.margens[0]
+            frame_margem = frames_margem[self.frame_index % len(frames_margem)]
+            self.tela.blit(frame_margem, (0, 0))
 
     def desenhar_fundo_por_progresso(self, progresso, objetivo):
         if progresso <= objetivo / 4:
@@ -173,6 +158,27 @@ class Jogo:
 
         self.atualizar_frame()
         self.desenhar_fundo(nivel)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -872,9 +878,9 @@ while JOGO_RODANDO:
         # if progresso >= 0:
         #     nivel = 0  # rio imundo
         # elif progresso <= OBJETIVO / 2:
-        #     nivel = 1  # meio sujo
+        #     nivel = 1  # rio muito sujo
         # elif progresso <= 2*(OBJETIVO/4):
-        #     nivel = 2  # pouco sujo
+        #     nivel = 2  # rio pouco sujo
         # elif progresso > 3*(OBJETIVO/4):
         #     nivel = 3  # rio limpo
         # desenhando o background do jogo

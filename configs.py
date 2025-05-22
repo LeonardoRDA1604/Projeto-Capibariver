@@ -4,7 +4,7 @@ import pygame
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 30 #! os frames do personagem tão organizados para 6 fps
+FPS = 50 #! os frames do personagem tão organizados para 6 fps
 
 
 FONTES = {
@@ -38,7 +38,7 @@ CORES = {
 
 # === Velocidade do jogador e dos itens ===
 VEL_JOGADOR = 5
-VEL_ITEM = 3
+VEL_ITEM = 2
 
 # === Tamanho do jogador e do itens ===
 TAMANHO_JOGADOR = 64, 64
@@ -51,7 +51,7 @@ TAMANHO_ITEM = 40, 40
 
 
 # === Objetivo do jogo ===                 # 200 objetivo ideal
-OBJETIVO = 200
+OBJETIVO = 50
 
 
 
