@@ -28,16 +28,16 @@ FONTE_CONCLUSAO = pygame.font.SysFont(*FONTES["conclusao"])
 FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
-# try:
-#     # Caminho para o som ambiente
-#     caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+try:
+    # Caminho para o som ambiente
+    caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
 
-#     # Carrega e toca o som em loop infinito
-#     pygame.mixer.music.load(caminho_som)
-#     pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
-#     pygame.mixer.music.play(-1)  # -1 = loop infinito
-# except pygame.error as e:
-#     print(f"Erro ao carregar trilha sonora: {e}")
+    # Carrega e toca o som em loop infinito
+    pygame.mixer.music.load(caminho_som)
+    pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
+    pygame.mixer.music.play(-1)  # -1 = loop infinito
+except pygame.error as e:
+    print(f"Erro ao carregar trilha sonora: {e}")
 
 
 
@@ -717,6 +717,15 @@ def tela_vitoria():
 
 
 
+# def circle_colide(objeto:list, circulo:list, raio):
+#     # Definir a colisão com a esquerda e direita do circulo
+#     coli_x_esquerda = objeto[0] >= circulo[0] - raio
+#     coli_x_direita = objeto[0] <= circulo[0] + raio
+#     # Se o objeto está entre circulo -30 e circulo + 30
+#     coli_y_topo = objeto[1] >= circulo[1] - raio
+#     coli_y_baixo = objeto[1] <= circulo[1] + raio
+#     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
+#     return colide
 
 
 
@@ -734,7 +743,6 @@ def circle_colide(objeto:list, circulo:list, raio):
     return colide
 
 # todo ---------------------------------------------------------------------------------------------------
-
 
 
 
@@ -826,10 +834,10 @@ while JOGO_RODANDO:
                 for _ in range(8): # começa em 8 e vai diminuindo por mapa de 2 em 2, até 2?
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(1): # começa em 4 e vai diminuindo por mapa até 1
+                for _ in range(4): # começa em 4 e vai diminuindo por mapa até 1
                     itens_terra.append(Item_terra())
 # todo ---------------------------------------------------------------------------------------------------
-            # Colisão e coleta do jogador 2
+            # Colisão e coleta do jogador 2 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! muda
             if evento.type == MOUSEBUTTONDOWN and evento.button == 1:  # Ação com botão esquerdo do mouse
                 # jogador2.lançar_rede()
                 # print(f'{jogador2.rede_rect=}')
@@ -845,6 +853,24 @@ while JOGO_RODANDO:
                     if False not in circle_colide(pos, rede_circle, 60):
                         jogador2.itens_coletados += 1
                         item.rect.x = LARGURA_TELA
+
+            
+            # # Colisão e coleta do jogador 2 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! muda
+            # if evento.type == MOUSEBUTTONDOWN and evento.button == 1:  # Ação com botão esquerdo do mouse
+            #     # jogador2.lançar_rede()
+            #     # print(f'{jogador2.rede_rect=}')
+            #     # pygame.draw.rect(TELA,CORES["BRANCO"],jogador2.rede_rect)
+            #     # pygame.blit()
+            #     pos_mouse = pygame.mouse.get_pos() 
+            #     rede_circle = pygame.mouse.get_pos()
+            #     for item in itens_agua:
+            #         pos_item = item.rect.topleft
+            #         # if jogador2.rect.colliderect(item.rect):
+            #         #     jogador2.itens_coletados += 1
+            #         #     item.rect.x = LARGURA_TELA
+            #         if False not in circle_colide(pos_item, rede_circle, 30):
+            #             jogador2.itens_coletados += 1
+            #             item.rect.x = LARGURA_TELA
 # todo ---------------------------------------------------------------------------------------------------
             # Colisão e coleta do jogador 1
             for item in itens_terra:

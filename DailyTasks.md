@@ -52,6 +52,7 @@ Concluidos
 # arrumar trilha sonora --------------------------------------------------------------------------------------------- Concluído    -    (Leo)
 # arrumar posição dos players 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra) -------------- Concluído    -    (Leo)
 # colocar sprites dos lixos ----------------------------------------------------------------------------------------- Concluído    -    (Leo)
+# animação do rio --------------------------------------------------------------------------------------------------- Concluído    -    (Leo)
 # arrumar animações ------------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
 
 
