@@ -975,10 +975,10 @@ while JOGO_RODANDO:
     )
         
         # Exibir pontuação
-        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1: {jogador1.itens_coletados}', True, CORES["AMARELO"])
-        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2: {jogador2.itens_coletados}', True, CORES["ROXO"])
+        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1:  {jogador1.itens_coletados}', True, CORES["AMARELO"])
+        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2:  {jogador2.itens_coletados}', True, CORES["VERMELHO"])
         TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
-        TEXTO_FPS = FONTE_TITULO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["VERMELHO"])
+        TEXTO_FPS = FONTE_TITULO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["ROXO"])
         largura_texto2 = TEXTO2.get_width()
         largura_texto3 = TEXTO3.get_width()
         altura_texto_fps = TEXTO_FPS.get_height()
