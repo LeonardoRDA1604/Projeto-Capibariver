@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 # === Configurações da tela ===
 LARGURA_TELA, ALTURA_TELA = 1280, 720
@@ -6,9 +7,11 @@ TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 NOME_DO_JOGO = "Capibariver v9.4.4"
 FPS = 50 #! os frames do personagem tão organizados para 6 fps
 
-
+# Fontes
 FONTES = {
-    "titulo": ('Arial', 30),
+    "titulo_grande": ('Arial', 56),
+    "botao_menu": ('Arial', 32),
+    "titulo_pequeno": ('Arial', 30),
     "texto": ('Arial', 24),
     "conclusao": ('Arial', 50),
 }
@@ -84,3 +87,5 @@ CRIAR_ITEM_EVENTO = None
 CRIAR_ITEM_EVENTO_2 = None
 progresso = 0
 rede_circle = [999, 999]
+
+

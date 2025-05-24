@@ -7,6 +7,7 @@ from menu import Menu
 from entities.players import Jogador
 # from sprite_manager import SpriteSheet
 from entities.items import *
+from utils import *
 
 # Inicialização do Pygame
 pygame.init()
@@ -20,24 +21,19 @@ pygame.display.set_caption(NOME_DO_JOGO)
 # Inicializar o menu
 menu = Menu(TELA)
 
-FONTE_TEXTO = pygame.font.SysFont(*FONTES["texto"])
-FONTE_TEXTO_NEGRITO = pygame.font.SysFont(*FONTES["texto"], bold=True)
-FONTE_TITULO = pygame.font.SysFont(*FONTES["titulo"])
-FONTE_TITULO_NEGRITO = pygame.font.SysFont(*FONTES["titulo"], bold=True)
-FONTE_CONCLUSAO = pygame.font.SysFont(*FONTES["conclusao"])
-FONTE_CONCLUSAO_NEGRITO = pygame.font.SysFont(*FONTES["conclusao"], bold=True)
 
 
-try:
-    # Caminho para o som ambiente
-    caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
 
-    # Carrega e toca o som em loop infinito
-    pygame.mixer.music.load(caminho_som)
-    pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
-    pygame.mixer.music.play(-1)  # -1 = loop infinito
-except pygame.error as e:
-    print(f"Erro ao carregar trilha sonora: {e}")
+# try:
+#     # Caminho para o som ambiente
+#     caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+
+#     # Carrega e toca o som em loop infinito
+#     pygame.mixer.music.load(caminho_som)
+#     pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
+#     pygame.mixer.music.play(-1)  # -1 = loop infinito
+# except pygame.error as e:
+#     print(f"Erro ao carregar trilha sonora: {e}")
 
 
 
@@ -643,7 +639,7 @@ def desenhar_barra_progresso(TELA, x, y, largura, altura):
 
     # Texto centralizado
     texto = f"{progresso}/{OBJETIVO}"
-    superficie_texto = FONTE_TITULO.render(texto, True, CORES["PRETO"])
+    superficie_texto = FONTE_TITULO_PEQUENO.render(texto, True, CORES["PRETO"])
     largura_texto = superficie_texto.get_width()
     altura_texto = superficie_texto.get_height()
     pos_texto_x = x + (largura - largura_texto) // 2
@@ -977,8 +973,8 @@ while JOGO_RODANDO:
         # Exibir pontuação
         TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1:  {jogador1.itens_coletados}', True, CORES["AMARELO"])
         TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2:  {jogador2.itens_coletados}', True, CORES["VERMELHO"])
-        TEXTO3 = FONTE_TITULO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
-        TEXTO_FPS = FONTE_TITULO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["ROXO"])
+        TEXTO3 = FONTE_TITULO_PEQUENO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
+        TEXTO_FPS = FONTE_TITULO_PEQUENO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["ROXO"])
         largura_texto2 = TEXTO2.get_width()
         largura_texto3 = TEXTO3.get_width()
         altura_texto_fps = TEXTO_FPS.get_height()

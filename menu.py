@@ -3,10 +3,11 @@ from pygame.locals import *
 import sys
 import os
 from configs import *
+from utils import *
 
 class Menu:
     def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
-        self.tela = tela
+        self.tela = TELA
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
         
@@ -15,9 +16,9 @@ class Menu:
         self.estado = "MENU"  # Estado inicial
         
         # Fontes
-        self.fonte_titulo = pygame.font.SysFont('Arial', 56, bold=True)
-        self.fonte_botao = pygame.font.SysFont('Arial', 32, bold=True)
-        self.fonte_texto = pygame.font.SysFont('Arial', 24)
+        self.fonte_titulo = FONTE_TITULO_GRANDE_NEGRITO
+        self.fonte_botao = FONTE_BOTAO_MENU
+        self.fonte_texto = FONTE_TEXTO
         
         # Configurações de áudio
         self.som_ativado = True

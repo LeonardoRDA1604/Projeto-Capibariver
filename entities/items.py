@@ -7,24 +7,31 @@ class Item_agua:
     def __init__(self):
         y_positions = list(range(ALTURA_TELA - 350, ALTURA_TELA - 750, -50)) # Posições y dos objetos do rio
                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
-        # Lista de imagens disponíveis para os itens de água
+        # Lista de imagens disponíveis para os itens de água (coco e pneu não entram nessa lista pois não boiam)
         self.imagens = [
-                    pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
+                    pygame.image.load('./assets/sprites/items/type1-lata-alimento_atum.png'), # Objeto 1
+                    pygame.image.load('./assets/sprites/items/type1-lata-alimento_sardinha.png'), # Objeto 2
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_cerveja.png'), # Objeto 3
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_coca-cola.png'), # Objeto 4
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_fanta.png'), # Objeto 5
+                    pygame.image.load('./assets/sprites/items/type3-tenis_all-star-preto.png'), # Objeto 6
+                    pygame.image.load('./assets/sprites/items/type3-tenis_all-star-vermelho.png'), # Objeto 7
+                    pygame.image.load('./assets/sprites/items/type4-embalagem_azul.png'), # Objeto 8
+                    pygame.image.load('./assets/sprites/items/type4-embalagem_laranja.png'), # Objeto 9
+                    pygame.image.load('./assets/sprites/items/type5-sacola_branca.png'), # Objeto 10
+                    pygame.image.load('./assets/sprites/items/type5-sacola_verde-claro.png'), # Objeto 11
+                    pygame.image.load('./assets/sprites/items/type6-lixo_azul.png'), # Objeto 12
+                    pygame.image.load('./assets/sprites/items/type6-lixo_preto1.png'), # Objeto 13
+                    pygame.image.load('./assets/sprites/items/type6-lixo_preto2.png'), # Objeto 14
+                    pygame.image.load('./assets/sprites/items/type6-lixo_verde-claro.png'), # Objeto 15
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_agua.png'), # Objeto 16
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_guarana.png'), # Objeto 17
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_agua-sanitaria.png'), # Objeto 18
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_amaciante.png'), # Objeto 19
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_galao-de-agua.png'), # Objeto 20
+                    pygame.image.load('./assets/sprites/items/type8-garrafa-vidro_verde.png'), # Objeto 21
+                    pygame.image.load('./assets/sprites/items/type9-outros_caixa-de-leite.png'), # Objeto 24
+                    pygame.image.load('./assets/sprites/items/type9-outros_oculos.png'), # Objeto 25
                 ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
@@ -59,24 +66,31 @@ class Item_terra:
         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
 # Lista de imagens disponíveis para os itens da terra
         self.imagens = [
-                    pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto5_pneu.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
-                    pygame.image.load('./assets/sprites/items/Objeto18_coco.png'),
+                    pygame.image.load('./assets/sprites/items/type1-lata-alimento_atum.png'), # Objeto 1
+                    pygame.image.load('./assets/sprites/items/type1-lata-alimento_sardinha.png'), # Objeto 2
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_cerveja.png'), # Objeto 3
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_coca-cola.png'), # Objeto 4
+                    pygame.image.load('./assets/sprites/items/type2-lata-bebida_fanta.png'), # Objeto 5
+                    pygame.image.load('./assets/sprites/items/type3-tenis_all-star-preto.png'), # Objeto 6
+                    pygame.image.load('./assets/sprites/items/type3-tenis_all-star-vermelho.png'), # Objeto 7
+                    pygame.image.load('./assets/sprites/items/type4-embalagem_azul.png'), # Objeto 8
+                    pygame.image.load('./assets/sprites/items/type4-embalagem_laranja.png'), # Objeto 9
+                    pygame.image.load('./assets/sprites/items/type5-sacola_branca.png'), # Objeto 10
+                    pygame.image.load('./assets/sprites/items/type5-sacola_verde-claro.png'), # Objeto 11
+                    pygame.image.load('./assets/sprites/items/type6-lixo_azul.png'), # Objeto 12
+                    pygame.image.load('./assets/sprites/items/type6-lixo_preto1.png'), # Objeto 13
+                    pygame.image.load('./assets/sprites/items/type6-lixo_preto2.png'), # Objeto 14
+                    pygame.image.load('./assets/sprites/items/type6-lixo_verde-claro.png'), # Objeto 15
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_agua.png'), # Objeto 16
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_guarana.png'), # Objeto 17
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_agua-sanitaria.png'), # Objeto 18
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_amaciante.png'), # Objeto 19
+                    pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_galao-de-agua.png'), # Objeto 20
+                    pygame.image.load('./assets/sprites/items/type8-garrafa-vidro_verde.png'), # Objeto 21
+                    pygame.image.load('./assets/sprites/items/type9-outros_coco-verde-com-canudo.png'), # Objeto 22
+                    pygame.image.load('./assets/sprites/items/type9-outros_pneu.png'), # Objeto 23
+                    pygame.image.load('./assets/sprites/items/type9-outros_caixa-de-leite.png'), # Objeto 24
+                    pygame.image.load('./assets/sprites/items/type9-outros_oculos.png'), # Objeto 25
         ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
