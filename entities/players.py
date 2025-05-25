@@ -1,5 +1,4 @@
-import pygame
-import os
+import pygame, os
 from sprite_manager import SpriteSheet
 from configs import *
 
@@ -19,11 +18,15 @@ class Jogador:
         self.animation_speed = 0.05  # CORRIGIDO: Velocidade mais rápida (50ms por frame)
         self.animation_timer = 0
         self.is_moving = False
-        
-        # NOVO: Para evitar movimento diagonal
+#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+        # Index da rede
+        self.redeindex = 0
+#? ---------------------------------------------------------------------------------------------------------------------------------------- F
+        # Para evitar movimento diagonal
         self.last_direction_pressed = None
         
         # Carregar o spritesheet
+        self.redesprites = pygame.image.load('assets/sprites/players/Jogador2_spritesheet_action.png')
         if spritesheet_path and os.path.exists(spritesheet_path):
             self.spritesheet = SpriteSheet(spritesheet_path)
             # Recortar o spritesheet (16 sprites: 4 linhas, 4 colunas)
@@ -34,7 +37,17 @@ class Jogador:
                 rows=4,     # 4 linhas (down, left, right, up)
                 cols=4      # 4 frames de animação para cada direção
             )
-            
+#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+            # Ler a spritesheet
+            self.redespritesheet = SpriteSheet('assets/sprites/players/Jogador2_spritesheet_action.png')
+            # Pra deixar os 3 sprites em uma unica lista
+            self.spritesrede = self.redespritesheet.get_sprites(64,128,2,2)
+            # teste \/
+            # print(self.spritesrede)
+            self.spritesrede[0].append(self.spritesrede[1][0])
+            self.spritesrede.pop()
+            self.spritesrede = self.spritesrede[0]
+#? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Redimensionar para o tamanho do jogador
             self.scale_sprites()
         else:
@@ -50,7 +63,14 @@ class Jogador:
                         (self.rect.width, self.rect.height)
                     )
     
-    def update_animation(self, dt): # CORRIGIDO: Atualiza o frame da animação com base no tempo decorrido.
+    def update_animation(self, dt,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
+#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+        self.rede = rede
+        if rede == False:
+            self.redeindex == 0
+            # teste \/
+            # print(f'{self.redeindex = }')
+#? ---------------------------------------------------------------------------------------------------------------------------------------- F
         if not self.is_moving:
             # Se não estiver se movendo, usar o primeiro frame (posição padrão)
             self.animation_frame = 0
@@ -71,7 +91,16 @@ class Jogador:
             direction_index = self.get_direction_index()
             
             # Desenhar o sprite correto (linha = direção, coluna = frame)
-            tela.blit(self.sprites[direction_index][self.animation_frame], self.rect)
+#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+            # teste \/
+            # print(f'{self.redeindex//10 = }')
+            if self.rede:
+                #TODO ajustar o reset da animação
+                tela.blit(self.spritesrede[self.redeindex//10],self.rect)
+                self.redeindex = (min(self.redeindex + 1,20))
+            else:
+                tela.blit(self.sprites[direction_index][self.animation_frame], self.rect)
+#? ---------------------------------------------------------------------------------------------------------------------------------------- F
         else:
             # Fallback para o retângulo colorido se não houver sprites
             pygame.draw.rect(tela, self.cor, self.rect)

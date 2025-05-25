@@ -56,8 +56,8 @@ TAMANHO_ITEM = 40, 40
 OBJETIVO = 50
 
 # === Quantidade de lixos ===
-QUANT_LIXOS_AGUA = 0
-QUANT_LIXOS_TERRA = 0
+QUANT_LIXOS_AGUA = 8
+QUANT_LIXOS_TERRA = 4
 
 # === Barra de progressão de objetivo do jogo ===
 LARGURA_BARRA = 300
@@ -76,3 +76,8 @@ CRIAR_ITEM_EVENTO = None
 CRIAR_ITEM_EVENTO_2 = None
 progresso = 0
 rede_circle = [999, 999]
+#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+rede_velocidade = 6
+#? ---------------------------------------------------------------------------------------------------------------------------------------- F
+TRANSPARENCIA_RANGE_REDE = 40
+COR_RANGE_REDE = CORES["PRETO"]

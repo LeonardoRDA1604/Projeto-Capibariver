@@ -1,5 +1,4 @@
-import pygame
-import random
+import pygame, random
 from configs import *
 
 # Classes Item (Água e Terra)
