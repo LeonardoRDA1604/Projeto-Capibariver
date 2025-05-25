@@ -116,7 +116,7 @@ class Jogador:
             return 3
         return 0  # Padrão: para baixo
     
-    def mover(self, teclas, cima, baixo, esquerda, direita): # CORRIGIDO: Move o jogador e atualiza a direção
+    def mover(self, teclas, cima, baixo, esquerda, direita): # Move o jogador e atualiza a direção
         # Resetar estado de movimento
         self.is_moving = False
         
@@ -190,30 +190,3 @@ class Jogador:
     def desenhar_rede(self, tela): # Implementação do método de desenhar a rede.
         if self.rede:
             pygame.draw.circle(tela, (255, 255, 255), self.rede.center, 30)  # CORES["BRANCO"]
-    
-    # def lançar_rede(self, tela): # Implementação do método de lançar a rede. 
-    #     pos_mouse = pygame.mouse.get_pos()
-    #     # Calcula distância do jogador até o mouse
-    #     pos_player = self.rect.topleft
-    #     distx = (pos_mouse[0] - pos_player[0]) ** 2
-    #     disty = (pos_mouse[1] - pos_player[1]) ** 2
-    #     limit_range = (distx + disty) ** 0.5
-    
-    #     if limit_range <= 300:
-    #         pygame.draw.circle(tela, (255, 255, 255), pos_mouse, 30)
-        
-        
-    #     # self.pos_mouse = pygame.mouse.get_pos()
-    #     # self.pos_player = self.rect.topleft
-    #     # distx = (self.pos_mouse[0] - self.pos_player[0])**2 
-    #     # disty = (self.pos_mouse[1] - self.pos_player[1])**2
-    #     # limit_range = ((distx + disty) ** 0.5)
-        
-
-    #     # if limit_range <= 300:
-    #     #     pygame.draw.circle(tela, (255, 255, 255), self.pos_mouse, 30)    
-    #     # self.rede.center = self.pos_mouse
-
-    # # def desenhar_rede(self, tela): # Implementação do método de desenhar a rede.
-    # #     if limit_range <= 300:
-    # #         pygame.draw.circle(tela, (255, 255, 255), pos_mouse, 30)    
