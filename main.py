@@ -21,9 +21,6 @@ pygame.display.set_caption(NOME_DO_JOGO)
 # Inicializar o menu
 menu = Menu(TELA)
 
-
-
-
 # try:
 #     # Caminho para o som ambiente
 #     caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
@@ -35,41 +32,7 @@ menu = Menu(TELA)
 # except pygame.error as e:
 #     print(f"Erro ao carregar trilha sonora: {e}")
 
-
-
-
-
-
 # pygame.mixer.music.stop() # to stop
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ???????????????????????????????????????????????????????????????????????????????????????????????????????
 
 class Jogo:
     def __init__(self, tela):
@@ -165,7 +128,6 @@ class Jogo:
         else:
             self.tela.fill((0, 0, 0))
 
-
         # Desenha margem por cima (fixa, usa sempre o índice 0 para aplicar em todos os backgrounds.)
         # A margem NÃO tem scroll, apenas animação
         if self.margens and self.margens[0]:
@@ -189,177 +151,7 @@ class Jogo:
         self.atualizar_scroll()
         self.desenhar_fundo(nivel)
 
-
-
-# ???????????????????????????????????????????????????????????????????????????????????????????????????????
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 jogo = Jogo(TELA)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # Classes dos jogadores
-# class Jogador:
-#     def __init__(self, x, y, cor):
-#         self.rect = pygame.Rect(x, y, TAMANHO_JOGADOR[0], TAMANHO_JOGADOR[1])
-#         self.cor = cor
-#         self.itens_coletados = 0  # Contador de itens coletados
-#         self.rede = None
-
-#     def desenhar(self):
-#         pygame.draw.rect(TELA, self.cor, self.rect)
-
-#     def mover(self, teclas, cima, baixo, esquerda, direita):
-#         if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
-#             self.rect.y -= VEL_JOGADOR
-#         if teclas[baixo] and self.rect.bottom < ALTURA_TELA-ALTURA_TELA//20:
-#             self.rect.y += VEL_JOGADOR
-#         if teclas[esquerda] and self.rect.left > 5*(LARGURA_TELA//40):
-#             self.rect.x -= VEL_JOGADOR
-#         if teclas[direita] and self.rect.right < 37*(LARGURA_TELA//40):
-#             self.rect.x += VEL_JOGADOR
-
-
-#     def coletar_item(self):
-#         # Coletar item diretamente abaixo do jogador 1
-#         for item in itens_terra:
-#             if self.rect.colliderect(item.rect):
-#                 self.itens_coletados += 1
-#                 itens_terra.remove(item)  # Remove o item da lista
-#                 break
-    
-# # todo ---------------------------------------------------------------------------------------------------
-#     def lançar_rede(self):
-#         # Verifica se o jogador 2 clicou e cria a rede
-#         self.pos_mouse = pygame.mouse.get_pos()
-#         self.rede_rect = pygame.Rect(300,200,30,30)
-#         self.rede = pygame.Rect(self.rect[0] - 15, self.rect.centery - 15, 30, 30)
-#         self.rede.center = self.pos_mouse
-            
-#     def desenhar_rede(self):
-#         if self.rede:
-#             pygame.draw.circle(TELA, CORES["BRANCO"], self.rede.center, 30)
-    
-#     def limit_range(pos_rede , pos_player2):    
-#         pos_player2 = jogador2.rect.topleft
-#         pos_rede = pygame.rect(pos_player2[0], pos_player2[1] - (ALTURA_TELA//6), pos_player2[0]+ 100, pos_player2[1] - 100)
-    
-#     def hitbox_rede():
-        
-#         pos_player2 = jogador2.rect.topleft
-#         pos_mouse = pygame.mouse.get_pos()
-#         pygame.rect(pos_player2[0], pos_player2[1], pos_player2[0], pos_player2[1])
-#         Dist_rede_player = abs((pos_mouse[1] - pos_player2[1])**1/2) + abs((pos_player2[0] - pos_mouse[0])**1/2 )
-#         print(Dist_rede_player)
-    
-
-
-#     # def limit_range(self):
-#     #     self.pos_player = self.rect
-#     #     #delimitar a área de criação da rede de acordo com a posição do player
-#     #     # pegar posição do jogador
-#     #     # criar retângulo que pegue a largura do player e a altura de metade da tela , a partir da posição do player
-#     #     self.pos_rede = pygame.rect(self.pos_player[0], self.pos_player[1], self.pos_player[0]+ 30, self.pos_player[1] - 100)
-# # todo ---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Classe do rio
 class Rio:
@@ -375,151 +167,6 @@ class Rio:
 
 # Criar rio
 rio = Rio()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # Classes Item (Água e Terra)
-# class Item_agua:
-#     def __init__(self):
-#         y_positions = list(range(ALTURA_TELA - 350, ALTURA_TELA - 750, -50)) # Posições y dos objetos do rio
-#                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
-#         # Lista de imagens disponíveis para os itens de água
-#         self.imagens = [
-#                     pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
-#                 ]
-#         # Escolher uma imagem aleatória da lista
-#         self.imagem = random.choice(self.imagens)
-#         # Redimensionar a imagem para o tamanho do item (opcional)
-#         self.imagem = pygame.transform.scale(self.imagem, TAMANHO_ITEM)
-#         # self.rect = pygame.Rect(random.randint(-100, -50), random.choice(y_positions), TAMANHO_ITEM[0], TAMANHO_ITEM[1])
-#         # Criar o retângulo baseado na imagem
-#         self.rect = self.imagem.get_rect()
-#         self.rect.x = random.randint(-100, -50)
-#         self.rect.y = random.choice(y_positions)
-#         # Manter a cor se a imagem não carregar
-#         self.cor = CORES["LARANJA"]
-
-#     def mover(self):
-#         self.rect.x += VEL_ITEM
-
-#     # def desenhar(self):
-#     #     pygame.draw.rect(TELA, self.cor, self.rect)
-#     def desenhar(self):
-#         try:
-#             # Tentar desenhar a imagem
-#             TELA.blit(self.imagem, self.rect)
-#         except:
-#             # Fallback para o retângulo colorido se a imagem falhar
-#             pygame.draw.rect(TELA, self.cor, self.rect)
-
-# class Item_terra:
-#     def __init__(self):
-#         x1_margem = 5*(LARGURA_TELA//40) # antes era 0
-#         x2_margem = 37*(LARGURA_TELA//40) - TAMANHO_ITEM[0] # antes era LARGURA_TELA - TAMANHO_ITEM[0]
-#         y1_margem = 2*(ALTURA_TELA//3)
-#         y2_margem = ALTURA_TELA-ALTURA_TELA//20-TAMANHO_ITEM[1]
-# # Lista de imagens disponíveis para os itens da terra
-#         self.imagens = [
-#                     pygame.image.load('./assets/sprites/items/Objeto1_lata-de-cerveja.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto2_lata-coca-cola.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto3_lata-sardinha.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto4_lata-atum.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto5_pneu.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto6_all-star-preto.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto7_all-star-vermelho.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto8_embalagem-laranja.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto9_embalagem-azul.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto10_sacola.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto11_lixo-preto.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto12_lixo-azul.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto13_lixo-verde.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto14_água-sanitária.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto15_amaciante.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto16_garrafa-de-água.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto17_galão-de-água.png'),
-#                     pygame.image.load('./assets/sprites/items/Objeto18_coco.png'),
-#         ]
-#         # Escolher uma imagem aleatória da lista
-#         self.imagem = random.choice(self.imagens)
-#         self.imagem = pygame.transform.scale(self.imagem, TAMANHO_ITEM)
-#         # Criar o retângulo baseado na imagem
-#         self.rect = self.imagem.get_rect()
-#         self.rect.x = random.randint(x1_margem, x2_margem)
-#         self.rect.y = random.randint(y1_margem, y2_margem)
-#         # self.rect = pygame.Rect(random.randint(x1_margem, x2_margem), random.randint(y1_margem, y2_margem), TAMANHO_ITEM[0], TAMANHO_ITEM[1]) # parametros (x(x1, x2), y(y1, y2), TAMANHO_ITEM, TAMANHO_ITEM)
-#         # Manter a cor se a imagem não carregar
-#         self.cor = CORES["VERMELHO"]
-
-#     def mover(self):
-#         pass
-
-#     # def desenhar(self):
-#     #     pygame.draw.rect(TELA, self.cor, self.rect)
-#     def desenhar(self):
-#         try:
-#             # Tentar desenhar a imagem
-#             TELA.blit(self.imagem, self.rect)
-#         except:
-#             # Fallback para o retângulo colorido se a imagem falhar
-#             pygame.draw.rect(TELA, self.cor, self.rect)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Conclusao:
@@ -541,18 +188,6 @@ class Conclusao:
             self.tela.blit(self.background, (0, 0))         # Desenha o fundo
         else:
             pass
-
-
-
-
-
-
-
-
-
-
-
-
 
 def iniciar_jogo():
     global jogador1, jogador2, itens_agua, itens_terra, CRIAR_ITEM_EVENTO, CRIAR_ITEM_EVENTO_2
@@ -578,53 +213,6 @@ def iniciar_jogo():
     itens_terra = []
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def desenhar_barra_progresso(TELA, x, y, largura, altura):
     # Fundo da barra
     pygame.draw.rect(TELA, CORES["CINZA_CLARO"], (x, y, largura, altura))
@@ -645,18 +233,6 @@ def desenhar_barra_progresso(TELA, x, y, largura, altura):
     pos_texto_x = x + (largura - largura_texto) // 2
     pos_texto_y = y + (altura - altura_texto) // 2
     TELA.blit(superficie_texto, (pos_texto_x, pos_texto_y))
-
-
-
-
-
-
-
-
-
-
-
-
 
 def tela_vitoria():
     vitoria_jogadores = True
@@ -686,45 +262,6 @@ def tela_vitoria():
 
         pygame.display.update()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def circle_colide(objeto:list, circulo:list, raio):
-#     # Definir a colisão com a esquerda e direita do circulo
-#     coli_x_esquerda = objeto[0] >= circulo[0] - raio
-#     coli_x_direita = objeto[0] <= circulo[0] + raio
-#     # Se o objeto está entre circulo -30 e circulo + 30
-#     coli_y_topo = objeto[1] >= circulo[1] - raio
-#     coli_y_baixo = objeto[1] <= circulo[1] + raio
-#     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
-#     return colide
-
-
-
 # todo ---------------------------------------------------------------------------------------------------
 
 
@@ -738,74 +275,12 @@ def circle_colide(objeto:list, circulo:list, raio):
     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
     return colide
 
-# todo ---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# todo --------------------------------------------------------------------------------------------------
 
 # Inicializar o jogo
 iniciar_jogo()
 
 clock = pygame.time.Clock()  # criando o relógio antes do loop
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Loop principal
 JOGO_RODANDO = True
@@ -827,10 +302,10 @@ while JOGO_RODANDO:
             jogador2.update_animation(dt)
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
-                for _ in range(8): # começa em 8 e vai diminuindo por mapa de 2 em 2, até 2?
+                for _ in range(QUANT_LIXOS_AGUA): # começa em 8 e vai diminuindo por mapa de 2 em 2, até 2?
                     itens_agua.append(Item_agua())
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(4): # começa em 4 e vai diminuindo por mapa até 1
+                for _ in range(QUANT_LIXOS_TERRA): # começa em 4 e vai diminuindo por mapa até 1
                     itens_terra.append(Item_terra())
 # todo ---------------------------------------------------------------------------------------------------
             # Colisão e coleta do jogador 2 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! muda
@@ -850,7 +325,6 @@ while JOGO_RODANDO:
                         jogador2.itens_coletados += 1
                         item.rect.x = LARGURA_TELA
 
-            
             # # Colisão e coleta do jogador 2 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! muda
             # if evento.type == MOUSEBUTTONDOWN and evento.button == 1:  # Ação com botão esquerdo do mouse
             #     # jogador2.lançar_rede()
@@ -875,9 +349,6 @@ while JOGO_RODANDO:
                         jogador1.coletar_item(itens_terra)
                         break
 
-
-
-    
     # Processar eventos do menu
     menu.eventos(eventos)
     
@@ -900,31 +371,6 @@ while JOGO_RODANDO:
         # Movimentação dos jogadores
         teclas = pygame.key.get_pressed()
 
-
-
-
-
-# todo ---------------------------------------------------------------------------------------------------
-
-
-        # Dist_rede_player = abs((pos_mouse[1] - pos_player2[1])**1/2) + abs((pos_player2[0] - pos_mouse[0])**1/2 )
-
-
-
-
-
-
-        # pos_jogador2 = jogador2.get_pos()
-        # print(pos_player2)
-
-        # circle = [jogador2.desenhar_rede()]
-
-        
-        # if pos_mouse[1] <= ALTURA_TELA//2 and pos_player2[1] >= 580 :
-        #     jogador2.itens_coletados -= 1
-# todo ---------------------------------------------------------------------------------------------------
-
-
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
 
@@ -941,10 +387,7 @@ while JOGO_RODANDO:
         #     nivel = 3  # rio limpo
         # desenhando o background do jogo
         jogo.desenhar_fundo_por_progresso(progresso, OBJETIVO)
-        
-
-
-
+    
         for item in itens_agua:
             item.desenhar()
             item.mover() # Movimentação dos itens
@@ -990,8 +433,6 @@ while JOGO_RODANDO:
             if menu.estado == "MENU" and iniciar_jogo() == True:
                 menu.estado = "JOGO"
             # elif teclas[K_ESC] == (JOGO_RODANDO == False)
-            # -------------------------------------------------------------------------------------------------------------------------
-            # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
     

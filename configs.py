@@ -52,31 +52,20 @@ TAMANHO_ITEM = 40, 40
 #     "item": (590, 500)
 # }
 
-
 # === Objetivo do jogo ===                 # 200 objetivo ideal
 OBJETIVO = 50
 
-
+# === Quantidade de lixos ===
+QUANT_LIXOS_AGUA = 0
+QUANT_LIXOS_TERRA = 0
 
 # === Barra de progressão de objetivo do jogo ===
 LARGURA_BARRA = 300
 ALTURA_BARRA = 30
 
-
-
-
-
-
-
 # === Áudio ===
 SOM_ATIVADO = True
 VOLUME_GERAL = 0.5
-
-
-
-
-
-
 
 # Variáveis globais
 jogador1 = None
@@ -87,5 +76,3 @@ CRIAR_ITEM_EVENTO = None
 CRIAR_ITEM_EVENTO_2 = None
 progresso = 0
 rede_circle = [999, 999]
-
-
