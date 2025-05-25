@@ -1,12 +1,6 @@
 # Arrumar menu
 - leo
 
-# Arrumar logica de movimento e ação do jogador 2, range para jogar a rede para o movimento fazer sentido
-********************************
-- gabriel e heitor / brenno
-
-
-
 # tela de conclusão
 - brenda
 
@@ -53,7 +47,7 @@ Concluidos
 # arrumar posição dos players 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra) -------------- Concluído    -    (Leo)
 # colocar sprites dos lixos ----------------------------------------------------------------------------------------- Concluído    -    (Leo)
 # animação do rio --------------------------------------------------------------------------------------------------- Concluído    -    (Leo)
+# Arrumar logica de movimento e ação do jogador 2, range para jogar a rede para o movimento fazer sentido ----------- Concluído    -    (Davi)
+
 # arrumar animações ------------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
-
-
 # modularizar o codigo ---------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
