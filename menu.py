@@ -242,18 +242,25 @@ class Menu:
             # Usar o método renderizar_texto da própria classe
             self.renderizar_texto(texto, FONTE_TEXTO_PEQUENO_NEGRITO, cor, y_base + i * espaco_linha, alinhamento)
 
-        # Botão voltar
+        # Botão voltar com hover
+        pos_mouse = pygame.mouse.get_pos()
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 610, 200, 50)
-        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
-        
+
+        # Aplica o mesmo sistema de hover do menu principal
+        cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
+
+        # Retângulo do botão (igual ao seu menu principal)
+        pygame.draw.rect(self.tela, cor, voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
+
+        # Texto do botão (igual ao seu menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
         ))
-        
-        return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
+
+        return voltar_rect # Retorna o rect do botão voltar para checagem de clique
 
 
     def desenhar_creditos(self): # Desenha a tela de créditos
@@ -291,18 +298,25 @@ class Menu:
             # Usar o método renderizar_texto da própria classe
             self.renderizar_texto(texto, FONTE_TEXTO_PEQUENO_NEGRITO, cor, y_base + i * espaco_linha, alinhamento)
 
-        # Botão voltar
+        # Botão voltar com hover
+        pos_mouse = pygame.mouse.get_pos()
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 590, 200, 50)
-        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
-        
+
+        # Aplica o mesmo sistema de hover do menu principal
+        cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
+
+        # Retângulo do botão (igual ao seu menu principal)
+        pygame.draw.rect(self.tela, cor, voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
+
+        # Texto do botão (igual ao seu menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
         ))
-        
-        return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
+
+        return voltar_rect # Retorna o rect do botão voltar para checagem de clique
 
         
     def desenhar_opcoes(self): # Desenha o menu de opções
@@ -320,7 +334,7 @@ class Menu:
         self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
         
         # Definir posição inicial e espaçamento
-        y_base = 260  # Posição Y inicial para as opções
+        y_base = 270  # Posição Y inicial para as opções
         espaco_linha = 35  # Espaço entre cada linha de opção
         linha_atual = 0
         
@@ -372,18 +386,25 @@ class Menu:
         self.tela.blit(volume_texto, (x_inicio, y_volume))
         self.tela.blit(valor_texto, (x_inicio + volume_texto.get_width(), y_volume))
 
-        # Botão voltar
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 535, 200, 50)
-        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
-        
+        # Botão voltar com hover
+        pos_mouse = pygame.mouse.get_pos()
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 515, 200, 50)
+
+        # Aplica o mesmo sistema de hover do menu principal
+        cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
+
+        # Retângulo do botão (igual ao seu menu principal)
+        pygame.draw.rect(self.tela, cor, voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
+
+        # Texto do botão (igual ao seu menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
         ))
-        
-        return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
+
+        return voltar_rect # Retorna o rect do botão voltar para checagem de clique
 
 
     def eventos(self, eventos): # Processa os eventos do pygame

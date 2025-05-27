@@ -57,7 +57,7 @@ TAMANHO_ITEM = 40, 40
 # }
 
 # === Objetivo do jogo ===                 # 200 objetivo ideal
-OBJETIVO = 5
+OBJETIVO = 200
 
 # === Quantidade de lixos ===
 QUANT_LIXOS_AGUA = 8
