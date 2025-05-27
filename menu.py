@@ -16,7 +16,9 @@ class Menu:
         
         # Configurações de áudio
         self.som_ativado = True
+        self.volume = 10  # Volume de 0 a 100 (começando em 10%)
         self.efeitos_ativados = True
+        self.musica_carregada = False
         
         # Carregar imagem de fundo
         try:
@@ -25,16 +27,78 @@ class Menu:
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")
             self.background = None
-        
+
+        # Inicializar sistema de som
+        self.inicializar_som()
+
         # Botões
         self.botoes = []
         self.criar_botoes()
 
+    # Carregar som do jogo
+    def inicializar_som(self): # Inicializa o sistema de som e carrega a música
+        try:
+            # Caminho para o som ambiente
+            caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+            # Verifica se o arquivo existe
+            if os.path.exists(caminho_som):
+                pygame.mixer.music.load(caminho_som)
+                self.musica_carregada = True
+                print(f"Música carregada: {caminho_som}")
+                # Inicia a música se o som estiver ativado
+                if self.som_ativado:
+                    pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
+                    pygame.mixer.music.play(-1)  # -1 = loop infinito
+                    print("Música iniciada")
+            else:
+                print(f"Arquivo de música não encontrado: {caminho_som}")
+                self.musica_carregada = False
+        except pygame.error as e:
+            print(f"Erro ao carregar trilha sonora: {e}")
+            self.musica_carregada = False
 
 
+    def controlar_som(self): # controla o estado da música baseado na config de som
+        if not self.musica_carregada:
+            print("Música não carregada, não é possível controlar")
+            return
+        try:
+            if self.som_ativado: # Se o som está ativado mas a música não está tocando, inicia
+                if not pygame.mixer.music.get_busy():
+                    pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
+                    # Carrega e toca o som em loop infinito
+                    pygame.mixer.music.play(-1)  # -1 = loop infinito
+                    print("Música iniciada via controle")
+                else:
+                    # Se já está tocando, apenas ajusta o volume
+                    pygame.mixer.music.set_volume(self.volume / 100.0)
+                    print("Volume ajustado")
+            else:
+                # Se o som está desativado, para a música
+                pygame.mixer.music.stop()
+                print("Música parada")
+        except pygame.error as e:
+            print(f"Erro ao carregar trilha sonora: {e}")
 
 
+    def alternar_som(self): # alterna o estado do som e controla a música
+        self.som_ativado = not self.som_ativado
+        print(f"Som {'ativado' if self.som_ativado else 'desativado'}")
+        self.controlar_som()
 
+    def aumentar_volume(self): # Aumenta o volume em 1%
+        if self.volume < 100:
+            self.volume += 10
+            print(f"Volume aumentado para: {self.volume}%")
+            if self.som_ativado and self.musica_carregada:
+                pygame.mixer.music.set_volume(self.volume / 100.0)
+
+    def diminuir_volume(self): # Diminui o volume em 1%
+        if self.volume > 0:
+            self.volume -= 10
+            print(f"Volume diminuído para: {self.volume}%")
+            if self.som_ativado and self.musica_carregada:
+                pygame.mixer.music.set_volume(self.volume / 100.0)
 
 
 
@@ -201,31 +265,36 @@ class Menu:
 
 
 
+
+
+
     def desenhar_opcoes(self): # Desenha o menu de opções
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
+            painel = pygame.Surface((400, 200), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
+            painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
+            self.tela.blit(painel, (self.largura_tela // 2 - 200, 215))
         else:
             self.tela.fill(CORES["AZUL"])
         
         # Desenha o título com sombra
-        titulo = self.texto_com_sombra("OPÇÕES", FONTE_TITULO_GRANDE_NEGRITO, CORES["BRANCO"], CORES["PRETO"])
-        self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
-
-        # Criando um painel semi-transparente para os textos
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        painel = pygame.Surface((400, 200), pygame.SRCALPHA)
-        painel.fill((0, 0, 0, 150))  # Preto semi-transparente
-        self.tela.blit(painel, (self.largura_tela // 2 - 200, 230))
+        self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
 
         # Opção de Som com sombra no texto
         som_texto = self.texto_com_sombra("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
                                         FONTE_BOTAO_MENU, CORES["BRANCO"])
+
         self.tela.blit(som_texto, (self.largura_tela // 2 - som_texto.get_width() // 2, 250))
         
         # Opção de Efeitos com sombra
-        efeitos_texto = self.texto_com_sombra("Efeitos (tecla 2): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
+        Volume_texto = self.texto_com_sombra("Volume+ (tecla2) / Volume- (tecla3): " + f"{self.volume}%", 
                                             FONTE_BOTAO_MENU, CORES["BRANCO"])
-        self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
+        self.tela.blit(Volume_texto, (self.largura_tela // 2 - Volume_texto.get_width() // 2, 310))
+
+        # # Opção de Efeitos sonoros com sombra
+        # efeitos_texto = self.texto_com_sombra("Efeitos (tecla 4): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
+        #                                     FONTE_BOTAO_MENU, CORES["BRANCO"])
+        # self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
         
         # Botão voltar
         voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 450, 200, 50)
@@ -268,9 +337,8 @@ class Menu:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
             # Painel de fundo (retangulo preto com opacidade)
             painel = pygame.Surface((600, 380), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
-            painel.fill((0, 0, 0, 150))  # Preto com opacidade
+            painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
             self.tela.blit(painel, (self.largura_tela // 2 - 300, 215))
-
         else:
             self.tela.fill(CORES["AZUL"])
 
@@ -334,7 +402,7 @@ class Menu:
             self.tela.blit(self.background, (0, 0))
             # Painel de fundo (retangulo preto com opacidade)
             painel = pygame.Surface((800, 360), pygame.SRCALPHA)
-            painel.fill((0, 0, 0, 150))
+            painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  
             self.tela.blit(painel, (self.largura_tela // 2 - 400, 215)) #todo ------------------------------------------------------------- (opacidade do fundo)
         else:
             self.tela.fill(CORES["AZUL"])
@@ -357,7 +425,7 @@ class Menu:
         ]
 
         # Definir posição inicial e espaçamento
-        y_base = 270  # Posição Y inicial para os créditos
+        y_base = 260  # Posição Y inicial para os créditos
         espaco_linha = 30  # Espaço entre cada linha de crédito
         for i, (texto, alinhamento, cor) in enumerate(creditos):
             # Usar o método renderizar_texto da própria classe
@@ -435,6 +503,10 @@ class Menu:
             # Teclas para as opções
             if evento.type == KEYDOWN and self.estado == "OPCOES":
                 if evento.key == K_1:  # Tecla 1 para alternar som
-                    self.som_ativado = not self.som_ativado
-                elif evento.key == K_2:  # Tecla 2 para alternar efeitos
+                    self.alternar_som()
+                elif evento.key == K_2:  # Tecla 2 para diminuir volume
+                    self.diminuir_volume()
+                elif evento.key == K_3:  # Tecla 3 para aumentar volume
+                    self.aumentar_volume()
+                elif evento.key == K_4:  # Tecla 4 para alternar efeitos
                     self.efeitos_ativados = not self.efeitos_ativados

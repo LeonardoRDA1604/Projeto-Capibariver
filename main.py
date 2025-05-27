@@ -300,7 +300,6 @@ while JOGO_RODANDO:
     for evento in eventos:
         if evento.type == QUIT:
             JOGO_RODANDO = False
-            
         # Eventos específicos do jogo
         if menu.estado == "JOGO":
             # Obter o tempo decorrido desde o último frame (em segundos)

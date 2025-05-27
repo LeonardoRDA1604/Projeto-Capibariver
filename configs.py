@@ -21,6 +21,7 @@ FONTES = {
 CORES = {
     "PRETO": (0, 0, 0),
     "PRETO_SOMBRA": (30, 30, 30),
+    "CINZA": (150, 150, 150),
     "CINZA_CLARO": (200, 200, 200),
     "BRANCO": (255, 255, 255),
     "VERMELHO": (255, 0, 0),
@@ -32,6 +33,7 @@ CORES = {
     "VERDE_MENU_2": (85, 217, 85),
     "AZUL_ESCURO": (17, 13, 120),
     "AZUL": (0, 0, 255),
+    "AZUL_CLARO": (0, 0, 200),
     "CIANO": (0, 255, 255),
     "AMARELO": (255, 255, 0),
     "ROXO": (67, 18, 135),
@@ -39,10 +41,6 @@ CORES = {
     "ROXO_GUIA_2": (122, 44, 255),
     "LARANJA": (255, 165, 0),
     "LARANJA_TITULO_MENU": (240, 124, 29),
-
-    "AZUL": (0, 0, 200),
-    "CINZA": (150, 150, 150),
-    "CINZA_CLARO": (200, 200, 200)
 }
 
 # === Velocidade do jogador e dos itens ===
@@ -59,7 +57,7 @@ TAMANHO_ITEM = 40, 40
 # }
 
 # === Objetivo do jogo ===                 # 200 objetivo ideal
-OBJETIVO = 50
+OBJETIVO = 5
 
 # === Quantidade de lixos ===
 QUANT_LIXOS_AGUA = 8
@@ -87,3 +85,5 @@ rede_velocidade = 6
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
 TRANSPARENCIA_RANGE_REDE = 40
 COR_RANGE_REDE = CORES["PRETO"]
+
+OPACIDADE_FUNDO_MENU = 180
