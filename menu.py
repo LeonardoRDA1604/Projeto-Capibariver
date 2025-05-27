@@ -12,11 +12,7 @@ class Menu:
         # Estados possíveis
         self.estados = ["MENU", "JOGO", "GUIA", "CREDITOS", "OPCOES"]
         self.estado = "MENU"  # Estado inicial
-        
-        # Fontes
-        self.fonte_titulo = FONTE_TITULO_GRANDE_NEGRITO
-        self.fonte_botao = FONTE_BOTAO_MENU
-        self.fonte_texto = FONTE_TEXTO
+
         
         # Configurações de áudio
         self.som_ativado = True
@@ -35,7 +31,17 @@ class Menu:
         self.criar_botoes()
 
 
-    def texto_com_sombra(self, texto, fonte, cor, cor_sombra=(30, 30, 30), deslocamento=2):
+
+
+
+
+
+
+
+
+
+
+    def texto_com_sombra(self, texto, fonte, cor, cor_sombra=(CORES["PRETO_SOMBRA"]), deslocamento=2):
         # Renderiza a sombra
         superficie_sombra = fonte.render(texto, True, cor_sombra)
         # Renderiza o texto principal
@@ -48,6 +54,42 @@ class Menu:
         superficie_final.blit(superficie_sombra, (deslocamento, deslocamento))
         superficie_final.blit(superficie_texto, (0, 0))
         return superficie_final
+
+
+
+    def renderizar_texto(self, texto, fonte, cor, y, alinhamento="CENTRO", usar_sombra=True): #  Renderiza texto com alinhamento e sombra opcional.
+        if usar_sombra:
+            superficie_texto = self.texto_com_sombra(texto, fonte, cor)
+        else:
+            superficie_texto = fonte.render(texto, True, cor)
+
+        if alinhamento == "CENTRO_GUIA":
+            x = self.largura_tela // 2 - superficie_texto.get_width() // 2
+        elif alinhamento == "ESQUERDA_GUIA":
+            x = self.largura_tela // 2 - 270  # ajuste para alinhamento à esquerda
+        elif alinhamento == "DIREITA_GUIA":
+            x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
+        elif alinhamento == "CENTRO_CREDITOS":
+            x = self.largura_tela // 2 - superficie_texto.get_width() // 2
+        elif alinhamento == "ESQUERDA_CREDITOS":
+            x = self.largura_tela // 2 - 370  # ajuste para alinhamento à esquerda
+        elif alinhamento == "DIREITA_CREDITOS":
+            x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
+        elif alinhamento == "CENTRO_OPCOES":
+            x = self.largura_tela // 2 - superficie_texto.get_width() // 2
+        elif alinhamento == "ESQUERDA_OPCOES":
+            x = self.largura_tela // 2 - 270  # ajuste para alinhamento à esquerda
+        elif alinhamento == "DIREITA_OPCOES":
+            x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
+        else:
+            x = 0  # fallback
+
+        self.tela.blit(superficie_texto, (x, y))
+
+
+
+
+
 
 
 
@@ -68,6 +110,18 @@ class Menu:
                 "acao": self.get_acao(opcao)
             })
     
+
+
+
+
+
+
+
+
+
+
+
+
     def get_acao(self, opcao): # Retorna a ação associada a cada botão
         if opcao == "INICIAR":
             return lambda: self.mudar_estado("JOGO")
@@ -82,20 +136,36 @@ class Menu:
         else:
             return lambda: None
     
+
+
+
+
+
+
+
+
+
     def mudar_estado(self, novo_estado):                    # Muda o estado do menu
         if novo_estado in self.estados:
             self.estado = novo_estado
     
+
+
+
+
+
+
+
+
+
+
+
+
     def desenhar(self):                                     # Desenha o menu principal
         if self.background:
             self.tela.blit(self.background, (0, 0))         # Desenha o fundo
         else:
             self.tela.fill(CORES["AZUL"])
-# ----------------------------------------------------------------------------------------------------------
-        # Desenha o título
-        # titulo = self.fonte_titulo.render("Capibariver", True, CORES["BRANCO"])                # Desenha o título
-        # self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
-# ----------------------------------------------------------------------------------------------------------
 
         # Desenha os botões
         pos_mouse = pygame.mouse.get_pos()
@@ -107,12 +177,30 @@ class Menu:
             pygame.draw.rect(self.tela, CORES["PRETO"], botao["rect"], 2)  # Borda
             
             # Texto do botão
-            texto = self.fonte_botao.render(botao["texto"], True, CORES["PRETO"])
+            texto = FONTE_BOTAO_MENU.render(botao["texto"], True, CORES["PRETO"])
             self.tela.blit(texto, (
                 botao["rect"].centerx - texto.get_width() // 2,
                 botao["rect"].centery - texto.get_height() // 2
             ))
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def desenhar_opcoes(self): # Desenha o menu de opções
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
@@ -120,7 +208,7 @@ class Menu:
             self.tela.fill(CORES["AZUL"])
         
         # Desenha o título com sombra
-        titulo = self.texto_com_sombra("OPÇÕES", self.fonte_titulo, CORES["BRANCO"], CORES["PRETO"])
+        titulo = self.texto_com_sombra("OPÇÕES", FONTE_TITULO_GRANDE_NEGRITO, CORES["BRANCO"], CORES["PRETO"])
         self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
 
         # Criando um painel semi-transparente para os textos
@@ -131,12 +219,12 @@ class Menu:
 
         # Opção de Som com sombra no texto
         som_texto = self.texto_com_sombra("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
-                                        self.fonte_botao, CORES["BRANCO"])
+                                        FONTE_BOTAO_MENU, CORES["BRANCO"])
         self.tela.blit(som_texto, (self.largura_tela // 2 - som_texto.get_width() // 2, 250))
         
         # Opção de Efeitos com sombra
         efeitos_texto = self.texto_com_sombra("Efeitos (tecla 2): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
-                                            self.fonte_botao, CORES["BRANCO"])
+                                            FONTE_BOTAO_MENU, CORES["BRANCO"])
         self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
         
         # Botão voltar
@@ -144,7 +232,7 @@ class Menu:
         pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
+        voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
@@ -152,34 +240,69 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def desenhar_guia(self): # Desenha a tela de guia        
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
+            # Painel de fundo (retangulo preto com opacidade)
+            painel = pygame.Surface((600, 380), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
+            painel.fill((0, 0, 0, 150))  # Preto com opacidade
+            self.tela.blit(painel, (self.largura_tela // 2 - 300, 215))
+
         else:
             self.tela.fill(CORES["AZUL"])
-        
+
         # Desenha o título
-        titulo = self.fonte_titulo.render("GUIA DO JOGO", True, CORES["BRANCO"])
-        self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
-        # ----------------------------------------------------------------------------------------------------------
+        self.renderizar_texto("GUIA DO JOGO", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
+
         # Instruções
         instrucoes = [
-            f"Jogador 1 (Verde): Use as teclas 'W', 'A', 'S' e 'D' para mover o personagem e ESPAÇO para coletar os resíduos da margem",
-            "Jogador 2 (Roxo): Use setas direcionais do teclado para mover o personagem e clique com o botão direito do mouse para lançar rede e coletar os resíduos do rio",
-            "Colete itens para limpar o rio e atingir o objetivo!",
-            "Trabalhem juntos para conseguir o melhor resultado!"
+            ("Jogador 1 (Personagem Feminino):", "CENTRO_GUIA", CORES["AMARELO"]),
+            ("- Use as teclas 'W', 'A', 'S' e 'D' para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("- Use a tecla ESPAÇO para coletar os resíduos da margem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("Jogador 2 (Personagem Masculino):", "CENTRO_GUIA", CORES["VERMELHO"]),
+            ("- Use as setas direcionais do teclado para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("- Clique com o botão direito do mouse dentro da área de alcance,", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("  para lançar rede e coletar os resíduos do rio.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("Colete itens para limpar o rio e atingir o objetivo!", "CENTRO_GUIA", CORES["ROXO_GUIA_2"]),
+            ("Trabalhem juntos para conseguir o melhor resultado!", "CENTRO_GUIA", CORES["VERDE_MENU"]),
         ]
-        # ----------------------------------------------------------------------------------------------------------
-        for i, texto in enumerate(instrucoes):
-            linha = self.fonte_botao.render(texto, True, CORES["BRANCO"])
-            self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
-        
+
+        y_base = 270
+        espaco_linha = 35
+
+        for i, (texto, alinhamento, cor) in enumerate(instrucoes):
+            # Usar o método renderizar_texto da própria classe
+            self.renderizar_texto(texto, FONTE_TEXTO_PEQUENO_NEGRITO, cor, y_base + i * espaco_linha, alinhamento)
+
         # Botão voltar
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 610, 200, 50)
         pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
+        voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
@@ -187,37 +310,65 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def desenhar_creditos(self): # Desenha a tela de créditos
         # Desenha o fundo
         if self.background:
             self.tela.blit(self.background, (0, 0))
+            # Painel de fundo (retangulo preto com opacidade)
+            painel = pygame.Surface((800, 360), pygame.SRCALPHA)
+            painel.fill((0, 0, 0, 150))
+            self.tela.blit(painel, (self.largura_tela // 2 - 400, 215)) #todo ------------------------------------------------------------- (opacidade do fundo)
         else:
             self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        titulo = self.fonte_titulo.render("CRÉDITOS", True, CORES["PRETO"])
-        self.tela.blit(titulo, (self.largura_tela // 2 - titulo.get_width() // 2, 100))
+        self.renderizar_texto("CRÉDITOS", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
         
         # Créditos
         creditos = [
-            "Desenvolvido por: Leonardo Rafael, Gabriel Lucas, Heitor da Silva e Brenno Rodrigues",
-            "Arte por: Guilherme Enrique e Yasmim Victória",
-            "Documentado por: Wesley Luiz e Brenda Rafaelly",
-            "Versão: 9.4.4",
-            "Agradecimentos especiais: Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Camila Moura e Davi Wanderley",
-            "Música: Rebbeka Cynthia",
+            ("Desenvolvido por: ", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
+            ("Leonardo Rafael, Gabriel Lucas, Heitor da Silva e Brenno Rodrigues", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Arte por: ", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
+            ("Guilherme Enrique e Yasmim Victória", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Documentado por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
+            ("Wesley Luiz e Brenda Rafaelly", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Música por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
+            ("Rebbeka Cynthia", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Agradecimentos especiais:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
+            ("Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Camila Moura e Davi Wanderley", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
         ]
-        
-        for i, texto in enumerate(creditos):
-            linha = self.fonte_botao.render(texto, True, CORES["PRETO"])
-            self.tela.blit(linha, (self.largura_tela // 2 - linha.get_width() // 2, 200 + i * 40))
-        
+
+        # Definir posição inicial e espaçamento
+        y_base = 270  # Posição Y inicial para os créditos
+        espaco_linha = 30  # Espaço entre cada linha de crédito
+        for i, (texto, alinhamento, cor) in enumerate(creditos):
+            # Usar o método renderizar_texto da própria classe
+            self.renderizar_texto(texto, FONTE_TEXTO_PEQUENO_NEGRITO, cor, y_base + i * espaco_linha, alinhamento)
+
         # Botão voltar
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 400, 200, 50)
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 590, 200, 50)
         pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
         
-        voltar_texto = self.fonte_botao.render("VOLTAR", True, CORES["PRETO"])
+        voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
             voltar_rect.centery - voltar_texto.get_height() // 2
@@ -225,6 +376,32 @@ class Menu:
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def eventos(self, eventos): # Processa os eventos do pygame
         for evento in eventos:
             if evento.type == QUIT:

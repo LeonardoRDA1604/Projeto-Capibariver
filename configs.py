@@ -13,30 +13,36 @@ FONTES = {
     "botao_menu": ('Arial', 32),
     "titulo_pequeno": ('Arial', 30),
     "texto": ('Arial', 24),
+    "texto_pequeno": ('Arial', 18),
     "conclusao": ('Arial', 50),
 }
 
 # === Cores ===
 CORES = {
     "PRETO": (0, 0, 0),
+    "PRETO_SOMBRA": (30, 30, 30),
+    "CINZA_CLARO": (200, 200, 200),
     "BRANCO": (255, 255, 255),
     "VERMELHO": (255, 0, 0),
+    "VERMELHO_CLARO": (200, 0, 0),
     "VERDE_LIMÃO": (0, 255, 0),
     "VERDE": (0, 200, 0),
     "VERDE_CLARO": (0, 150, 0),
+    "VERDE_MENU": (100, 255, 100),
+    "VERDE_MENU_2": (85, 217, 85),
+    "AZUL_ESCURO": (17, 13, 120),
     "AZUL": (0, 0, 255),
+    "CIANO": (0, 255, 255),
     "AMARELO": (255, 255, 0),
     "ROXO": (67, 18, 135),
-    "CINZA_CLARO": (200, 200, 200),
-    "CIANO": (0, 255, 255),
+    "ROXO_GUIA": (126, 10, 242),
+    "ROXO_GUIA_2": (122, 44, 255),
     "LARANJA": (255, 165, 0),
-    "AZUL_ESCURO": (17, 13, 120),
-    "VERDE MENU": (100, 255, 100),
+    "LARANJA_TITULO_MENU": (240, 124, 29),
 
-#    "VERMELHO": (200, 0, 0),
-#    "AZUL": (0, 0, 200),
-#    "CINZA": (150, 150, 150),
-#    "CINZA_CLARO": (200, 200, 200)
+    "AZUL": (0, 0, 200),
+    "CINZA": (150, 150, 150),
+    "CINZA_CLARO": (200, 200, 200)
 }
 
 # === Velocidade do jogador e dos itens ===
