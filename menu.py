@@ -16,7 +16,7 @@ class Menu:
         
         # Configurações de áudio
         self.som_ativado = True
-        self.volume = 10  # Volume de 0 a 100 (começando em 10%)
+        self.volume = 00  # Volume de 0 a 100 (começando em 10%)
         self.efeitos_ativados = True
         self.musica_carregada = False
         
@@ -25,7 +25,7 @@ class Menu:
             self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_menu_capibariver.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
-            print("Imagem de fundo não encontrada. Usando cor sólida.")
+            # print("Imagem de fundo não encontrada. Usando cor sólida.")
             self.background = None
 
         # Inicializar sistema de som
@@ -34,6 +34,7 @@ class Menu:
         # Botões
         self.botoes = []
         self.criar_botoes()
+
 
     # Carregar som do jogo
     def inicializar_som(self): # Inicializa o sistema de som e carrega a música
@@ -44,23 +45,23 @@ class Menu:
             if os.path.exists(caminho_som):
                 pygame.mixer.music.load(caminho_som)
                 self.musica_carregada = True
-                print(f"Música carregada: {caminho_som}")
+                # print(f"Música carregada: {caminho_som}")
                 # Inicia a música se o som estiver ativado
                 if self.som_ativado:
                     pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
                     pygame.mixer.music.play(-1)  # -1 = loop infinito
-                    print("Música iniciada")
+                    # print("Música iniciada")
             else:
                 print(f"Arquivo de música não encontrado: {caminho_som}")
                 self.musica_carregada = False
         except pygame.error as e:
-            print(f"Erro ao carregar trilha sonora: {e}")
+            # print(f"Erro ao carregar trilha sonora: {e}")
             self.musica_carregada = False
 
 
     def controlar_som(self): # controla o estado da música baseado na config de som
         if not self.musica_carregada:
-            print("Música não carregada, não é possível controlar")
+            # print("Música não carregada, não é possível controlar")
             return
         try:
             if self.som_ativado: # Se o som está ativado mas a música não está tocando, inicia
@@ -68,41 +69,39 @@ class Menu:
                     pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
                     # Carrega e toca o som em loop infinito
                     pygame.mixer.music.play(-1)  # -1 = loop infinito
-                    print("Música iniciada via controle")
+                    # print("Música iniciada via controle")
                 else:
                     # Se já está tocando, apenas ajusta o volume
                     pygame.mixer.music.set_volume(self.volume / 100.0)
-                    print("Volume ajustado")
+                    # print("Volume ajustado")
             else:
                 # Se o som está desativado, para a música
                 pygame.mixer.music.stop()
-                print("Música parada")
+                # print("Música parada")
         except pygame.error as e:
             print(f"Erro ao carregar trilha sonora: {e}")
 
 
     def alternar_som(self): # alterna o estado do som e controla a música
         self.som_ativado = not self.som_ativado
-        print(f"Som {'ativado' if self.som_ativado else 'desativado'}")
+        # print(f"Som {'ativado' if self.som_ativado else 'desativado'}")
         self.controlar_som()
+
 
     def aumentar_volume(self): # Aumenta o volume em 1%
         if self.volume < 100:
             self.volume += 10
-            print(f"Volume aumentado para: {self.volume}%")
+            # print(f"Volume aumentado para: {self.volume}%")
             if self.som_ativado and self.musica_carregada:
                 pygame.mixer.music.set_volume(self.volume / 100.0)
+
 
     def diminuir_volume(self): # Diminui o volume em 1%
         if self.volume > 0:
             self.volume -= 10
-            print(f"Volume diminuído para: {self.volume}%")
+            # print(f"Volume diminuído para: {self.volume}%")
             if self.som_ativado and self.musica_carregada:
                 pygame.mixer.music.set_volume(self.volume / 100.0)
-
-
-
-
 
 
     def texto_com_sombra(self, texto, fonte, cor, cor_sombra=(CORES["PRETO_SOMBRA"]), deslocamento=2):
@@ -118,7 +117,6 @@ class Menu:
         superficie_final.blit(superficie_sombra, (deslocamento, deslocamento))
         superficie_final.blit(superficie_texto, (0, 0))
         return superficie_final
-
 
 
     def renderizar_texto(self, texto, fonte, cor, y, alinhamento="CENTRO", usar_sombra=True): #  Renderiza texto com alinhamento e sombra opcional.
@@ -142,20 +140,13 @@ class Menu:
         elif alinhamento == "CENTRO_OPCOES":
             x = self.largura_tela // 2 - superficie_texto.get_width() // 2
         elif alinhamento == "ESQUERDA_OPCOES":
-            x = self.largura_tela // 2 - 270  # ajuste para alinhamento à esquerda
+            x = self.largura_tela // 2 - 200  # ajuste para alinhamento à esquerda
         elif alinhamento == "DIREITA_OPCOES":
             x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
         else:
             x = 0  # fallback
 
         self.tela.blit(superficie_texto, (x, y))
-
-
-
-
-
-
-
 
 
     def criar_botoes(self): #Cria os botões do menu principal
@@ -173,17 +164,6 @@ class Menu:
                 "cor_hover": CORES["VERDE_CLARO"],
                 "acao": self.get_acao(opcao)
             })
-    
-
-
-
-
-
-
-
-
-
-
 
 
     def get_acao(self, opcao): # Retorna a ação associada a cada botão
@@ -201,28 +181,9 @@ class Menu:
             return lambda: None
     
 
-
-
-
-
-
-
-
-
     def mudar_estado(self, novo_estado):                    # Muda o estado do menu
         if novo_estado in self.estados:
             self.estado = novo_estado
-    
-
-
-
-
-
-
-
-
-
-
 
 
     def desenhar(self):                                     # Desenha o menu principal
@@ -246,90 +207,6 @@ class Menu:
                 botao["rect"].centerx - texto.get_width() // 2,
                 botao["rect"].centery - texto.get_height() // 2
             ))
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def desenhar_opcoes(self): # Desenha o menu de opções
-        if self.background:
-            self.tela.blit(self.background, (0, 0)) # Desenha o fundo
-            painel = pygame.Surface((400, 200), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
-            painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
-            self.tela.blit(painel, (self.largura_tela // 2 - 200, 215))
-        else:
-            self.tela.fill(CORES["AZUL"])
-        
-        # Desenha o título com sombra
-        self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
-
-        # Opção de Som com sombra no texto
-        som_texto = self.texto_com_sombra("Som (tecla 1): " + ("LIGADO" if self.som_ativado else "DESLIGADO"), 
-                                        FONTE_BOTAO_MENU, CORES["BRANCO"])
-
-        self.tela.blit(som_texto, (self.largura_tela // 2 - som_texto.get_width() // 2, 250))
-        
-        # Opção de Efeitos com sombra
-        Volume_texto = self.texto_com_sombra("Volume+ (tecla2) / Volume- (tecla3): " + f"{self.volume}%", 
-                                            FONTE_BOTAO_MENU, CORES["BRANCO"])
-        self.tela.blit(Volume_texto, (self.largura_tela // 2 - Volume_texto.get_width() // 2, 310))
-
-        # # Opção de Efeitos sonoros com sombra
-        # efeitos_texto = self.texto_com_sombra("Efeitos (tecla 4): " + ("LIGADO" if self.efeitos_ativados else "DESLIGADO"), 
-        #                                     FONTE_BOTAO_MENU, CORES["BRANCO"])
-        # self.tela.blit(efeitos_texto, (self.largura_tela // 2 - efeitos_texto.get_width() // 2, 300))
-        
-        # Botão voltar
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 450, 200, 50)
-        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
-        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
-        
-        voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
-        self.tela.blit(voltar_texto, (
-            voltar_rect.centerx - voltar_texto.get_width() // 2,
-            voltar_rect.centery - voltar_texto.get_height() // 2
-        ))
-        
-        return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     def desenhar_guia(self): # Desenha a tela de guia        
@@ -377,23 +254,6 @@ class Menu:
         ))
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     def desenhar_creditos(self): # Desenha a tela de créditos
@@ -443,31 +303,87 @@ class Menu:
         ))
         
         return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
-    
 
+        
+    def desenhar_opcoes(self): # Desenha o menu de opções
+        # Desenha o fundo
+        if self.background:
+            self.tela.blit(self.background, (0, 0))
+            # Painel de fundo (retangulo preto com opacidade)
+            painel = pygame.Surface((450, 280), pygame.SRCALPHA)
+            painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  
+            self.tela.blit(painel, (self.largura_tela // 2 - 225, 215))
+        else:
+            self.tela.fill(CORES["AZUL"])
+        
+        # Desenha o título
+        self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
+        
+        # Definir posição inicial e espaçamento
+        y_base = 260  # Posição Y inicial para as opções
+        espaco_linha = 35  # Espaço entre cada linha de opção
+        linha_atual = 0
+        
+        # 1. Música (Tecla 1 para Ligar/Desligar)
+        self.renderizar_texto("Tecla 1 para Ligar/Desligar a música do jogo", FONTE_TEXTO_PEQUENO_NEGRITO, CORES["VERDE_MENU"], 
+                            y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
+        linha_atual += 1
 
+        # 2. MÚSICA: LIGADO/DESLIGADO na mesma linha
+        y_som = y_base + linha_atual * espaco_linha
+        som_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("MÚSICA: ", True, CORES["BRANCO"])
+        status_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("LIGADA" if self.som_ativado else "DESLIGADA", True, 
+                                            CORES["VERDE"] if self.som_ativado else CORES["VERMELHO_CLARO"])
+        
+        # Calcular posições para centralizar ambos os textos juntos
+        largura_total = som_texto.get_width() + status_texto.get_width()
+        x_inicio = 440
+        # x_inicio = self.largura_tela // 2 - largura_total // 2
+        
+        self.tela.blit(som_texto, (x_inicio, y_som))
+        self.tela.blit(status_texto, (x_inicio + som_texto.get_width(), y_som))
+        linha_atual += 1
 
+        # 3. Blank space, para separar
+        self.renderizar_texto("", FONTE_TEXTO_PEQUENO_NEGRITO, CORES["BRANCO"], 
+                            y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
+        linha_atual += 1
 
+        # 4. Volume (Tecla 2 para Diminuir o som do jogo)
+        self.renderizar_texto("Tecla 2 para diminuir o som do jogo", FONTE_TEXTO_PEQUENO_NEGRITO, CORES["VERDE_MENU"], 
+                            y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
+        linha_atual += 1
+        
+        # 5. Volume (Tecla 3 para Aumentar o som do jogo)
+        self.renderizar_texto("ou a Tecla 3 para aumentar", FONTE_TEXTO_PEQUENO_NEGRITO, CORES["VERDE_MENU"], 
+                            y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
+        linha_atual += 1
 
+        # 6. VOLUME: x% na mesma linha
+        y_volume = y_base + linha_atual * espaco_linha
+        volume_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("VOLUME: ", True, CORES["BRANCO"])
+        valor_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render(f"{self.volume}%", True, CORES["ROXO_GUIA"])
+        
+        # Calcular posições para centralizar ambos os textos juntos
+        largura_total = volume_texto.get_width() + valor_texto.get_width()
+        x_inicio = 440
+        # x_inicio = self.largura_tela // 2 - largura_total // 2
+        
+        self.tela.blit(volume_texto, (x_inicio, y_volume))
+        self.tela.blit(valor_texto, (x_inicio + volume_texto.get_width(), y_volume))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        # Botão voltar
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 535, 200, 50)
+        pygame.draw.rect(self.tela, CORES["VERDE"], voltar_rect)
+        pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)
+        
+        voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
+        self.tela.blit(voltar_texto, (
+            voltar_rect.centerx - voltar_texto.get_width() // 2,
+            voltar_rect.centery - voltar_texto.get_height() // 2
+        ))
+        
+        return voltar_rect  # Retorna o rect do botão voltar para checagem de clique
 
 
     def eventos(self, eventos): # Processa os eventos do pygame

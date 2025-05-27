@@ -242,7 +242,6 @@ def tela_vitoria():
                 vitoria_jogadores = False  # Sai da tela de vitória com qualquer tecla
                 
         TELA.fill((CORES["PRETO"]))
-# !!!!!!!!! ----------------------------------------------------- ALERTA ARRUMAR DEPOIS, NÃO ESTÁ RESPONSIVO ----------------------------------------------------------------
         Conclusao(TELA).desenhar()
         TEXTO1 = FONTE_CONCLUSAO_NEGRITO.render('Parabéns!', True, CORES["CIANO"], 1)
         TEXTO2 = FONTE_CONCLUSAO_NEGRITO.render('Vocês ajudaram na limpeza do rio.', True, CORES["VERDE"], 1)
@@ -253,7 +252,7 @@ def tela_vitoria():
         TELA.blit(TEXTO2, (LARGURA_TELA // 2 - TEXTO2.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 - 50))
         TELA.blit(TEXTO3, (LARGURA_TELA // 2 - TEXTO3.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 50))
         TELA.blit(TEXTO4, (LARGURA_TELA // 2 - TEXTO4.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 150))
-# !!!!!!!!! ----------------------------------------------------- ALERTA ARRUMAR DEPOIS, NÃO ESTÁ RESPONSIVO ----------------------------------------------------------------
+
 
         # TELA.blit(TEXTO1, (LARGURA_TELA // 2 - TEXTO1.get_width() // 2, ALTURA_TELA // 2 - 50))
 
@@ -497,9 +496,3 @@ while JOGO_RODANDO:
 # Finaliza o Pygame
 pygame.quit()
 sys.exit()
-
-
-
-
-# [[<Surface(64x128x32 SW)>, <Surface(64x128x32 SW)>], [<Surface(64x128x32 SW)>, <Surface(64x128x32 SW)>]]
-# [[<Surface(64x128x32 SW)>, <Surface(64x128x32 SW)>], [<Surface(64x128x32 SW)>, <Surface(64x128x32 SW)>]]
