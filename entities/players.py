@@ -104,18 +104,10 @@ class Jogador:
         if self.sprites:
             # Selecionar a linha correta baseada na direção
             direction_index = self.get_direction_index()
-            
-            # Desenhar o sprite correto (linha = direção, coluna = frame)
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
-            # teste \/
-            # print(f'{self.redeindex//10 = }')
+            # Desenhar o sprite correto (linha = direção, coluna = frame)
             if self.rede:
                 #TODO ajustar o reset da animação
-                # tela.blit(self.spritesrede[self.redeindex//10],self.rect)
-                # self.redeindex = (min(self.redeindex + 1,20))
-
-                # tela.blit(self.spritesrede[self.redeindex//8],self.rect)  # //8 em vez de //10
-                # self.redeindex = (self.redeindex + 1) % 40 # 39 em vez de 20 (5 sprites * 8 = 40 frames)
                 frame_atual = min(self.redeindex//3, 4)  # Garante que não passe do sprite 4
                 tela.blit(self.spritesrede[frame_atual], self.rect)
                 if self.redeindex < 14:  # Só incrementa se não chegou no final
@@ -140,6 +132,9 @@ class Jogador:
         return 0  # Padrão: para baixo
     
     def mover(self, teclas, cima, baixo, esquerda, direita): # Move o jogador e atualiza a direção
+        if self.rede:
+            self.is_moving = False
+            return
         # Resetar estado de movimento
         self.is_moving = False
         
