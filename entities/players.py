@@ -132,6 +132,7 @@ class Jogador:
         return 0  # Padrão: para baixo
     
     def mover(self, teclas, cima, baixo, esquerda, direita): # Move o jogador e atualiza a direção
+        # verificador para o personagem ficar parado, não ter movimentação enquanto a rede está sendo jogada/puxada, indo e retornando
         if self.rede:
             self.is_moving = False
             return
