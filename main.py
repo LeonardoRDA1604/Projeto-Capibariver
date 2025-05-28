@@ -430,7 +430,7 @@ while JOGO_RODANDO:
                     pontos_jogada = 0
                     rede_timer = -1
                 else:
-                    rede_timer += 10
+                    rede_timer = 10
         except NameError:
             pass
         try: #TODO (?)
