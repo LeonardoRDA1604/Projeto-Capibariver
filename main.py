@@ -285,11 +285,37 @@ while JOGO_RODANDO:
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
-                for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
-                    itens_agua.append(Item_agua())
+                # for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
+                #     itens_agua.append(Item_agua())
+                if progresso <= OBJETIVO / 4:
+                    for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
+                        itens_agua.append(Item_agua())
+                elif progresso <= OBJETIVO / 2:
+                    for _ in range( (QUANT_LIXOS_AGUA * 3) // 4  ): 
+                        itens_agua.append(Item_agua())
+                elif progresso <= (3 * OBJETIVO) / 4:
+                    for _ in range(QUANT_LIXOS_AGUA // 2): 
+                        itens_agua.append(Item_agua())
+                else:  
+                   for _ in range(QUANT_LIXOS_AGUA // 4): 
+                        itens_agua.append(Item_agua())
+
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
-                    itens_terra.append(Item_terra())
+                # for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
+                #     itens_terra.append(Item_terra())
+
+                if progresso <= OBJETIVO / 4:
+                    for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
+                        itens_terra.append(Item_terra())
+                elif progresso <= OBJETIVO / 2:
+                    for _ in range((QUANT_LIXOS_TERRA * 3) // 4): 
+                        itens_terra.append(Item_terra())
+                elif progresso <= (3 * OBJETIVO) / 4:
+                    for _ in range(QUANT_LIXOS_TERRA // 2): 
+                        itens_terra.append(Item_terra())
+                else:  
+                    for _ in range(QUANT_LIXOS_TERRA // 4): 
+                        itens_terra.append(Item_terra())
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Lógica de colisão da rede
             if evento.type == MOUSEBUTTONDOWN and evento.button == 1 and rede_timer == -1:  # Faz uma série de verificações antes de lançar a rede
@@ -380,7 +406,7 @@ while JOGO_RODANDO:
                 # Verifica se a rede chegou no seu local para coletar o lixo
                 if rede_origem[1] - rede_circle[1] < 5:
                     for item in itens_agua:
-                        pos = item.rect[0], item.rect[1]
+                        # pos = item.rect[0], item.rect[1]
                         if False not in circle_colide(pos, rede_pos, 40): # Se tiver colisão com algum dos itens
                             pontos_jogada += 1
                             item.rect.x = LARGURA_TELA
@@ -406,19 +432,21 @@ while JOGO_RODANDO:
                 if rede_circle[1] > jogador_pos[1]:
                     rede_circle[1] -= rede_velocidade
                 if rede_circle[0] < jogador_pos[0]:
-                    rede_circle[0] += rede_velocidade/(proporção+0.01)
+                    rede_circle[0] += rede_velocidade//(proporção+0.01)
                 if rede_circle[0] > jogador_pos[0]:
-                    rede_circle[0] -= rede_velocidade/(proporção+0.01)
-
+                    rede_circle[0] -= rede_velocidade//(proporção+0.01)
+                # print(rede_circle)
+                # print(rede_timer)
                 # Atualiza a posição da rede
                 rede_pos = rede_circle
-            if rede_timer == 0: # Final do ciclo da rede
+            if rede_timer == 3: # Final do ciclo da rede
                 if abs(rede_circle[1] - jogador_pos[1]) < 20 and abs(rede_circle[0] - jogador_pos[0]) < 20:
                     jogador2.itens_coletados += pontos_jogada
                     pontos_jogada = 0
                     rede_timer = -1
                 else:
-                    rede_timer = 10
+                    rede_circle = jogador_pos
+                    rede_timer += 1  
         except NameError:
             pass
         try: #TODO (?)
