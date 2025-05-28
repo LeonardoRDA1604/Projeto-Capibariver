@@ -116,9 +116,9 @@ class Jogador:
 
                 # tela.blit(self.spritesrede[self.redeindex//8],self.rect)  # //8 em vez de //10
                 # self.redeindex = (self.redeindex + 1) % 40 # 39 em vez de 20 (5 sprites * 8 = 40 frames)
-                frame_atual = min(self.redeindex//8, 4)  # Garante que não passe do sprite 4
+                frame_atual = min(self.redeindex//3, 4)  # Garante que não passe do sprite 4
                 tela.blit(self.spritesrede[frame_atual], self.rect)
-                if self.redeindex < 39:  # Só incrementa se não chegou no final
+                if self.redeindex < 14:  # Só incrementa se não chegou no final
                     self.redeindex += 1
 
             else:
