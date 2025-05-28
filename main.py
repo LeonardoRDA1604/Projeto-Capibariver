@@ -396,7 +396,7 @@ while JOGO_RODANDO:
                         if False not in circle_colide(pos, rede_pos, 40): #Se tiver colisão com algum dos itens
                             pontos_jogada += 1
                             item.rect.x = LARGURA_TELA
-                            REDE.blit(item.imagem,(random.randint(0,80),random.randint(0,80))) #Coloca os itens na superficie da rede
+                            REDE.blit(item.imagem,(random.randint(0,30),random.randint(0,30))) #Coloca os itens na superficie da rede
                             # teste \/
                             # print(item.imagem)
                 rede_pos = rede_origem
@@ -406,7 +406,7 @@ while JOGO_RODANDO:
                         pos = item.rect[0], item.rect[1]
                         if False not in circle_colide(pos, rede_pos, 40):
                             pontos_jogada += 1
-                            REDE.blit(item.imagem,(random.randint(0,68),random.randint(0,68)))
+                            REDE.blit(item.imagem,(random.randint(0,40),random.randint(0,40)))
                             item.rect.x = LARGURA_TELA
                 rede_timer -= 1
 

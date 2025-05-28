@@ -15,7 +15,7 @@ class Jogador:
         # Atributos para animação
         self.direction = "down"  # Direção padrão (baixo, cima, esquerda, direita)
         self.animation_frame = 0
-        self.animation_speed = 0.05  # CORRIGIDO: Velocidade mais rápida (50ms por frame)
+        self.animation_speed = 0.05  # Velocidade mais rápida (50ms por frame)
         self.animation_timer = 0
         self.is_moving = False
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
@@ -89,7 +89,7 @@ class Jogador:
         if not self.is_moving:
             # Se não estiver se movendo, usar o primeiro frame (posição padrão)
             self.animation_frame = 0
-            self.animation_timer = 0  # NOVO: Resetar timer quando parar
+            self.animation_timer = 0  # resetar timer quando parar
             return
             
         # Incrementar o timer
@@ -143,7 +143,7 @@ class Jogador:
         # Resetar estado de movimento
         self.is_moving = False
         
-        # Verificar quais teclas estão pressionadas (usando IF ao invés de ELIF)
+        # Verificar quais teclas estão pressionadas
         movimentos_ativos = []
         
         if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
@@ -168,7 +168,7 @@ class Jogador:
             direction = movimentos_ativos[0]
             self.last_direction_pressed = direction
         else:
-            # NOVO: Evitar movimento diagonal - usar última direção ou primeira disponível
+            # Evitar movimento diagonal - usar última direção ou primeira disponível
             direction = None
             
             # Verificar se a última direção pressionada ainda está ativa
@@ -212,4 +212,4 @@ class Jogador:
             
     def desenhar_rede(self, tela): # Implementação do método de desenhar a rede.
         if self.rede:
-            pygame.draw.circle(tela, (255, 255, 255), self.rede.center, 30)  # CORES["BRANCO"]
+            pygame.draw.circle(tela, (CORES["BRANCO"]), self.rede.center, 30)

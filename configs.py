@@ -62,7 +62,7 @@ OBJETIVO = 200
 
 # === Quantidade de lixos ===
 QUANT_LIXOS_AGUA = 8
-QUANT_LIXOS_TERRA = 4
+QUANT_LIXOS_TERRA = 0
 
 # === Barra de progressão de objetivo do jogo ===
 LARGURA_BARRA = 300

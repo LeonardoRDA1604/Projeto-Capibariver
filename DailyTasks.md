@@ -1,11 +1,3 @@
-# Arrumar menu
-- leo
-
-# tela de conclusão
-- brenda
-
-
-------------------------------------------------------------------------
 parte 2
 
 
@@ -15,40 +7,25 @@ parte 2
 
 # retoques finais
 
-# criar o executável do jogo (brenno)
+# criar o executável do jogo e link de download (brenno)
 
 # entregar
 
 
-------------------------------------------------------------------------
-cortados
-
-- ecobarreira
-- ecobarco
-- animacoes dos animais
-- tela responsiva
-- arrumar efeitos sonoros
 
 
 
 
+------------------------------------------------------
 
 
 
 
+- # ADD Logica de diminuir quantidade de lixos a medida que o rio troca de background/nivel
+- # ADD ANIMACAO COLETA
+- # AJUSTAR ANIMACAO PERSONAGEM (MOVIMENTO)
+- # AJUSTAR ANIMACAO E BUG DA REDE QUANDO VOLTA PRO PERSONAGEM
 
-------------------------------------------------------------------------
-Concluidos
-
-
-# Objetos ----------------------------------------------------------------------------------------------------------- Concluido    -    (Leo)
-# arrumar backgrounds com animações do rio -------------------------------------------------------------------------- Concluido    -    (Leo)
-# arrumar trilha sonora --------------------------------------------------------------------------------------------- Concluído    -    (Leo)
-# arrumar posição dos players 1 e dois (limites de onde podem se movimentar, iguais aos do item_terra) -------------- Concluído    -    (Leo)
-# colocar sprites dos lixos ----------------------------------------------------------------------------------------- Concluído    -    (Leo)
-# animação do rio --------------------------------------------------------------------------------------------------- Concluído    -    (Leo)
-# Arrumar logica de movimento e ação do jogador 2, range para jogar a rede para o movimento fazer sentido ----------- Concluído    -    (Davi)
-
-# arrumar animações ------------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
-# modularizar o codigo ---------------------------------------------------------------------------------------------- Em Progresso -    (Leo)
-# Arrumar menu ------------------------------------------------------------------------------------------------------ Em Progresso -    (Leo)
+- ADD FULLSCREEN MODE
+- ADD SOMBRA TEXTO DO JOGO (JOGADORES, OBJETIVO, FPS)
+- ADD TEMPO MINIMO DA LOCKED TELA CONCLUSAO ATÉ SKIPPAR
