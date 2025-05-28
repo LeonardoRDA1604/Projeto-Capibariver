@@ -22,7 +22,7 @@ class Menu:
         
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_menu_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_menu_capibariver_com_logo-fafire.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             # print("Imagem de fundo não encontrada. Usando cor sólida.")
@@ -220,19 +220,19 @@ class Menu:
             self.tela.fill(CORES["AZUL"])
 
         # Desenha o título
-        self.renderizar_texto("GUIA DO JOGO", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
+        self.renderizar_texto("GUIA DO JOGO", FONTE_TITULO_PEQUENO_NEGRITO_SUBLINHADO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
 
         # Instruções
         instrucoes = [
-            ("Jogador 1 (Personagem Feminino):", "CENTRO_GUIA", CORES["AMARELO"]),
+            ("Jogador 1 (Personagem Feminino):", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("- Use as teclas 'W', 'A', 'S' e 'D' para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("- Use a tecla ESPAÇO para coletar os resíduos da margem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
-            ("Jogador 2 (Personagem Masculino):", "CENTRO_GUIA", CORES["VERMELHO"]),
+            ("Jogador 2 (Personagem Masculino):", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("- Use as setas direcionais do teclado para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("- Clique com o botão direito do mouse dentro da área de alcance,", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("  para lançar rede e coletar os resíduos do rio.", "ESQUERDA_GUIA", CORES["BRANCO"]),
-            ("Colete itens para limpar o rio e atingir o objetivo!", "CENTRO_GUIA", CORES["ROXO_GUIA_2"]),
-            ("Trabalhem juntos para conseguir o melhor resultado!", "CENTRO_GUIA", CORES["VERDE_MENU"]),
+            ("Colete itens para limpar o rio e atingir o objetivo!", "CENTRO_GUIA", CORES["AZUL_TURQUESA"]),
+            ("Trabalhem juntos para conseguir o melhor resultado!", "CENTRO_GUIA", CORES["CIANO"]),
         ]
 
         y_base = 270
@@ -275,7 +275,7 @@ class Menu:
             self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        self.renderizar_texto("CRÉDITOS", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
+        self.renderizar_texto("CRÉDITOS", FONTE_TITULO_PEQUENO_NEGRITO_SUBLINHADO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
         
         # Créditos
         creditos = [
@@ -331,7 +331,7 @@ class Menu:
             self.tela.fill(CORES["AZUL"])
         
         # Desenha o título
-        self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
+        self.renderizar_texto("OPÇÕES", FONTE_TITULO_PEQUENO_NEGRITO_SUBLINHADO, CORES["LARANJA_TITULO_MENU"], 220, "CENTRO_GUIA")
         
         # Definir posição inicial e espaçamento
         y_base = 270  # Posição Y inicial para as opções
@@ -347,7 +347,7 @@ class Menu:
         y_som = y_base + linha_atual * espaco_linha
         som_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("MÚSICA: ", True, CORES["BRANCO"])
         status_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("LIGADA" if self.som_ativado else "DESLIGADA", True, 
-                                            CORES["VERDE"] if self.som_ativado else CORES["VERMELHO_CLARO"])
+                                            CORES["CIANO"] if self.som_ativado else CORES["VERMELHO_CLARO"])
         
         # Calcular posições para centralizar ambos os textos juntos
         largura_total = som_texto.get_width() + status_texto.get_width()

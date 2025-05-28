@@ -26,7 +26,7 @@ class Jogador:
         self.last_direction_pressed = None
         
         # Carregar o spritesheet
-        self.redesprites = pygame.image.load('assets/sprites/players/Jogador2_spritesheet_action.png')
+        self.redesprites = pygame.image.load('assets/sprites/players/Jogador2_spritesheet_action_without_net.png')
         if spritesheet_path and os.path.exists(spritesheet_path):
             self.spritesheet = SpriteSheet(spritesheet_path)
             # Recortar o spritesheet (16 sprites: 4 linhas, 4 colunas)
@@ -39,14 +39,28 @@ class Jogador:
             )
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Ler a spritesheet
-            self.redespritesheet = SpriteSheet('assets/sprites/players/Jogador2_spritesheet_action.png')
+            self.redespritesheet = SpriteSheet('assets/sprites/players/Jogador2_spritesheet_action_without_net.png')
             # Pra deixar os 3 sprites em uma unica lista
-            self.spritesrede = self.redespritesheet.get_sprites(64,128,2,2)
-            # teste \/
-            # print(self.spritesrede)
-            self.spritesrede[0].append(self.spritesrede[1][0])
-            self.spritesrede.pop()
-            self.spritesrede = self.spritesrede[0]
+            # self.spritesrede = self.redespritesheet.get_sprites(64,128,2,2)
+            # # teste \/
+            # # print(self.spritesrede)
+            # self.spritesrede[0].append(self.spritesrede[1][0])
+            # self.spritesrede.pop()
+            # self.spritesrede = self.spritesrede[0]
+
+
+            self.spritesrede = self.redespritesheet.get_sprites(64, 64, 3, 2)  # 3 linhas, 2 colunas
+
+            # Agora transformar a matriz em lista linear dos 5 sprites
+            sprites_temp = []
+            for linha in self.spritesrede:
+                for sprite in linha:
+                    sprites_temp.append(sprite)
+
+            # Pegar apenas os 5 primeiros (caso tenha 6 posições mas só 5 sprites)
+            self.spritesrede = sprites_temp[:5]
+
+
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Redimensionar para o tamanho do jogador
             self.scale_sprites()
@@ -67,7 +81,8 @@ class Jogador:
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         self.rede = rede
         if rede == False:
-            self.redeindex == 0
+            # self.redeindex == 0
+            self.redeindex = 0
             # teste \/
             # print(f'{self.redeindex = }')
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
@@ -96,8 +111,16 @@ class Jogador:
             # print(f'{self.redeindex//10 = }')
             if self.rede:
                 #TODO ajustar o reset da animação
-                tela.blit(self.spritesrede[self.redeindex//10],self.rect)
-                self.redeindex = (min(self.redeindex + 1,20))
+                # tela.blit(self.spritesrede[self.redeindex//10],self.rect)
+                # self.redeindex = (min(self.redeindex + 1,20))
+
+                # tela.blit(self.spritesrede[self.redeindex//8],self.rect)  # //8 em vez de //10
+                # self.redeindex = (self.redeindex + 1) % 40 # 39 em vez de 20 (5 sprites * 8 = 40 frames)
+                frame_atual = min(self.redeindex//8, 4)  # Garante que não passe do sprite 4
+                tela.blit(self.spritesrede[frame_atual], self.rect)
+                if self.redeindex < 39:  # Só incrementa se não chegou no final
+                    self.redeindex += 1
+
             else:
                 tela.blit(self.sprites[direction_index][self.animation_frame], self.rect)
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F

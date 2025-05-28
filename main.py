@@ -174,7 +174,7 @@ class Conclusao:
 
         # Carregar imagem de fundo
         try:
-            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_conclusao_capibariver.png'))
+            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_conclusao_com_texto_e_logo-fafire.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
         except:
             print("Imagem de fundo não encontrada. Usando cor sólida.")
@@ -243,24 +243,9 @@ def tela_vitoria():
                 
         TELA.fill((CORES["PRETO"]))
         Conclusao(TELA).desenhar()
-        TEXTO1 = FONTE_CONCLUSAO_NEGRITO.render('Parabéns!', True, CORES["CIANO"], 1)
-        TEXTO2 = FONTE_CONCLUSAO_NEGRITO.render('Vocês ajudaram na limpeza do rio.', True, CORES["VERDE"], 1)
-        TEXTO3 = FONTE_CONCLUSAO_NEGRITO.render('Graças aos seus esforços, o rio foi salvo.', True, CORES["VERDE"], 1)
-        TEXTO4 = FONTE_CONCLUSAO_NEGRITO.render('Continue com o bom trabalho!', True, CORES["VERDE"], 1)
-
-        TELA.blit(TEXTO1, (LARGURA_TELA // 2 - TEXTO1.get_width() // 2, ALTURA_TELA // 5 - ALTURA_TELA // 10))
-        TELA.blit(TEXTO2, (LARGURA_TELA // 2 - TEXTO2.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 - 50))
-        TELA.blit(TEXTO3, (LARGURA_TELA // 2 - TEXTO3.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 50))
-        TELA.blit(TEXTO4, (LARGURA_TELA // 2 - TEXTO4.get_width() // 2, ALTURA_TELA // 5 + ALTURA_TELA // 10 + 150))
-
-
-        # TELA.blit(TEXTO1, (LARGURA_TELA // 2 - TEXTO1.get_width() // 2, ALTURA_TELA // 2 - 50))
-
         pygame.display.update()
 
 # todo ---------------------------------------------------------------------------------------------------
-
-
 def circle_colide(objeto:list, circulo:list, raio):
     # Definir a colisão com a esquerda e direita do circulo
     coli_x_esquerda = objeto[0] >= circulo[0] - raio
@@ -270,7 +255,6 @@ def circle_colide(objeto:list, circulo:list, raio):
     coli_y_baixo = objeto[1] <= circulo[1] + raio
     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
     return colide
-
 # todo --------------------------------------------------------------------------------------------------
 
 # Inicializar o jogo
@@ -287,7 +271,7 @@ rede_chegou = False
 rede_origem = [10000,10000]
 pontos_jogada = 0
 REDE = pygame.surface.Surface((100,100))
-imagem_rede = pygame.image.load('assets/sprites/players/Jogador2_object_rede-teste.png')
+imagem_rede = pygame.image.load('assets/sprites/players/Jogador2_object_rede.png')
 imagem_rede.set_colorkey((0,0,0))
 REDE.blit(imagem_rede,(0,0))
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F

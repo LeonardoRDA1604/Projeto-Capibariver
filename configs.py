@@ -34,6 +34,7 @@ CORES = {
     "AZUL_ESCURO": (17, 13, 120),
     "AZUL": (0, 0, 255),
     "AZUL_CLARO": (0, 0, 200),
+    "AZUL_TURQUESA": (5, 165, 255),
     "CIANO": (0, 255, 255),
     "AMARELO": (255, 255, 0),
     "ROXO": (67, 18, 135),

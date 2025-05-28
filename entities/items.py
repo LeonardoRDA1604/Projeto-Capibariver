@@ -28,9 +28,7 @@ class Item_agua:
                     pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_agua-sanitaria.png'), # Objeto 18
                     pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_amaciante.png'), # Objeto 19
                     pygame.image.load('./assets/sprites/items/type7-garrafa-plastica_galao-de-agua.png'), # Objeto 20
-                    pygame.image.load('./assets/sprites/items/type8-garrafa-vidro_verde.png'), # Objeto 21
                     pygame.image.load('./assets/sprites/items/type9-outros_caixa-de-leite.png'), # Objeto 24
-                    pygame.image.load('./assets/sprites/items/type9-outros_oculos.png'), # Objeto 25
                 ]
         # Escolher uma imagem aleatória da lista
         self.imagem = random.choice(self.imagens)
