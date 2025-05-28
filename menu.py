@@ -48,7 +48,7 @@ class Menu:
                 # print(f"Música carregada: {caminho_som}")
                 # Inicia a música se o som estiver ativado
                 if self.som_ativado:
-                    pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
+                    pygame.mixer.music.set_volume(self.volume / 100.0)  # Volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1, por exemplo
                     pygame.mixer.music.play(-1)  # -1 = loop infinito
                     # print("Música iniciada")
             else:
@@ -59,14 +59,14 @@ class Menu:
             self.musica_carregada = False
 
 
-    def controlar_som(self): # controla o estado da música baseado na config de som
+    def controlar_som(self): # Controla o estado da música baseado na config de som
         if not self.musica_carregada:
             # print("Música não carregada, não é possível controlar")
             return
         try:
-            if self.som_ativado: # Se o som está ativado mas a música não está tocando, inicia
+            if self.som_ativado: # Se o som está ativado e a música não está tocando, inicia
                 if not pygame.mixer.music.get_busy():
-                    pygame.mixer.music.set_volume(self.volume / 100.0)  # volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1 por exemplo
+                    pygame.mixer.music.set_volume(self.volume / 100.0)  # Volume entre 0.0(0%) e 1.0(100%) ||| divide e transforma 10 em 0.1, por exemplo
                     # Carrega e toca o som em loop infinito
                     pygame.mixer.music.play(-1)  # -1 = loop infinito
                     # print("Música iniciada via controle")
@@ -82,7 +82,7 @@ class Menu:
             print(f"Erro ao carregar trilha sonora: {e}")
 
 
-    def alternar_som(self): # alterna o estado do som e controla a música
+    def alternar_som(self): # Alterna o estado do som e controla a música
         self.som_ativado = not self.som_ativado
         # print(f"Som {'ativado' if self.som_ativado else 'desativado'}")
         self.controlar_som()
@@ -119,7 +119,7 @@ class Menu:
         return superficie_final
 
 
-    def renderizar_texto(self, texto, fonte, cor, y, alinhamento="CENTRO", usar_sombra=True): #  Renderiza texto com alinhamento e sombra opcional.
+    def renderizar_texto(self, texto, fonte, cor, y, alinhamento="CENTRO", usar_sombra=True): #  Renderiza texto com alinhamento e sombra opcional
         if usar_sombra:
             superficie_texto = self.texto_com_sombra(texto, fonte, cor)
         else:
@@ -128,19 +128,19 @@ class Menu:
         if alinhamento == "CENTRO_GUIA":
             x = self.largura_tela // 2 - superficie_texto.get_width() // 2
         elif alinhamento == "ESQUERDA_GUIA":
-            x = self.largura_tela // 2 - 270  # ajuste para alinhamento à esquerda
+            x = self.largura_tela // 2 - 270  # Ajuste para alinhamento à esquerda
         elif alinhamento == "DIREITA_GUIA":
             x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
         elif alinhamento == "CENTRO_CREDITOS":
             x = self.largura_tela // 2 - superficie_texto.get_width() // 2
         elif alinhamento == "ESQUERDA_CREDITOS":
-            x = self.largura_tela // 2 - 370  # ajuste para alinhamento à esquerda
+            x = self.largura_tela // 2 - 370  # Ajuste para alinhamento à esquerda
         elif alinhamento == "DIREITA_CREDITOS":
             x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
         elif alinhamento == "CENTRO_OPCOES":
             x = self.largura_tela // 2 - superficie_texto.get_width() // 2
         elif alinhamento == "ESQUERDA_OPCOES":
-            x = self.largura_tela // 2 - 200  # ajuste para alinhamento à esquerda
+            x = self.largura_tela // 2 - 200  # Ajuste para alinhamento à esquerda
         elif alinhamento == "DIREITA_OPCOES":
             x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
         else:
@@ -149,7 +149,7 @@ class Menu:
         self.tela.blit(superficie_texto, (x, y))
 
 
-    def criar_botoes(self): #Cria os botões do menu principal
+    def criar_botoes(self): # Cria os botões do menu principal
         opcoes = ["INICIAR", "GUIA", "CRÉDITOS", "OPÇÕES", "SAIR"]
         for i, opcao in enumerate(opcoes):
             largura_botao = 200
@@ -212,7 +212,7 @@ class Menu:
     def desenhar_guia(self): # Desenha a tela de guia        
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
-            # Painel de fundo (retangulo preto com opacidade)
+            # Painel de fundo (retângulo preto com opacidade)
             painel = pygame.Surface((600, 380), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
             self.tela.blit(painel, (self.largura_tela // 2 - 300, 215))
@@ -229,7 +229,7 @@ class Menu:
             ("- Use a tecla ESPAÇO para coletar os resíduos da margem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("Jogador 2 (Personagem Masculino):", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("- Use as setas direcionais do teclado para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
-            ("- Clique com o botão direito do mouse dentro da área de alcance,", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("- Clique com o botão esquerdo do mouse dentro da área de alcance,", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("  para lançar rede e coletar os resíduos do rio.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("Colete itens para limpar o rio e atingir o objetivo!", "CENTRO_GUIA", CORES["AZUL_TURQUESA"]),
             ("Trabalhem juntos para conseguir o melhor resultado!", "CENTRO_GUIA", CORES["CIANO"]),
@@ -249,11 +249,11 @@ class Menu:
         # Aplica o mesmo sistema de hover do menu principal
         cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
 
-        # Retângulo do botão (igual ao seu menu principal)
+        # Retângulo do botão (igual ao menu principal)
         pygame.draw.rect(self.tela, cor, voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
 
-        # Texto do botão (igual ao seu menu principal)
+        # Texto do botão (igual ao menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
@@ -267,8 +267,8 @@ class Menu:
         # Desenha o fundo
         if self.background:
             self.tela.blit(self.background, (0, 0))
-            # Painel de fundo (retangulo preto com opacidade)
-            painel = pygame.Surface((800, 360), pygame.SRCALPHA)
+            # Painel de fundo (retângulo preto com opacidade)
+            painel = pygame.Surface((800, 390), pygame.SRCALPHA)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  
             self.tela.blit(painel, (self.largura_tela // 2 - 400, 215)) #todo ------------------------------------------------------------- (opacidade do fundo)
         else:
@@ -288,7 +288,8 @@ class Menu:
             ("Música por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
             ("Rebbeka Cynthia", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Agradecimentos especiais:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
-            ("Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Camila Moura e Davi Wanderley", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Dir. Elaine Carpinteiro (EPEC),", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Camila Moura e Davi Wanderley", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
         ]
 
         # Definir posição inicial e espaçamento
@@ -300,16 +301,16 @@ class Menu:
 
         # Botão voltar com hover
         pos_mouse = pygame.mouse.get_pos()
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 590, 200, 50)
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 620, 200, 50)
 
         # Aplica o mesmo sistema de hover do menu principal
         cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
 
-        # Retângulo do botão (igual ao seu menu principal)
+        # Retângulo do botão (igual ao menu principal)
         pygame.draw.rect(self.tela, cor, voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
 
-        # Texto do botão (igual ao seu menu principal)
+        # Texto do botão (igual ao menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
@@ -323,7 +324,7 @@ class Menu:
         # Desenha o fundo
         if self.background:
             self.tela.blit(self.background, (0, 0))
-            # Painel de fundo (retangulo preto com opacidade)
+            # Painel de fundo (retângulo preto com opacidade)
             painel = pygame.Surface((450, 280), pygame.SRCALPHA)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  
             self.tela.blit(painel, (self.largura_tela // 2 - 225, 215))
@@ -358,7 +359,7 @@ class Menu:
         self.tela.blit(status_texto, (x_inicio + som_texto.get_width(), y_som))
         linha_atual += 1
 
-        # 3. Blank space, para separar
+        # 3. Blank space (para separar)
         self.renderizar_texto("", FONTE_TEXTO_PEQUENO_NEGRITO, CORES["BRANCO"], 
                             y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
         linha_atual += 1
@@ -373,7 +374,7 @@ class Menu:
                             y_base + linha_atual * espaco_linha, "ESQUERDA_OPCOES")
         linha_atual += 1
 
-        # 6. VOLUME: x% na mesma linha
+        # 6. VOLUME: x % na mesma linha
         y_volume = y_base + linha_atual * espaco_linha
         volume_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render("VOLUME: ", True, CORES["BRANCO"])
         valor_texto = FONTE_TEXTO_PEQUENO_NEGRITO.render(f"{self.volume}%", True, CORES["ROXO_GUIA"])
@@ -393,11 +394,11 @@ class Menu:
         # Aplica o mesmo sistema de hover do menu principal
         cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
 
-        # Retângulo do botão (igual ao seu menu principal)
+        # Retângulo do botão (igual ao menu principal)
         pygame.draw.rect(self.tela, cor, voltar_rect)
         pygame.draw.rect(self.tela, CORES["PRETO"], voltar_rect, 2)  # Borda
 
-        # Texto do botão (igual ao seu menu principal)
+        # Texto do botão (igual ao menu principal)
         voltar_texto = FONTE_BOTAO_MENU.render("VOLTAR", True, CORES["PRETO"])
         self.tela.blit(voltar_texto, (
             voltar_rect.centerx - voltar_texto.get_width() // 2,
