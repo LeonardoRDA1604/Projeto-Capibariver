@@ -128,7 +128,7 @@ class Menu:
         if alinhamento == "CENTRO_GUIA":
             x = self.largura_tela // 2 - superficie_texto.get_width() // 2
         elif alinhamento == "ESQUERDA_GUIA":
-            x = self.largura_tela // 2 - 270  # Ajuste para alinhamento à esquerda
+            x = self.largura_tela // 2 - 285  # Ajuste para alinhamento à esquerda
         elif alinhamento == "DIREITA_GUIA":
             x = self.largura_tela // 2 + 400 - superficie_texto.get_width()
         elif alinhamento == "CENTRO_CREDITOS":
@@ -213,9 +213,9 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
             # Painel de fundo (retângulo preto com opacidade)
-            painel = pygame.Surface((600, 380), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
+            painel = pygame.Surface((630, 400), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
-            self.tela.blit(painel, (self.largura_tela // 2 - 300, 215))
+            self.tela.blit(painel, (self.largura_tela // 2 - 315, 215))
         else:
             self.tela.fill(CORES["AZUL"])
 
@@ -226,17 +226,19 @@ class Menu:
         instrucoes = [
             ("Jogador 1 (Personagem Feminino):", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("- Use as teclas 'W', 'A', 'S' e 'D' para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
-            ("- Use a tecla ESPAÇO para coletar os resíduos da margem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("- Use a tecla 'ESPAÇO' para coletar os resíduos da margem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("Jogador 2 (Personagem Masculino):", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("- Use as setas direcionais do teclado para mover o personagem.", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("- Clique com o botão esquerdo do mouse dentro da área de alcance,", "ESQUERDA_GUIA", CORES["BRANCO"]),
             ("  para lançar rede e coletar os resíduos do rio.", "ESQUERDA_GUIA", CORES["BRANCO"]),
+            ("Pressione a tecla 'F11' para Ativar/Desativar", "CENTRO_GUIA", CORES["VERDE_MENU"]),
+            ("o modo tela cheia, ou pressione ESC para sair dele.", "CENTRO_GUIA", CORES["VERDE_MENU"]),
             ("Colete itens para limpar o rio e atingir o objetivo!", "CENTRO_GUIA", CORES["AZUL_TURQUESA"]),
             ("Trabalhem juntos para conseguir o melhor resultado!", "CENTRO_GUIA", CORES["CIANO"]),
         ]
 
         y_base = 270
-        espaco_linha = 35
+        espaco_linha = 30
 
         for i, (texto, alinhamento, cor) in enumerate(instrucoes):
             # Usar o método renderizar_texto da própria classe
@@ -244,7 +246,7 @@ class Menu:
 
         # Botão voltar com hover
         pos_mouse = pygame.mouse.get_pos()
-        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100, 610, 200, 50)
+        voltar_rect = pygame.Rect(self.largura_tela // 2 - 100,630, 200, 50)
 
         # Aplica o mesmo sistema de hover do menu principal
         cor = CORES["VERDE_CLARO"] if voltar_rect.collidepoint(pos_mouse) else CORES["VERDE"]
@@ -284,7 +286,7 @@ class Menu:
             ("Arte por: ", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
             ("Guilherme Enrique e Yasmim Victória", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Documentado por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
-            ("Wesley Luiz e Brenda Rafaelly", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Wesley Luiz e Brenda Rafaely", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Música por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
             ("Rebbeka Cynthia", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Agradecimentos especiais:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
