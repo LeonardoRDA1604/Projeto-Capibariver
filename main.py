@@ -18,6 +18,7 @@ pygame.display.set_caption(NOME_DO_JOGO)
 # Inicialização do menu
 menu = Menu(TELA)
 
+fullscreen = False
 
 class Jogo:
     def __init__(self, tela):
@@ -271,6 +272,14 @@ while JOGO_RODANDO:
     for evento in eventos:
         if evento.type == QUIT:
             JOGO_RODANDO = False
+        if evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_F11:
+                pygame.display.toggle_fullscreen()
+            elif evento.key == pygame.K_ESCAPE:
+                # Verifica se está em fullscreen checando as flags da tela
+                current_flags = TELA.get_flags()
+                if current_flags & pygame.FULLSCREEN:
+                    pygame.display.toggle_fullscreen()
         # Eventos específicos do jogo
         if menu.estado == "JOGO":
             # Obter o tempo decorrido desde o último frame (em segundos)
@@ -486,6 +495,7 @@ while JOGO_RODANDO:
             menu.estado = "MENU"  # Volta para o menu após a vitória
             if menu.estado == "MENU" and iniciar_jogo() == True:
                 menu.estado = "JOGO"
+
             # elif teclas[K_ESC] == (JOGO_RODANDO == False)
             # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
