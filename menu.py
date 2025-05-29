@@ -15,8 +15,8 @@ class Menu:
 
         
         # Configurações de áudio
-        self.som_ativado = True
-        self.volume = 00  # Volume de 0 a 100 (começando em 10%)
+        self.som_ativado = SOM_ATIVADO
+        self.volume = VOLUME_INICIAL_MUSICA  # Volume de 0 a 100 (começando em 10%)
         self.efeitos_ativados = True
         self.musica_carregada = False
         

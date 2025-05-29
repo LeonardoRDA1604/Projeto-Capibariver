@@ -70,7 +70,7 @@ ALTURA_BARRA = 30
 
 # === Áudio ===
 SOM_ATIVADO = True
-VOLUME_GERAL = 0.5
+VOLUME_INICIAL_MUSICA = 10
 
 # Variáveis globais
 jogador1 = None
