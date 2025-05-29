@@ -339,6 +339,7 @@ while JOGO_RODANDO:
                 if jogador1.rect.colliderect(item.rect):
                     if evento.type ==  pygame.KEYDOWN and evento.key == pygame.K_SPACE:
                         jogador1.coletar_item(itens_terra)
+                        jogador1.coleta = True
                         break
 
     #Animação dos personagens:
