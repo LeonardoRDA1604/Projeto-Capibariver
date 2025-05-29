@@ -285,12 +285,7 @@ while JOGO_RODANDO:
             # Obter o tempo decorrido desde o último frame (em segundos)
             dt = clock.get_time() / 1000.0
             # Atualiza animações
-            jogador1.update_animation(dt)
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
-            if rede_timer != -1:
-                jogador2.update_animation(dt,True)
-            else:
-                jogador2.update_animation(dt)
+            
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
@@ -346,6 +341,14 @@ while JOGO_RODANDO:
                         jogador1.coletar_item(itens_terra)
                         break
 
+    #Animação dos personagens:
+    if menu.estado == "JOGO":
+        jogador1.update_animation()
+    #? ---------------------------------------------------------------------------------------------------------------------------------------- I
+        if rede_timer != -1:
+            jogador2.update_animation(True)
+        else:
+            jogador2.update_animation()
     # Processa eventos do menu
     menu.eventos(eventos)
     

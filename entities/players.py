@@ -77,7 +77,7 @@ class Jogador:
                         (self.rect.width, self.rect.height)
                     )
     
-    def update_animation(self, dt,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
+    def update_animation(self,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         self.rede = rede
         if rede == False:
@@ -93,13 +93,13 @@ class Jogador:
             return
             
         # Incrementar o timer
-        self.animation_timer += dt
-        
-        # Se passou tempo suficiente, avançar para o próximo frame
-        if self.animation_timer >= self.animation_speed:
-            self.animation_frame = (self.animation_frame + 1) % 4  # Ciclo entre os 4 frames
-            self.animation_timer = 0  # Resetar o timer
+        self.animation_timer = (self.animation_timer + 1) % 10
     
+        # Se passou tempo suficiente, avançar para o próximo frame
+        if self.animation_timer == 9:
+            self.animation_frame = (self.animation_frame + 1) % 4 # Ciclo entre os 4 frames
+        print(self.animation_frame)
+        
     def desenhar(self, tela): # Desenha o jogador com sprite ou retângulo colorido como fallback
         if self.sprites:
             # Selecionar a linha correta baseada na direção
