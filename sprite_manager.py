@@ -1,14 +1,14 @@
 import pygame
 
 class SpriteSheet:
-    def __init__(self, filename): # Carrega o arquivo de spritesheet.
+    def __init__(self, filename): # Carrega o arquivo de spritesheet
         try:
             self.sheet = pygame.image.load(filename).convert_alpha()
         except pygame.error as e:
             print(f"Erro ao carregar o spritesheet: {e}")
             self.sheet = None
     
-    def get_image(self, x, y, width, height): # Extrai uma imagem do spritesheet.
+    def get_image(self, x, y, width, height): # Extrai uma imagem do spritesheet
         if self.sheet is None:
             # Criar uma superfície vazia como fallback
             image = pygame.Surface((width, height), pygame.SRCALPHA)
@@ -21,7 +21,7 @@ class SpriteSheet:
         image.blit(self.sheet, (0, 0), (x, y, width, height))
         return image
     
-    def get_sprites(self, width, height, rows, cols): # Recorta todo o spritesheet em várias imagens individuais e Retorna uma matriz bidimensional de imagens.
+    def get_sprites(self, width, height, rows, cols): # Recorta todo o spritesheet em várias imagens individuais e retorna uma matriz bidimensional de imagens
         sprite_list = []
         for row in range(rows):
             row_sprites = []

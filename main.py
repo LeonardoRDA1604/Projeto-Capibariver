@@ -15,21 +15,10 @@ pygame.mixer.init()
 # Inicialização da tela do Game
 pygame.display.set_caption(NOME_DO_JOGO)
 
-# Inicializar o menu
+# Inicialização do menu
 menu = Menu(TELA)
 
-# try:
-#     # Caminho para o som ambiente
-#     caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
-
-#     # Carrega e toca o som em loop infinito
-#     pygame.mixer.music.load(caminho_som)
-#     pygame.mixer.music.set_volume(0.1)  # volume entre 0.0(0%) e 1.0(100%)
-#     pygame.mixer.music.play(-1)  # -1 = loop infinito
-# except pygame.error as e:
-#     print(f"Erro ao carregar trilha sonora: {e}")
-
-# pygame.mixer.music.stop() # to stop
+fullscreen = False
 
 class Jogo:
     def __init__(self, tela):
@@ -58,17 +47,17 @@ class Jogo:
 
         # Controle de animação do rio (não afetado pelo scroll)
         self.rio_frame_index = 0
-        self.rio_frame_delay = 1  # milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou multiplos de 2
+        self.rio_frame_delay = 1  # Milissegundos entre frames #!padrão 150ms e o ideal é 1 / 10 / 100 ou múltiplos de 2
         self.ultimo_update_rio = pygame.time.get_ticks()
 
         # Controle de animação da margem (independente do rio)
         self.margem_frame_index = 0
-        self.margem_frame_delay = 1000  # milissegundos entre frames #!padrão 150ms
+        self.margem_frame_delay = 1000 # Milissegundos entre frames #!padrão 150ms
         self.ultimo_update_margem = pygame.time.get_ticks()
 
         # Controle de scroll (apenas para backgrounds, não afeta animação)
         self.scroll_x = 0
-        self.scroll_speed = VEL_ITEM # velocidade do scroll (pixels por frame) #! +1 + VEL_ITEM  
+        self.scroll_speed = VEL_ITEM # Velocidade do scroll (pixels por frame) #! +1 + VEL_ITEM  
 
     def carregar_frames_animados(self, lista_de_pastas):
         animacoes = []
@@ -109,12 +98,12 @@ class Jogo:
         if self.scroll_x >= self.largura_tela:
             self.scroll_x = 0
 
-    def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados. (backgrounds e margens)
-        max_background = max((len(f) for f in self.backgrounds if f), default=1) # backgrounds
-        max_margem = max((len(f) for f in self.margens if f), default=1) # margens
+    def get_max_frames(self): # Retorna o maior número de frames entre os fundos carregados (backgrounds e margens)
+        max_background = max((len(f) for f in self.backgrounds if f), default=1) # Backgrounds
+        max_margem = max((len(f) for f in self.margens if f), default=1) # Margens
         return max(max_background, max_margem)
 
-    def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível.
+    def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
             frames = self.backgrounds[nivel]
             frame_atual = frames[self.rio_frame_index % len(frames)]
@@ -123,9 +112,9 @@ class Jogo:
             self.tela.blit(frame_atual, (self.scroll_x, 0))
             self.tela.blit(frame_atual, (self.scroll_x - self.largura_tela, 0))
         else:
-            self.tela.fill((0, 0, 0))
+            self.tela.fill(CORES["PRETO"])
 
-        # Desenha margem por cima (fixa, usa sempre o índice 0 para aplicar em todos os backgrounds.)
+        # Desenha margem por cima (fixa, usa sempre o índice 0 para aplicar em todos os backgrounds)
         # A margem NÃO tem scroll, apenas animação
         if self.margens and self.margens[0]:
             frames_margem = self.margens[0]
@@ -154,15 +143,15 @@ jogo = Jogo(TELA)
 class Rio:
     def __init__(self):
         self.x1 = 0
-        self.x2 = LARGURA_TELA  # começa fora da tela à esquerda
-        self.y = 0  # posição vertical do rio visível na parte inferior
-        self.altura = ALTURA_TELA-(ALTURA_TELA/3) # altura do retângulo do rio
+        self.x2 = LARGURA_TELA  # Começa fora da tela, à esquerda
+        self.y = 0  # Posição vertical do rio visível na parte inferior
+        self.altura = ALTURA_TELA-(ALTURA_TELA/3) # Altura do retângulo do rio
         self.cor = CORES["AZUL"]
 
     def desenhar(self):
         pygame.draw.rect(TELA, self.cor, (self.x1, self.y, LARGURA_TELA, self.altura))
 
-# Criar rio
+# Cria rio
 rio = Rio()
 
 
@@ -172,7 +161,7 @@ class Conclusao:
         self.largura_tela = tela.get_width()
         self.altura_tela = tela.get_height()
 
-        # Carregar imagem de fundo
+        # Carrega imagem de fundo
         try:
             self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_conclusao_com_texto_e_logo-fafire.png'))
             self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
@@ -189,14 +178,14 @@ class Conclusao:
 def iniciar_jogo():
     global jogador1, jogador2, itens_agua, itens_terra, CRIAR_ITEM_EVENTO, CRIAR_ITEM_EVENTO_2
     
-    # # Criar jogadores (sem animação)
+    # # Cria jogadores (SEM animação)
     # jogador1 = Jogador(300, ALTURA_TELA-100, CORES["AMARELO"])  # Amarelo
     # jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"])  # Roxo
     
-    #spritesheet path
+    # spritesheet path
     spritesheet_path1 = os.path.join('assets/sprites/players', 'Jogador1_spritesheet_movement.png')
     spritesheet_path2 = os.path.join('assets/sprites/players', 'Jogador2_spritesheet_movement.png')
-    # Criar jogadores (com animação)
+    # Cria jogadores (COM animação)
     jogador1 = Jogador(300, ALTURA_TELA-100, CORES["AMARELO"], spritesheet_path1, 1)
     jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"], spritesheet_path2, 2)
 
@@ -214,7 +203,7 @@ def desenhar_barra_progresso(TELA, x, y, largura, altura):
     # Fundo da barra
     pygame.draw.rect(TELA, CORES["CINZA_CLARO"], (x, y, largura, altura))
 
-    # Calcular largura da barra preenchida
+    # Calcula largura da barra preenchida
     preenchimento_barra = int((progresso / OBJETIVO) * largura)
     # Preenchimento proporcional / Barra preenchida
     pygame.draw.rect(TELA, CORES["VERDE"], (x, y, preenchimento_barra, altura))  # Barra verde de progressão
@@ -247,25 +236,25 @@ def tela_vitoria():
 
 # todo ---------------------------------------------------------------------------------------------------
 def circle_colide(objeto:list, circulo:list, raio):
-    # Definir a colisão com a esquerda e direita do circulo
+    # Define a colisão com a esquerda e direita do circulo
     coli_x_esquerda = objeto[0] >= circulo[0] - raio
     coli_x_direita = objeto[0] <= circulo[0] + raio
-    # Se o objeto está entre circulo -30 e circulo + 30
+    # Se o objeto está entre círculo -30 e círculo + 30
     coli_y_topo = objeto[1] >= circulo[1] - raio
     coli_y_baixo = objeto[1] <= circulo[1] + raio
     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
     return colide
 # todo --------------------------------------------------------------------------------------------------
 
-# Inicializar o jogo
+# Inicializa o jogo
 iniciar_jogo()
 
-clock = pygame.time.Clock()  # criando o relógio antes do loop
+clock = pygame.time.Clock()  # Cria o relógio antes do loop
 
 # Loop principal
 JOGO_RODANDO = True
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
-# Variaveis da rede. #todo (passar pro config depois)
+# Variáveis da rede. #todo (passar pro config depois)
 rede_timer = -1
 rede_chegou = False
 rede_origem = [10000,10000]
@@ -276,57 +265,95 @@ imagem_rede.set_colorkey((0,0,0))
 REDE.blit(imagem_rede,(0,0))
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
 while JOGO_RODANDO:
-    clock.tick(FPS) # velocidade de atualização da tela ou FPS(Frames por segundo)
+    clock.tick(FPS) # Velocidade de atualização da tela ou FPS (Frames Por Segundo)
     # print(clock.get_fps())
-    # Processar eventos
+    # Processa eventos
     eventos = pygame.event.get()
     for evento in eventos:
         if evento.type == QUIT:
             JOGO_RODANDO = False
+        if evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_F11:
+                pygame.display.toggle_fullscreen()
+            elif evento.key == pygame.K_ESCAPE:
+                # Verifica se está em fullscreen checando as flags da tela
+                current_flags = TELA.get_flags()
+                if current_flags & pygame.FULLSCREEN:
+                    pygame.display.toggle_fullscreen()
         # Eventos específicos do jogo
         if menu.estado == "JOGO":
             # Obter o tempo decorrido desde o último frame (em segundos)
             dt = clock.get_time() / 1000.0
-            # Atualizar animações
-            jogador1.update_animation(dt)
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
-            if rede_timer != -1:
-                jogador2.update_animation(dt,True)
-            else:
-                jogador2.update_animation(dt)
+            # Atualiza animações
+            
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
-                for _ in range(QUANT_LIXOS_AGUA): # começa em 8 e vai diminuindo por mapa de 2 em 2, até 2?
-                    itens_agua.append(Item_agua())
+                # for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
+                #     itens_agua.append(Item_agua())
+                if progresso <= OBJETIVO / 4:
+                    for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
+                        itens_agua.append(Item_agua())
+                elif progresso <= OBJETIVO / 2:
+                    for _ in range( (QUANT_LIXOS_AGUA * 3) // 4  ): 
+                        itens_agua.append(Item_agua())
+                elif progresso <= (3 * OBJETIVO) / 4:
+                    for _ in range(QUANT_LIXOS_AGUA // 2): 
+                        itens_agua.append(Item_agua())
+                else:  
+                   for _ in range(QUANT_LIXOS_AGUA // 4): 
+                        itens_agua.append(Item_agua())
+
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                for _ in range(QUANT_LIXOS_TERRA): # começa em 4 e vai diminuindo por mapa até 1
-                    itens_terra.append(Item_terra())
+                # for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
+                #     itens_terra.append(Item_terra())
+
+                if progresso <= OBJETIVO / 4:
+                    for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
+                        itens_terra.append(Item_terra())
+                elif progresso <= OBJETIVO / 2:
+                    for _ in range((QUANT_LIXOS_TERRA * 3) // 4): 
+                        itens_terra.append(Item_terra())
+                elif progresso <= (3 * OBJETIVO) / 4:
+                    for _ in range(QUANT_LIXOS_TERRA // 2): 
+                        itens_terra.append(Item_terra())
+                else:  
+                    for _ in range(QUANT_LIXOS_TERRA // 4): 
+                        itens_terra.append(Item_terra())
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
-            # Logica de colisão da rede
-            if evento.type == MOUSEBUTTONDOWN and evento.button == 1 and rede_timer == -1:  #Faz uma série de verificações antes de lançar a rede
+            # Lógica de colisão da rede
+            if evento.type == MOUSEBUTTONDOWN and evento.button == 1 and rede_timer == -1:  # Faz uma série de verificações antes de lançar a rede
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
                 pos_mouse = pygame.mouse.get_pos() 
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
-                if pygame.rect.Rect(rede_disponivel).collidepoint(pos_mouse[0],pos_mouse[1]): #Verifica se o clique foi na área disponível para rede
+                if pygame.rect.Rect(rede_disponivel).collidepoint(pos_mouse[0],pos_mouse[1]): # Verifica se o clique foi na área disponível para rede
                     rede_circle = [pos_mouse[0], pos_mouse[1]]
-                    proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))) - 180 #Varíavel criada para mudar o tempo da rede dinamicamente com base na distância
-                    rede_timer = int(FPS*2.5+(proporção/6)) #Tempo do ciclo da rede e temporarizador
-                    tempo_total = rede_timer #COpia do temporarizador para referência de proporcionalidade na rede
-                    rede_origem = [jogador2.rect.centerx,jogador2.rect.centery] #Posição de onde a rede vai
-                    REDE.blit(imagem_rede,(0,0)) #Coloca a imaagem da rede
+                    proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))) - 180 # Variável criada para mudar o tempo da rede dinamicamente, com base na distância
+                    rede_timer = int(FPS*2.5+(proporção/6)) # Tempo do ciclo da rede e temporizador
+                    tempo_total = rede_timer # Cópia do temporizador para referência de proporcionalidade na rede
+                    rede_origem = [jogador2.rect.centerx,jogador2.rect.centery] # Posição de onde a rede vai
+                    REDE.blit(imagem_rede,(0,0)) # Coloca a imagem da rede
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
-            # Colisão e coleta do jogador 1
+            # Colisão e coleta do Jogador 1
             for item in itens_terra:
                 if jogador1.rect.colliderect(item.rect):
                     if evento.type ==  pygame.KEYDOWN and evento.key == pygame.K_SPACE:
                         jogador1.coletar_item(itens_terra)
+                        jogador1.coleta = True
                         break
 
-    # Processar eventos do menu
+    #Animação dos personagens:
+    if menu.estado == "JOGO":
+        jogador1.update_animation()
+    #? ---------------------------------------------------------------------------------------------------------------------------------------- I
+        if rede_timer != -1:
+            jogador2.update_animation(True)
+        else:
+            jogador2.update_animation()
+    # Processa eventos do menu
     menu.eventos(eventos)
     
-    # Desenhar a tela atual baseada no estado
+    # Desenha a tela atual baseada no estado
     if menu.estado == "MENU":
         menu.desenhar()
     elif menu.estado == "GUIA":
@@ -339,7 +366,7 @@ while JOGO_RODANDO:
         # Lógica do jogo
         TELA.fill(CORES["PRETO"])
         
-        # Atualizar o progresso
+        # Atualiza o progresso
         progresso = jogador1.itens_coletados + jogador2.itens_coletados
         
         # Movimentação dos jogadores
@@ -348,20 +375,20 @@ while JOGO_RODANDO:
         jogador1.mover(teclas, K_w, K_s, K_a, K_d)
         jogador2.mover(teclas, K_UP, K_DOWN, K_LEFT, K_RIGHT)
 
-        # Desenhar elementos do jogo
+        # Desenha elementos do jogo
         rio.desenhar()
-        # desenhando o background do jogo
+        # Desenha o background do jogo
         jogo.desenhar_fundo_por_progresso(progresso, OBJETIVO)
     
         for item in itens_agua:
             item.desenhar()
-            item.mover() # Movimentação dos itens
+            item.mover() # Movimentação dos itens no rio (água)
         for item in itens_terra:
             item.desenhar()
-            item.mover() # Movimentação dos itens
+            item.mover() # Movimentação dos itens na margem (terra)
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         # Área onde se pode jogar a rede, define e mostra
-        rede_disponivel = [jogador2.rect.centerx-100,jogador2.rect[1]-500,200,350] # area onde se pode jogar a rede (range da rede)
+        rede_disponivel = [jogador2.rect.centerx-100,jogador2.rect[1]-500,200,350] # Área onde se pode jogar a rede (range da rede)
         range_rede = pygame.surface.Surface((200,350))
         range_rede.fill((COR_RANGE_REDE))
         range_rede.set_alpha(TRANSPARENCIA_RANGE_REDE)
@@ -373,15 +400,15 @@ while JOGO_RODANDO:
         jogador2.desenhar(TELA)
 
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
-        jogador_pos = [jogador2.rect.centerx,jogador2.rect.centery] #Pega a posiçaõ atual do jogador quando verifica a rede
+        jogador_pos = [jogador2.rect.centerx,jogador2.rect.centery] # Pega a posição atual do jogador quando verifica a rede
 
         # Desenhar rede
         try:
-            if rede_timer > tempo_total/2.3: #Primeiro ciclo da rede
-                proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1)) #Mesma proporção anterior
-                rede_timer -= 1 #Diminiu um do timer
+            if rede_timer > tempo_total/2.3: # Primeiro ciclo da rede
+                proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1)) # Mesma proporção anterior
+                rede_timer -= 1 # Diminui um do timer
 
-                #Verficações de posições cartesianas
+                # Verificações de posições cartesianas
                 if rede_origem[1] > rede_circle[1]:
                     rede_origem[1] -= rede_velocidade*2
                 if rede_origem[0] < rede_circle[0]:
@@ -389,14 +416,14 @@ while JOGO_RODANDO:
                 if rede_origem[0] > rede_circle[0]:
                     rede_origem[0] -= rede_velocidade/(proporção+0.01)*2
 
-                #Verifica se a rede chegou no seu local para coletar o lixo
+                # Verifica se a rede chegou no seu local para coletar o lixo
                 if rede_origem[1] - rede_circle[1] < 5:
                     for item in itens_agua:
-                        pos = item.rect[0], item.rect[1]
-                        if False not in circle_colide(pos, rede_pos, 40): #Se tiver colisão com algum dos itens
+                        # pos = item.rect[0], item.rect[1]
+                        if False not in circle_colide(pos, rede_pos, 40): # Se tiver colisão com algum dos itens
                             pontos_jogada += 1
                             item.rect.x = LARGURA_TELA
-                            REDE.blit(item.imagem,(random.randint(0,30),random.randint(0,30))) #Coloca os itens na superficie da rede
+                            REDE.blit(item.imagem,(random.randint(0,30),random.randint(0,30))) # Coloca os itens na superfície da rede
                             # teste \/
                             # print(item.imagem)
                 rede_pos = rede_origem
@@ -412,32 +439,34 @@ while JOGO_RODANDO:
 
                 proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1))
 
-                #Verficações de posições cartesianas
+                # Verificações de posições cartesianas
                 if rede_circle[1] < jogador_pos[1]:
                     rede_circle[1] += rede_velocidade
                 if rede_circle[1] > jogador_pos[1]:
                     rede_circle[1] -= rede_velocidade
                 if rede_circle[0] < jogador_pos[0]:
-                    rede_circle[0] += rede_velocidade/(proporção+0.01)
+                    rede_circle[0] += rede_velocidade//(proporção+0.01)
                 if rede_circle[0] > jogador_pos[0]:
-                    rede_circle[0] -= rede_velocidade/(proporção+0.01)
-
-                #Atualiza a posilção da rede
+                    rede_circle[0] -= rede_velocidade//(proporção+0.01)
+                # print(rede_circle)
+                # print(rede_timer)
+                # Atualiza a posição da rede
                 rede_pos = rede_circle
-            if rede_timer == 0: #Final do ciclo da rede
+            if rede_timer == 3: # Final do ciclo da rede
                 if abs(rede_circle[1] - jogador_pos[1]) < 20 and abs(rede_circle[0] - jogador_pos[0]) < 20:
                     jogador2.itens_coletados += pontos_jogada
                     pontos_jogada = 0
                     rede_timer = -1
                 else:
-                    rede_timer = 10
+                    rede_circle = jogador_pos
+                    rede_timer += 1  
         except NameError:
             pass
         try: #TODO (?)
-            REDE.set_colorkey((0,0,0))
+            REDE.set_colorkey(CORES["PRETO"])
             TELA.blit(REDE,(rede_pos[0]-50,rede_pos[1]-50))
             if rede_timer == -1:
-                REDE.fill((0,0,0))
+                REDE.fill(CORES["PRETO"])
 
         except NameError:
             pass
@@ -470,11 +499,12 @@ while JOGO_RODANDO:
             menu.estado = "MENU"  # Volta para o menu após a vitória
             if menu.estado == "MENU" and iniciar_jogo() == True:
                 menu.estado = "JOGO"
+
             # elif teclas[K_ESC] == (JOGO_RODANDO == False)
             # -------------------------------------------------------------------------------------------------------------------------
             # -------------------------------------------------------------------------------------------------------------------------
     
-    # Atualizar a tela
+    # Atualiza a tela
     pygame.display.update()
 
 # Finaliza o Pygame

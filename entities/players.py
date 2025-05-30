@@ -18,6 +18,7 @@ class Jogador:
         self.animation_speed = 0.05  # Velocidade mais rápida (50ms por frame)
         self.animation_timer = 0
         self.is_moving = False
+        self.coleta = False
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         # Index da rede
         self.redeindex = 0
@@ -27,6 +28,7 @@ class Jogador:
         
         # Carregar o spritesheet
         self.redesprites = pygame.image.load('assets/sprites/players/Jogador2_spritesheet_action_without_net.png')
+        self.timer = 0
         if spritesheet_path and os.path.exists(spritesheet_path):
             self.spritesheet = SpriteSheet(spritesheet_path)
             # Recortar o spritesheet (16 sprites: 4 linhas, 4 colunas)
@@ -37,6 +39,7 @@ class Jogador:
                 rows=4,     # 4 linhas (down, left, right, up)
                 cols=4      # 4 frames de animação para cada direção
             )
+            self.spritesheet_coleta = SpriteSheet(r'assets\sprites\players\Jogador1_spritesheet_action.png')
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Ler a spritesheet
             self.redespritesheet = SpriteSheet('assets/sprites/players/Jogador2_spritesheet_action_without_net.png')
@@ -50,7 +53,8 @@ class Jogador:
 
 
             self.spritesrede = self.redespritesheet.get_sprites(64, 64, 3, 2)  # 3 linhas, 2 colunas
-
+            self.spritecoleta = self.spritesheet_coleta.get_sprites(64,64,1,4)
+            
             # Agora transformar a matriz em lista linear dos 5 sprites
             sprites_temp = []
             for linha in self.spritesrede:
@@ -77,7 +81,7 @@ class Jogador:
                         (self.rect.width, self.rect.height)
                     )
     
-    def update_animation(self, dt,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
+    def update_animation(self,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
 #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         self.rede = rede
         if rede == False:
@@ -91,15 +95,15 @@ class Jogador:
             self.animation_frame = 0
             self.animation_timer = 0  # resetar timer quando parar
             return
-            
+        
         # Incrementar o timer
-        self.animation_timer += dt
+        self.animation_timer = (self.animation_timer + 1) % 10
         
         # Se passou tempo suficiente, avançar para o próximo frame
-        if self.animation_timer >= self.animation_speed:
-            self.animation_frame = (self.animation_frame + 1) % 4  # Ciclo entre os 4 frames
-            self.animation_timer = 0  # Resetar o timer
-    
+        if self.animation_timer == 9:
+            self.animation_frame = (self.animation_frame + 1) % 4 # Ciclo entre os 4 frames
+        print(self.animation_frame)
+        
     def desenhar(self, tela): # Desenha o jogador com sprite ou retângulo colorido como fallback
         if self.sprites:
             # Selecionar a linha correta baseada na direção
@@ -112,9 +116,14 @@ class Jogador:
                 tela.blit(self.spritesrede[frame_atual], self.rect)
                 if self.redeindex < 14:  # Só incrementa se não chegou no final
                     self.redeindex += 1
-
+            elif self.coleta:
+                tela.blit(self.spritecoleta[0][direction_index], self.rect)
+                self.timer += 1
+                if self.timer == 6:
+                    self.coleta = False
             else:
                 tela.blit(self.sprites[direction_index][self.animation_frame], self.rect)
+                self.timer = 0
 #? ---------------------------------------------------------------------------------------------------------------------------------------- F
         else:
             # Fallback para o retângulo colorido se não houver sprites
