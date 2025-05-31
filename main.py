@@ -234,7 +234,6 @@ def tela_vitoria():
         Conclusao(TELA).desenhar()
         pygame.display.update()
 
-# todo ---------------------------------------------------------------------------------------------------
 def circle_colide(objeto:list, circulo:list, raio):
     # Define a colisão com a esquerda e direita do circulo
     coli_x_esquerda = objeto[0] >= circulo[0] - raio
@@ -244,7 +243,6 @@ def circle_colide(objeto:list, circulo:list, raio):
     coli_y_baixo = objeto[1] <= circulo[1] + raio
     colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
     return colide
-# todo --------------------------------------------------------------------------------------------------
 
 # Inicializa o jogo
 iniciar_jogo()
@@ -253,8 +251,8 @@ clock = pygame.time.Clock()  # Cria o relógio antes do loop
 
 # Loop principal
 JOGO_RODANDO = True
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
-# Variáveis da rede. #todo (passar pro config depois)
+
+# Variáveis da rede.
 rede_timer = -1
 rede_chegou = False
 rede_origem = [10000,10000]
@@ -263,10 +261,9 @@ REDE = pygame.surface.Surface((100,100))
 imagem_rede = pygame.image.load('assets/sprites/players/Jogador2_object_rede.png')
 imagem_rede.set_colorkey((0,0,0))
 REDE.blit(imagem_rede,(0,0))
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
+
 while JOGO_RODANDO:
     clock.tick(FPS) # Velocidade de atualização da tela ou FPS (Frames Por Segundo)
-    # print(clock.get_fps())
     # Processa eventos
     eventos = pygame.event.get()
     for evento in eventos:
@@ -285,12 +282,8 @@ while JOGO_RODANDO:
             # Obter o tempo decorrido desde o último frame (em segundos)
             dt = clock.get_time() / 1000.0
             # Atualiza animações
-            
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
-                # for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
-                #     itens_agua.append(Item_agua())
                 if progresso <= OBJETIVO / 4:
                     for _ in range(QUANT_LIXOS_AGUA): # Começa em 8 e vai diminuindo por mapa de 2 em 2, até 2
                         itens_agua.append(Item_agua())
@@ -305,9 +298,6 @@ while JOGO_RODANDO:
                         itens_agua.append(Item_agua())
 
             if evento.type == CRIAR_ITEM_EVENTO_2:
-                # for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
-                #     itens_terra.append(Item_terra())
-
                 if progresso <= OBJETIVO / 4:
                     for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
                         itens_terra.append(Item_terra())
@@ -320,12 +310,9 @@ while JOGO_RODANDO:
                 else:  
                     for _ in range(QUANT_LIXOS_TERRA // 4): 
                         itens_terra.append(Item_terra())
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Lógica de colisão da rede
             if evento.type == MOUSEBUTTONDOWN and evento.button == 1 and rede_timer == -1:  # Faz uma série de verificações antes de lançar a rede
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
                 pos_mouse = pygame.mouse.get_pos() 
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
                 if pygame.rect.Rect(rede_disponivel).collidepoint(pos_mouse[0],pos_mouse[1]): # Verifica se o clique foi na área disponível para rede
                     rede_circle = [pos_mouse[0], pos_mouse[1]]
                     proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))) - 180 # Variável criada para mudar o tempo da rede dinamicamente, com base na distância
@@ -333,7 +320,6 @@ while JOGO_RODANDO:
                     tempo_total = rede_timer # Cópia do temporizador para referência de proporcionalidade na rede
                     rede_origem = [jogador2.rect.centerx,jogador2.rect.centery] # Posição de onde a rede vai
                     REDE.blit(imagem_rede,(0,0)) # Coloca a imagem da rede
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Colisão e coleta do Jogador 1
             for item in itens_terra:
                 if jogador1.rect.colliderect(item.rect):
@@ -345,7 +331,6 @@ while JOGO_RODANDO:
     #Animação dos personagens:
     if menu.estado == "JOGO":
         jogador1.update_animation()
-    #? ---------------------------------------------------------------------------------------------------------------------------------------- I
         if rede_timer != -1:
             jogador2.update_animation(True)
         else:
@@ -386,7 +371,7 @@ while JOGO_RODANDO:
         for item in itens_terra:
             item.desenhar()
             item.mover() # Movimentação dos itens na margem (terra)
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+
         # Área onde se pode jogar a rede, define e mostra
         rede_disponivel = [jogador2.rect.centerx-100,jogador2.rect[1]-500,200,350] # Área onde se pode jogar a rede (range da rede)
         range_rede = pygame.surface.Surface((200,350))
@@ -394,12 +379,10 @@ while JOGO_RODANDO:
         range_rede.set_alpha(TRANSPARENCIA_RANGE_REDE)
 
         TELA.blit(range_rede,(jogador2.rect.centerx-100,jogador2.rect[1]-500)) # Mostra essa área na tela
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
+
         # Desenhar jogadores
         jogador1.desenhar(TELA)
         jogador2.desenhar(TELA)
-
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
         jogador_pos = [jogador2.rect.centerx,jogador2.rect.centery] # Pega a posição atual do jogador quando verifica a rede
 
         # Desenhar rede
@@ -462,7 +445,7 @@ while JOGO_RODANDO:
                     rede_timer += 1  
         except NameError:
             pass
-        try: #TODO (?)
+        try:
             REDE.set_colorkey(CORES["PRETO"])
             TELA.blit(REDE,(rede_pos[0]-50,rede_pos[1]-50))
             if rede_timer == -1:
@@ -470,7 +453,6 @@ while JOGO_RODANDO:
 
         except NameError:
             pass
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
 
         # Barra de progresso
         desenhar_barra_progresso(
@@ -493,17 +475,14 @@ while JOGO_RODANDO:
         TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
         TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
         
-        # # Verificador para validar se o objetivo foi alcançado
+        # Verificador para validar se o objetivo foi alcançado
         if progresso >= OBJETIVO:
             tela_vitoria()
+            pygame.time.delay(5000)
             menu.estado = "MENU"  # Volta para o menu após a vitória
             if menu.estado == "MENU" and iniciar_jogo() == True:
                 menu.estado = "JOGO"
 
-            # elif teclas[K_ESC] == (JOGO_RODANDO == False)
-            # -------------------------------------------------------------------------------------------------------------------------
-            # -------------------------------------------------------------------------------------------------------------------------
-    
     # Atualiza a tela
     pygame.display.update()
 

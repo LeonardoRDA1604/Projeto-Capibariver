@@ -213,7 +213,7 @@ class Menu:
         if self.background:
             self.tela.blit(self.background, (0, 0)) # Desenha o fundo
             # Painel de fundo (retângulo preto com opacidade)
-            painel = pygame.Surface((630, 400), pygame.SRCALPHA) #todo ------------------------------------------------------------- (opacidade do fundo)
+            painel = pygame.Surface((630, 400), pygame.SRCALPHA)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  # Preto com opacidade
             self.tela.blit(painel, (self.largura_tela // 2 - 315, 215))
         else:
@@ -272,7 +272,7 @@ class Menu:
             # Painel de fundo (retângulo preto com opacidade)
             painel = pygame.Surface((800, 390), pygame.SRCALPHA)
             painel.fill((*CORES["PRETO"], OPACIDADE_FUNDO_MENU))  
-            self.tela.blit(painel, (self.largura_tela // 2 - 400, 215)) #todo ------------------------------------------------------------- (opacidade do fundo)
+            self.tela.blit(painel, (self.largura_tela // 2 - 400, 215))
         else:
             self.tela.fill(CORES["AZUL"])
         

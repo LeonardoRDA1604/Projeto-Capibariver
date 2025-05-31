@@ -19,10 +19,10 @@ class Jogador:
         self.animation_timer = 0
         self.is_moving = False
         self.coleta = False
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
+
         # Index da rede
         self.redeindex = 0
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
+
         # Para evitar movimento diagonal
         self.last_direction_pressed = None
         
@@ -40,18 +40,9 @@ class Jogador:
                 cols=4      # 4 frames de animação para cada direção
             )
             self.spritesheet_coleta = SpriteSheet(r'assets\sprites\players\Jogador1_spritesheet_action.png')
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Ler a spritesheet
             self.redespritesheet = SpriteSheet('assets/sprites/players/Jogador2_spritesheet_action_without_net.png')
             # Pra deixar os 3 sprites em uma unica lista
-            # self.spritesrede = self.redespritesheet.get_sprites(64,128,2,2)
-            # # teste \/
-            # # print(self.spritesrede)
-            # self.spritesrede[0].append(self.spritesrede[1][0])
-            # self.spritesrede.pop()
-            # self.spritesrede = self.spritesrede[0]
-
-
             self.spritesrede = self.redespritesheet.get_sprites(64, 64, 3, 2)  # 3 linhas, 2 colunas
             self.spritecoleta = self.spritesheet_coleta.get_sprites(64,64,1,4)
             
@@ -64,8 +55,6 @@ class Jogador:
             # Pegar apenas os 5 primeiros (caso tenha 6 posições mas só 5 sprites)
             self.spritesrede = sprites_temp[:5]
 
-
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
             # Redimensionar para o tamanho do jogador
             self.scale_sprites()
         else:
@@ -82,14 +71,11 @@ class Jogador:
                     )
     
     def update_animation(self,rede=False): # Atualiza o frame da animação com base no tempo decorrido.
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
         self.rede = rede
         if rede == False:
-            # self.redeindex == 0
             self.redeindex = 0
             # teste \/
             # print(f'{self.redeindex = }')
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
         if not self.is_moving:
             # Se não estiver se movendo, usar o primeiro frame (posição padrão)
             self.animation_frame = 0
@@ -108,10 +94,8 @@ class Jogador:
         if self.sprites:
             # Selecionar a linha correta baseada na direção
             direction_index = self.get_direction_index()
-#? ---------------------------------------------------------------------------------------------------------------------------------------- I
             # Desenhar o sprite correto (linha = direção, coluna = frame)
             if self.rede:
-                #TODO ajustar o reset da animação
                 frame_atual = min(self.redeindex//3, 4)  # Garante que não passe do sprite 4
                 tela.blit(self.spritesrede[frame_atual], self.rect)
                 if self.redeindex < 14:  # Só incrementa se não chegou no final
@@ -121,15 +105,16 @@ class Jogador:
                 self.timer += 1
                 if self.timer == 6:
                     self.coleta = False
+                elif self.coleta == True and self.timer > 6:  # só muda para False se timer for maior que 6
+                    self.coleta = False
             else:
                 tela.blit(self.sprites[direction_index][self.animation_frame], self.rect)
                 self.timer = 0
-#? ---------------------------------------------------------------------------------------------------------------------------------------- F
         else:
             # Fallback para o retângulo colorido se não houver sprites
             pygame.draw.rect(tela, self.cor, self.rect)
     
-    def get_direction_index(self): #Retorna o índice da linha correspondente à direção atual.
+    def get_direction_index(self): # Retorna o índice da linha correspondente à direção atual.
         if self.direction == "down":
             return 0
         elif self.direction == "up":
@@ -153,21 +138,16 @@ class Jogador:
         
         if teclas[cima] and self.rect.top > 2*(ALTURA_TELA/3):
             movimentos_ativos.append("up")
-        
         if teclas[baixo] and self.rect.bottom < ALTURA_TELA-ALTURA_TELA//20:
             movimentos_ativos.append("down")
-        
         if teclas[esquerda] and self.rect.left > 5*(LARGURA_TELA//40):
             movimentos_ativos.append("left")
-        
         if teclas[direita] and self.rect.right < 37*(LARGURA_TELA//40):
             movimentos_ativos.append("right")
-        
         # Se não há movimento, sair
         if not movimentos_ativos:
             self.last_direction_pressed = None
             return
-        
         # Se há apenas um movimento, aplicar diretamente
         if len(movimentos_ativos) == 1:
             direction = movimentos_ativos[0]
@@ -175,7 +155,6 @@ class Jogador:
         else:
             # Evitar movimento diagonal - usar última direção ou primeira disponível
             direction = None
-            
             # Verificar se a última direção pressionada ainda está ativa
             if self.last_direction_pressed in movimentos_ativos:
                 direction = self.last_direction_pressed
@@ -207,8 +186,6 @@ class Jogador:
                 return True
         return False
     
-# #todo ---------------------------------------------------------------------------------------------------------------------
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! mudar
     def lançar_rede(self): # Implementação do método de lançar a rede.
         self.pos_mouse = pygame.mouse.get_pos()
         self.rede_rect = pygame.Rect(300, 200, 30, 30)

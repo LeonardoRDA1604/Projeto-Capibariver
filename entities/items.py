@@ -6,7 +6,7 @@ class Item_agua:
     def __init__(self):
         y_positions = list(range(ALTURA_TELA - 350, ALTURA_TELA - 750, -50)) # Posições y dos objetos do rio
                     # [ALTURA_TELA - 350, ALTURA_TELA - 400, ALTURA_TELA - 450, ALTURA_TELA - 500, ALTURA_TELA - 550, ALTURA_TELA - 600, ALTURA_TELA - 650, ALTURA_TELA - 700, ALTURA_TELA - 750]
-        # Lista de imagens disponíveis para os itens de água (coco e pneu não entram nessa lista pois não boiam)
+        # Lista de imagens disponíveis para os itens de água
         self.imagens = [
                     pygame.image.load('./assets/sprites/items/type1-lata-alimento_atum.png'), # Objeto 1
                     pygame.image.load('./assets/sprites/items/type1-lata-alimento_sardinha.png'), # Objeto 2
