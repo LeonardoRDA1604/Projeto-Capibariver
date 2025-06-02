@@ -40,7 +40,7 @@ class Menu:
     def inicializar_som(self): # Inicializa o sistema de som e carrega a música
         try:
             # Caminho para o som ambiente
-            caminho_som = os.path.join('assets/sounds', 'trilha_sonora_edit7.mp3')  # .ogg, .wav etc.
+            caminho_som = os.path.join('assets/sounds', 'trilha_sonora.mp3')  # .ogg, .wav etc.
             # Verifica se o arquivo existe
             if os.path.exists(caminho_som):
                 pygame.mixer.music.load(caminho_som)
@@ -290,7 +290,7 @@ class Menu:
             ("Música por:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
             ("Rebbeka Cynthia", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Agradecimentos especiais:", "ESQUERDA_CREDITOS", CORES["VERDE_MENU"]),
-            ("Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Dir. Elaine Carpinteiro (EPEC),", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
+            ("Coord. Patrícia Mergulhão, Prof. Humberto Caetano, Dir. Elaine Carpintero (EPEC),", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
             ("Camila Moura e Davi Wanderley", "ESQUERDA_CREDITOS", CORES["BRANCO"]),
         ]
 
