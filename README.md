@@ -68,8 +68,8 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
  ### 👩🏽‍💻 Contribuições de colaboradores externos no projeto:
 | Nome                  | Contribuições                                                                                                                    | Linkedin | Github
 |-----------------------|----------------------------------------------------------------------------------------------------------------------------------|---------- |---------- |
-| Camila Moura          | Documentação, Revisão acadêmica e Consultoria biológica e ambiental.                                                                                       | [/camilacelestino](https://www.linkedin.com/in/camilacelestino) | [/ccelesti](https://github.com/ccelesti) |                                  
-| Davi Wanderley        | Desenvolvimento de funções específicas e Consultoria técnica     | [/odaviespecifico](https://www.linkedin.com/in/davi-wanderley-9512042a8/) | [/Odaviespecifico](https://github.com/Odaviespecifico)
+| Camila Moura          | Documentação, Revisão acadêmica, Consultoria biológica e ambiental.                                                                                       | [/camilacelestino](https://www.linkedin.com/in/camilacelestino) | [/ccelesti](https://github.com/ccelesti) |                                  
+| Davi Wanderley        | Consultoria técnica, Desenvolvimento de funções específicas.     | [/odaviespecifico](https://www.linkedin.com/in/davi-wanderley-9512042a8/) | [/Odaviespecifico](https://github.com/Odaviespecifico)
 
 
 
