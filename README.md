@@ -1,4 +1,4 @@
-<div style="background-color: rgba(40, 140, 255, 0.49); padding: 20px;">
+<div style="background-color: rgba(255, 255, 255, 0.49); padding: 20px;">
 
 # 🌎 CAPIBARIVER 🌊
 <br>
