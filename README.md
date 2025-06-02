@@ -12,18 +12,13 @@
 
 ## Índice
 - [Funcionalidades](#-funcionalidades)
-
 - [Equipe e contribuições](#equipe-e-contribuições)
-
 - [Tecnologias Utilizadas](#️-tecnologias-utilizadas)
 - [Galeria de mídia](#galeria-de-mídia-do-jogo)
 - [DOWNLOAD](#️-como-baixar-o-jogo)
 - [Apoio](#-apoio)
 - [Colaboração](#-colaboração)
 - [Licença](#-licença)
-
-
-- [Estrutura do código](#-estrutura-do-código)
 
 ---
 
@@ -81,36 +76,38 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 ---
 
 ## 📷Galeria de mídia do jogo:
-- **Menu:**
+<br>
+
+- ##### Menu:
   <img src = "https://github.com/user-attachments/assets/658f77a1-6ff2-42ec-9c0b-4d5cca5dc56c" width = "640" height ="360">
 <br>
 
-- **Gameplay do jogo e transição dos estados do rio progressivamente:**
+- ##### Gameplay do jogo e transição dos estados do rio progressivamente:
   <img src = "https://github.com/user-attachments/assets/40f7e665-64d0-4071-9c9f-bdb330810120" width = "640" height ="360">
 <br>
 
-- ***Rio Capibaribe* em seu estado mais poluído:**
+- ##### *Rio Capibaribe* em seu estado mais poluído:
   <img src = "https://github.com/user-attachments/assets/bf300794-9a8e-4464-8f41-69eb4ba528d7" width = "640" height ="360">
 <br>
 
-- ***Rio Capibaribe* em estágio inicial de recuperação:**
+- ##### *Rio Capibaribe* em estágio inicial de recuperação:
   <img src = "https://github.com/user-attachments/assets/aebaadfc-fe07-48e4-9b90-8923717cfb62" width = "640" height ="360">
 <br>
 
-- ***Rio Capibaribe* em estágio intermediário de recuperação:**
+- ##### *Rio Capibaribe* em estágio intermediário de recuperação:
   <img src = "https://github.com/user-attachments/assets/638cf3b5-bb6a-4375-bd38-ee2e47648184" width = "640" height ="360">
 <br>
 
-- ***Rio Capibaribe* em estágio avançado de recuperação:**
+- ##### *Rio Capibaribe* em estágio avançado de recuperação:
   <img src = "https://github.com/user-attachments/assets/691eca31-8759-44bf-8743-31dd37c42425" width = "640" height ="360">
 <br>
 
-- **Jogador 1 coletando resíduos na margem do rio:**
-  <img src = "https://github.com/user-attachments/assets/0c4159d5-9820-47d0-908a-47282b67c250">
+- ##### Jogador 1 coletando resíduos na margem do rio:
+  <img src = "https://github.com/user-attachments/assets/4d7b388c-2e31-48c0-9d23-2a30132ed282">
 <br>
 
-- **Jogador 2 lançando a rede retirando resíduos do rio:**
-  <img src = "https://github.com/user-attachments/assets/4d7b388c-2e31-48c0-9d23-2a30132ed282">
+- ##### Jogador 2 lançando a rede retirando resíduos do rio:
+  <img src = "https://github.com/user-attachments/assets/0c4159d5-9820-47d0-908a-47282b67c250">
 <br>
 
 ---
