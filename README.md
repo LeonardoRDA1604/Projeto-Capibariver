@@ -4,9 +4,9 @@
 <br>
 
 ### 📝 Descrição:
-#### O <font color="green">*Capibariver*</font> é um jogo educativo 2D, desenvolvido por alunos do 1º período da graduação de Análise e Desenvolvimento de Sistemas da *UniFAFIRE*, como parte de um projeto acadêmico voltado à conscientização ambiental e à preservação do *Rio Capibaribe*, localizado em Pernambuco.
-#### O Projeto foi desenvolvido com o objetivo de conscientizar crianças e adolescentes de 8 a 12 anos sobre os impactos ambientais da degradação do *Rio Capibaribe*, e destacar a importância de ações sustentáveis para sua preservação e revitalização.
-#### Por meio de uma abordagem lúdica e cooperativa, o jogo permite que os jogadores entendam, na prática, como suas ações impactam o meio ambiente, especialmente os recursos hídricos. A proposta é unir entretenimento, educação ambiental e cidadania, estimulando o pensamento crítico e o engajamento na preservação dos ecossistemas locais.
+O <font color="green">*Capibariver*</font> é um jogo educativo 2D, desenvolvido por alunos do 1º período da graduação de Análise e Desenvolvimento de Sistemas da *UniFAFIRE*, como parte de um projeto acadêmico voltado à conscientização ambiental e à preservação do *Rio Capibaribe*, localizado em Pernambuco.
+O Projeto foi desenvolvido com o objetivo de conscientizar crianças e adolescentes de 8 a 12 anos sobre os impactos ambientais da degradação do *Rio Capibaribe*, e destacar a importância de ações sustentáveis para sua preservação e revitalização.
+Por meio de uma abordagem lúdica e cooperativa, o jogo permite que os jogadores entendam, na prática, como suas ações impactam o meio ambiente, especialmente os recursos hídricos. A proposta é unir entretenimento, educação ambiental e cidadania, estimulando o pensamento crítico e o engajamento na preservação dos ecossistemas locais.
 
 ---
 
