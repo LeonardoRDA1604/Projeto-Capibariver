@@ -47,7 +47,7 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 ## Equipe e Contribuições: 
  ### 👩🏽‍💻 Contribuições dos integrantes no projeto:
 
-| Nome                   | Contribuições                                                                                  | Cargo | Linkedin | Github |
+| Nome                   | Contribuições                                                                                  | Role | Linkedin | Github |
 |----------------------- |------------------------------------------------------------------------------------------------| --- | --- | --- |
 | Leonardo Rafael        | Desenvolvimento, Gestão, Design e Documentação, Readme, Controle de qualidade geral, Apresentação do projeto, Testes unitários e de integração, Vídeo de divulgação.      | Tech Leader and Scrum Master  | [/leonardorafael1604](https://www.linkedin.com/in/leonardorafael1604/) | [/LeonardoRDA1604](https://github.com/LeonardoRDA1604)
 | Wesley Luiz            | Gestão, Documentação, Captação de Stakeholders, Design, Site, Apresentação do projeto, Vídeo de divulgação.                                        |  Product Owner   | [/wesley-luiz](https://www.linkedin.com/in/wesley-luiz-7a791b24b/) | [/wesley-luiz03](https://github.com/wesley-luiz03) |
