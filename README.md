@@ -4,8 +4,8 @@
 <br>
 
 ### 📝 Descrição:
-O <font color="green">*Capibariver*</font> é um jogo educativo 2D, desenvolvido por alunos do 1º período da graduação de Análise e Desenvolvimento de Sistemas da *UniFAFIRE*, como parte de um projeto acadêmico voltado à conscientização ambiental e à preservação do *Rio Capibaribe*, localizado em Pernambuco.
-O Projeto foi desenvolvido com o objetivo de conscientizar crianças e adolescentes de 8 a 12 anos sobre os impactos ambientais da degradação do *Rio Capibaribe*, e destacar a importância de ações sustentáveis para sua preservação e revitalização.
+O <font color="green">*Capibariver*</font> é um jogo educativo 2D, desenvolvido por alunos do 1º período da graduação de Análise e Desenvolvimento de Sistemas da *UniFAFIRE*, como parte de um projeto acadêmico voltado à conscientização ambiental e à preservação do *Rio Capibaribe*, localizado em Pernambuco.\
+O Projeto foi desenvolvido com o objetivo de conscientizar crianças e adolescentes de 8 a 12 anos sobre os impactos ambientais da degradação do *Rio Capibaribe*, e destacar a importância de ações sustentáveis para sua preservação e revitalização.\
 Por meio de uma abordagem lúdica e cooperativa, o jogo permite que os jogadores entendam, na prática, como suas ações impactam o meio ambiente, especialmente os recursos hídricos. A proposta é unir entretenimento, educação ambiental e cidadania, estimulando o pensamento crítico e o engajamento na preservação dos ecossistemas locais.
 
 ---
@@ -111,7 +111,7 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 ---
 
 ## 🕹️ Como baixar o jogo:
-- Baixe o jogo no nosso site: https://sites.google.com/d/1-uBNwb8Z6K0dMV7T8_QqU19u2Crl6Irc/p/13HR_Ozm1kwBQqt94kClRn37V4r6v63BP/edit
+- Baixe o jogo no nosso site: https://sites.google.com/view/capibariver/in%C3%ADcio?authuser=0
 
 ## 📥 Como baixar e utilizar o repositório:
 1. Instale o **Git** e o **Python 3.10 ou superior**  
