@@ -48,15 +48,13 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
  ### 👩🏽‍💻 Contribuições dos integrantes no projeto:
 
 | Nome                   | Contribuições                                                                                  | Role | Linkedin | Github |
-| Nome                   | Contribuições                                                                                  | Role | Linkedin | Github |
 |----------------------- |------------------------------------------------------------------------------------------------| --- | --- | --- |
-| Leonardo Rafael        | Desenvolvimento, Gestão, Design e Documentação, Readme, Controle de qualidade geral, Apresentação do projeto, Testes unitários, Testes de integração, Vídeo de divulgação.      | Tech Leader and Scrum Master  | [/leonardorafael1604](https://www.linkedin.com/in/leonardorafael1604/) | [/LeonardoRDA1604](https://github.com/LeonardoRDA1604)
+| Leonardo Rafael        | Desenvolvimento, Gestão, Design, Documentação, Readme, Controle de qualidade geral, Apresentação do projeto, Testes unitários, Testes de integração, Vídeo de divulgação.      | Tech Leader and Scrum Master  | [/leonardorafael1604](https://www.linkedin.com/in/leonardorafael1604/) | [/LeonardoRDA1604](https://github.com/LeonardoRDA1604)
 | Wesley Luiz            | Gestão, Documentação, Captação de Stakeholders, Design, Site, Apresentação do projeto, Vídeo de divulgação.                                        |  Product Owner   | [/wesley-luiz](https://www.linkedin.com/in/wesley-luiz-7a791b24b/) | [/wesley-luiz03](https://github.com/wesley-luiz03) |
 | Brenda Rafaely         | Gestão, Documentação, Design, Site, Apresentação do projeto.                                        |  Agile Assistant | [/brenda-rafaely](https://www.linkedin.com/in/brenda-rafaely-a7500a353?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [/15224469](https://github.com/15224469) |
 | Guilherme Enrique      | Design, Readme, Vídeo de divulgação, Testes.         | Head of Design | [/guilherme-enrique](https://www.linkedin.com/in/guilherme-enrique-b66202357?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [/GuilhermeTapia](https://github.com/GuilhermeTapia) |
 | Gabriel Lucas          | Desenvolvimento, Testes, Executável, Link de download.                              | | [/gabriel-lucas](https://www.linkedin.com/in/gabriel-lucas-de-oliveira-xavier-507564358/) | [/Ggeasy1574](https://github.com/Ggeasy1574) |
 | Yasmim Victória        | Design, Documentação.                                       | | [/yasmim-victoria](https://www.linkedin.com/in/yasmim-vict%C3%B3ria-246966356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app) | [/yasmimvicc](https://github.com/yasmimvicc) |
-| Heitor da Silva        |  Testes, Música do jogo, Readme.              |     | [/heitor-silva](https://www.linkedin.com/in/heitor-silva-2ba407364?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [/heitor1106](https://github.com/Heitor1106) |
 | Heitor da Silva        |  Testes, Música do jogo, Readme.              |     | [/heitor-silva](https://www.linkedin.com/in/heitor-silva-2ba407364?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [/heitor1106](https://github.com/Heitor1106) |
 | Brenno Rodrigues       | Executável, Link de download.                                       | | [/brenno-rodrigues](https://br.linkedin.com/in/brenno-rodrigues-51ab50264) | [/Persydzn71](https://github.com/Persydzn71) |
 | Rebbeka Cynthia        | Música do jogo.                                                                | | [/rebbeka-oliveira](https://www.linkedin.com/in/rebbeka-oliveira?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [/bekacynthia](https://github.com/bekacynthia) |
@@ -72,10 +70,6 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 |-----------------------|----------------------------------------------------------------------------------------------------------------------------------|---------- |---------- |
 | Camila Moura          | Documentação, Revisão acadêmica, Consultoria biológica e ambiental.                                                                                       | [/camilacelestino](https://www.linkedin.com/in/camilacelestino) | [/ccelesti](https://github.com/ccelesti) |                                  
 | Davi Wanderley        | Consultoria técnica, Desenvolvimento de funções específicas.     | [/odaviespecifico](https://www.linkedin.com/in/davi-wanderley-9512042a8/) | [/Odaviespecifico](https://github.com/Odaviespecifico)
-| Camila Moura          | Documentação, Revisão acadêmica, Consultoria biológica e ambiental.                                                                                       | [/camilacelestino](https://www.linkedin.com/in/camilacelestino) | [/ccelesti](https://github.com/ccelesti) |                                  
-| Davi Wanderley        | Consultoria técnica, Desenvolvimento de funções específicas.     | [/odaviespecifico](https://www.linkedin.com/in/davi-wanderley-9512042a8/) | [/Odaviespecifico](https://github.com/Odaviespecifico)
-
-
 
 ---
 
@@ -87,7 +81,7 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 <br>
 
 - ##### Gameplay do jogo e transição dos estados do rio progressivamente:
-  <img src = "https://github.com/user-attachments/assets/40f7e665-64d0-4071-9c9f-bdb330810120" width = "640" height ="360">
+  <img src = "https://github.com/user-attachments/assets/40f7e665-64d0-4071-9c9f-bdb330810120" width = "640">
 <br>
 
 - ##### *Rio Capibaribe* em seu estado mais poluído:
@@ -107,11 +101,11 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 <br>
 
 - ##### Jogador 1 coletando resíduos na margem do rio:
-  <img src = "https://github.com/user-attachments/assets/4d7b388c-2e31-48c0-9d23-2a30132ed282">
+  <img src = "https://github.com/user-attachments/assets/4d7b388c-2e31-48c0-9d23-2a30132ed282" width = "640">
 <br>
 
 - ##### Jogador 2 lançando a rede retirando resíduos do rio:
-  <img src = "https://github.com/user-attachments/assets/0c4159d5-9820-47d0-908a-47282b67c250">
+  <img src = "https://github.com/user-attachments/assets/0c4159d5-9820-47d0-908a-47282b67c250" width = "640">
 <br>
 
 ---
