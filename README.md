@@ -77,18 +77,16 @@ A cada ação sustentável feita pelo jogador, coletar os resíduos gera uma pon
 <br>
 
 - Teaser Oficial: CAPIBARIVER
-
 Clique na imagem (Thumbnail) abaixo e **assista ao vídeo de anúncio** do jogo, sinta a experiência de salvar o Rio Capibaribe.
 <!-- Markdown - Vídeo -->
 <!-- [![Capibariver Demo - 4K Full HD](https://img.youtube.com/vi/ID_DO_VIDEO/0.jpg)](https://youtu.be/2QdgdWRwlDw) -->
-
 <!-- HTML - Vídeo -->
 <!-- <p align="center"> -->
-<p>
-  <a href="https://youtu.be/2QdgdWRwlDw">
-    <img src="./assets/thumbnail/readme-video-thumbnail/Banner thumbnail Capibariver-with-yt-logo.png" alt="Capibariver Demo - 4K Full HD" width="600">
-  </a>
-</p>
+  <p>
+    <a href="https://youtu.be/2QdgdWRwlDw">
+      <img src="./assets/thumbnail/readme-video-thumbnail/Banner thumbnail Capibariver-with-yt-logo.png" alt="Capibariver Demo - 4K Full HD" width="640">
+    </a>
+  </p>
 
 
 - ##### Menu:
