@@ -5,71 +5,28 @@ from menu import Menu
 from entities.players import Jogador
 from entities.items import *
 from utils import *
-from app import jogo
+from gameSystemFunctions import game 
+from gameSystemFunctions.mapComponents import river
+from gameSystemFunctions.gameEnding import conclusion
 
-# Inicialização do Pygame
-pygame.init()
-
-# Inicialização da Música no Pygame
-pygame.mixer.init()
-
-# Inicialização da tela do Game
-pygame.display.set_caption(NOME_DO_JOGO)
-
-# Inicialização do menu
-menu = Menu(TELA)
-
-fullscreen = False
-
- 
-game = jogo.Jogo(TELA)
-
-# Classe do rio
-class Rio:
-    def __init__(self):
-        self.x1 = 0
-        self.x2 = LARGURA_TELA  # Começa fora da tela, à esquerda
-        self.y = 0  # Posição vertical do rio visível na parte inferior
-        self.altura = ALTURA_TELA-(ALTURA_TELA/3) # Altura do retângulo do rio
-        self.cor = CORES["AZUL"]
-
-    def desenhar(self):
-        pygame.draw.rect(TELA, self.cor, (self.x1, self.y, LARGURA_TELA, self.altura))
-
-# Cria rio
-rio = Rio()
-
-
-class Conclusao:
-    def __init__(self, tela): # Inicializa o background da tela de conclusão do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado
-        self.tela = tela
-        self.largura_tela = tela.get_width()
-        self.altura_tela = tela.get_height()
-
-        # Carrega imagem de fundo
-        try:
-            self.background = pygame.image.load(os.path.join('assets/sprites/screens', 'tela_conclusao_com_texto_e_logo-fafire.png'))
-            self.background = pygame.transform.scale(self.background, (self.largura_tela, self.altura_tela))
-        except:
-            print("Imagem de fundo não encontrada. Usando cor sólida.")
-            self.background = None
-    
-    def desenhar(self):                                     # Desenha o menu principal
-        if self.background:
-            self.tela.blit(self.background, (0, 0))         # Desenha o fundo
-        else:
-            pass
+# ------------- Ignition Variables -----------------
+pygame.init() # Inicialização do Pygame
+pygame.mixer.init() # Inicialização da Música no Pygame
+pygame.display.set_caption(NOME_DO_JOGO) # Inicialização da tela do Game
+fullscreen = False # Deixa o jogo em modo janela por default
+menu = Menu(TELA) # Inicialização do menu
+jogo = game.Jogo(TELA) # Deixa toda a parte jogável do jogo pronta antes de apertar "jogar"
+rio = river.Rio() # Cria rio
+# --------------------------------------------------
 
 def iniciar_jogo():
     global jogador1, jogador2, itens_agua, itens_terra, CRIAR_ITEM_EVENTO, CRIAR_ITEM_EVENTO_2
-    
-    # # Cria jogadores (SEM animação)
-    # jogador1 = Jogador(300, ALTURA_TELA-100, CORES["AMARELO"])  # Amarelo
-    # jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"])  # Roxo
-    
+
+
     # spritesheet path
     spritesheet_path1 = os.path.join('assets/sprites/players', 'Jogador1_spritesheet_movement.png')
     spritesheet_path2 = os.path.join('assets/sprites/players', 'Jogador2_spritesheet_movement.png')
+    
     # Cria jogadores (COM animação)
     jogador1 = Jogador(300, ALTURA_TELA-100, CORES["AMARELO"], spritesheet_path1, 1)
     jogador2 = Jogador(LARGURA_TELA-300, ALTURA_TELA-100, CORES["ROXO"], spritesheet_path2, 2)
@@ -78,46 +35,11 @@ def iniciar_jogo():
     CRIAR_ITEM_EVENTO = pygame.USEREVENT + 2
     pygame.time.set_timer(CRIAR_ITEM_EVENTO, 1000)  # 1000 ms = 1 segundo
     itens_agua = []
-    
+    # Jogador.criar_item_evento(CRIAR_ITEM_EVENTO, 2, 1000, itens_agua)
     CRIAR_ITEM_EVENTO_2 = pygame.USEREVENT + 1
     pygame.time.set_timer(CRIAR_ITEM_EVENTO_2, 3000)  # 3000 ms = 3 segundos
     itens_terra = []
-
-
-def desenhar_barra_progresso(TELA, x, y, largura, altura):
-    # Fundo da barra
-    pygame.draw.rect(TELA, CORES["CINZA_CLARO"], (x, y, largura, altura))
-
-    # Calcula largura da barra preenchida
-    preenchimento_barra = int((progresso / OBJETIVO) * largura)
-    # Preenchimento proporcional / Barra preenchida
-    pygame.draw.rect(TELA, CORES["VERDE"], (x, y, preenchimento_barra, altura))  # Barra verde de progressão
-
-    # Borda da barra (contorno)
-    pygame.draw.rect(TELA, CORES["PRETO"], (x, y, largura, altura), 2)  # Preto, contorno
-
-    # Texto centralizado
-    texto = f"{progresso}/{OBJETIVO}"
-    superficie_texto = FONTE_TITULO_PEQUENO.render(texto, True, CORES["PRETO"])
-    largura_texto = superficie_texto.get_width()
-    altura_texto = superficie_texto.get_height()
-    pos_texto_x = x + (largura - largura_texto) // 2
-    pos_texto_y = y + (altura - altura_texto) // 2
-    TELA.blit(superficie_texto, (pos_texto_x, pos_texto_y))
-
-def tela_vitoria():
-    vitoria_jogadores = True
-    while vitoria_jogadores:
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if evento.type == pygame.KEYDOWN:
-                vitoria_jogadores = False  # Sai da tela de vitória com qualquer tecla
-                
-        TELA.fill((CORES["PRETO"]))
-        Conclusao(TELA).desenhar()
-        pygame.display.update()
+    # Jogador.criar_item_evento(CRIAR_ITEM_EVENTO_2, 1, 3000, itens_terra)
 
 def circle_colide(objeto:list, circulo:list, raio):
     # Define a colisão com a esquerda e direita do circulo
@@ -340,12 +262,14 @@ while JOGO_RODANDO:
             pass
 
         # Barra de progresso
-        desenhar_barra_progresso(
-            TELA,
-            LARGURA_TELA//2-(LARGURA_BARRA//2),                     # Posição x na tela
+        game.Jogo.desenhar_barra_progresso(
+            jogo,
+            (LARGURA_TELA//2-(LARGURA_BARRA//2)),                     # Posição x na tela
             10,                                                     # Posição y na tela
-            LARGURA_BARRA, ALTURA_BARRA                             # Tamanho da barra (largura e altura)
-    )
+            LARGURA_BARRA, 
+            ALTURA_BARRA,                             # Tamanho da barra (largura e altura)
+            progresso
+        )
         
         # Exibir pontuação
         TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1:  {jogador1.itens_coletados}', True, CORES["AMARELO"])
@@ -362,7 +286,7 @@ while JOGO_RODANDO:
         
         # Verificador para validar se o objetivo foi alcançado
         if progresso >= OBJETIVO:
-            tela_vitoria()
+            conclusion.Conclusao.tela_vitoria()
             pygame.time.delay(5000)
             menu.estado = "MENU"  # Volta para o menu após a vitória
             if menu.estado == "MENU" and iniciar_jogo() == True:

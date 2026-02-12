@@ -195,3 +195,8 @@ class Jogador:
     def desenhar_rede(self, tela): # Implementação do método de desenhar a rede.
         if self.rede:
             pygame.draw.circle(tela, (CORES["BRANCO"]), self.rede.center, 30)
+    
+    def criar_item_evento(user_event : int,  event_position : int, event_interval : int, item_type : list):
+        user_event = pygame.USEREVENT + event_position
+        pygame.time.set_timer(user_event, event_interval)
+        item_type = []

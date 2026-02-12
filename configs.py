@@ -5,7 +5,7 @@ from pygame.locals import *
 LARGURA_TELA, ALTURA_TELA = 1280, 720
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 NOME_DO_JOGO = "Capibariver v9.4.4"
-FPS = 50 #! Os frames do personagem estão organizados para 6 FPS
+FPS = 60 #! Os frames do personagem estão organizados para 6 FPS
 
 # Fontes
 FONTES = {
@@ -58,7 +58,7 @@ TAMANHO_ITEM = 40, 40
 # }
 
 # === Objetivo do jogo ===                 # 200 objetivo ideal
-OBJETIVO = 200
+OBJETIVO = 10
 
 # === Quantidade de lixos ===
 QUANT_LIXOS_AGUA = 8
