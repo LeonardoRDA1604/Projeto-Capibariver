@@ -1,5 +1,5 @@
 import pygame, random
-from configs import *
+from assets.utils.configs import *
 
 # Classes Item (Água e Terra)
 class Item_agua:

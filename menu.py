@@ -1,7 +1,7 @@
 import pygame, sys, os
 from pygame.locals import *
-from configs import *
-from utils import *
+from assets.utils.configs import *
+from assets.utils.fontes import *
 
 class Menu:
     def __init__(self, tela): # Inicializa o menu do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado

@@ -1,5 +1,5 @@
 import pygame
-from configs import *
+from assets.utils.configs import *
 
 # Classe do rio
 class Rio:

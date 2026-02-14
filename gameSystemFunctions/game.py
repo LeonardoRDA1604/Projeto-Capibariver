@@ -1,4 +1,4 @@
-from utils import *
+from assets.utils.fontes import *
 import os
 
 class Jogo:
@@ -140,3 +140,18 @@ class Jogo:
         pos_texto_x = x + (largura - largura_texto) // 2
         pos_texto_y = y + (altura - altura_texto) // 2
         TELA.blit(superficie_texto, (pos_texto_x, pos_texto_y))
+    
+    def show_points(clock, jogador1, jogador2):
+        # Exibir pontuação
+        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1:  {jogador1.itens_coletados}', True, CORES["AMARELO"])
+        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2:  {jogador2.itens_coletados}', True, CORES["VERMELHO"])
+        TEXTO3 = FONTE_TITULO_PEQUENO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
+        TEXTO_FPS = FONTE_TITULO_PEQUENO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["ROXO"])
+        largura_texto2 = TEXTO2.get_width()
+        largura_texto3 = TEXTO3.get_width()
+        altura_texto_fps = TEXTO_FPS.get_height()
+        TELA.blit(TEXTO1, (10, 10))
+        TELA.blit(TEXTO2, (LARGURA_TELA-largura_texto2-10, 10))
+        TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
+        TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
+        

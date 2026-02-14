@@ -1,13 +1,14 @@
 import pygame, os, sys, random
 from pygame.locals import *
-from configs import *
+from assets.utils.configs import *
 from menu import Menu
 from entities.players import Jogador
 from entities.items import *
-from utils import *
+from assets.utils.fontes import *
 from gameSystemFunctions import game 
 from gameSystemFunctions.mapComponents import river
 from gameSystemFunctions.gameEnding import conclusion
+from gameSystemFunctions.playersActions import net
 
 # ------------- Ignition Variables -----------------
 pygame.init() # Inicialização do Pygame
@@ -17,6 +18,7 @@ fullscreen = False # Deixa o jogo em modo janela por default
 menu = Menu(TELA) # Inicialização do menu
 jogo = game.Jogo(TELA) # Deixa toda a parte jogável do jogo pronta antes de apertar "jogar"
 rio = river.Rio() # Cria rio
+
 # --------------------------------------------------
 
 def iniciar_jogo():
@@ -41,16 +43,6 @@ def iniciar_jogo():
     itens_terra = []
     # Jogador.criar_item_evento(CRIAR_ITEM_EVENTO_2, 1, 3000, itens_terra)
 
-def circle_colide(objeto:list, circulo:list, raio):
-    # Define a colisão com a esquerda e direita do circulo
-    coli_x_esquerda = objeto[0] >= circulo[0] - raio
-    coli_x_direita = objeto[0] <= circulo[0] + raio
-    # Se o objeto está entre círculo -30 e círculo + 30
-    coli_y_topo = objeto[1] >= circulo[1] - raio
-    coli_y_baixo = objeto[1] <= circulo[1] + raio
-    colide = [coli_x_esquerda, coli_x_direita, coli_y_topo, coli_y_baixo]
-    return colide
-
 # Inicializa o jogo
 iniciar_jogo()
 
@@ -64,10 +56,13 @@ rede_timer = -1
 rede_chegou = False
 rede_origem = [10000,10000]
 pontos_jogada = 0
+tempo_total = 0
 REDE = pygame.surface.Surface((100,100))
 imagem_rede = pygame.image.load('assets/sprites/players/Jogador2_object_rede.png')
 imagem_rede.set_colorkey((0,0,0))
 REDE.blit(imagem_rede,(0,0))
+rede_disponivel = [jogador2.rect.centerx-100,jogador2.rect[1]-500,200,350]
+rede = net.Net(itens_agua, jogador2)
 
 while JOGO_RODANDO:
     clock.tick(FPS) # Velocidade de atualização da tela ou FPS (Frames Por Segundo)
@@ -89,6 +84,7 @@ while JOGO_RODANDO:
             # Obter o tempo decorrido desde o último frame (em segundos)
             dt = clock.get_time() / 1000.0
             # Atualiza animações
+
             # Eventos (criação de items)
             if evento.type == CRIAR_ITEM_EVENTO:
                 if progresso <= OBJETIVO / 4:
@@ -104,6 +100,7 @@ while JOGO_RODANDO:
                    for _ in range(QUANT_LIXOS_AGUA // 4): 
                         itens_agua.append(Item_agua())
 
+            
             if evento.type == CRIAR_ITEM_EVENTO_2:
                 if progresso <= OBJETIVO / 4:
                     for _ in range(QUANT_LIXOS_TERRA): # Começa em 4 e vai diminuindo por mapa até 1
@@ -122,12 +119,12 @@ while JOGO_RODANDO:
                 pos_mouse = pygame.mouse.get_pos() 
                 if pygame.rect.Rect(rede_disponivel).collidepoint(pos_mouse[0],pos_mouse[1]): # Verifica se o clique foi na área disponível para rede
                     rede_circle = [pos_mouse[0], pos_mouse[1]]
-                    proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))) - 180 # Variável criada para mudar o tempo da rede dinamicamente, com base na distância
-                    rede_timer = int(FPS*2.5+(proporção/6)) # Tempo do ciclo da rede e temporizador
+                    proporcao = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))) - 180 # Variável criada para mudar o tempo da rede dinamicamente, com base na distância
+                    rede_timer = int(FPS*2.5+(proporcao/6)) # Tempo do ciclo da rede e temporizador
                     tempo_total = rede_timer # Cópia do temporizador para referência de proporcionalidade na rede
                     rede_origem = [jogador2.rect.centerx,jogador2.rect.centery] # Posição de onde a rede vai
                     REDE.blit(imagem_rede,(0,0)) # Coloca a imagem da rede
-            # Colisão e coleta do Jogador 1
+
             for item in itens_terra:
                 if jogador1.rect.colliderect(item.rect):
                     if evento.type ==  pygame.KEYDOWN and evento.key == pygame.K_SPACE:
@@ -180,12 +177,9 @@ while JOGO_RODANDO:
             item.mover() # Movimentação dos itens na margem (terra)
 
         # Área onde se pode jogar a rede, define e mostra
-        rede_disponivel = [jogador2.rect.centerx-100,jogador2.rect[1]-500,200,350] # Área onde se pode jogar a rede (range da rede)
-        range_rede = pygame.surface.Surface((200,350))
-        range_rede.fill((COR_RANGE_REDE))
-        range_rede.set_alpha(TRANSPARENCIA_RANGE_REDE)
+        rede.launch_area()
 
-        TELA.blit(range_rede,(jogador2.rect.centerx-100,jogador2.rect[1]-500)) # Mostra essa área na tela
+        # TELA.blit(range_rede,(jogador2.rect.centerx-100,jogador2.rect[1]-500)) # Mostra essa área na tela
 
         # Desenhar jogadores
         jogador1.desenhar(TELA)
@@ -195,51 +189,26 @@ while JOGO_RODANDO:
         # Desenhar rede
         try:
             if rede_timer > tempo_total/2.3: # Primeiro ciclo da rede
-                proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1)) # Mesma proporção anterior
+                proporcao = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1)) # Mesma proporcao anterior
                 rede_timer -= 1 # Diminui um do timer
 
                 # Verificações de posições cartesianas
-                if rede_origem[1] > rede_circle[1]:
-                    rede_origem[1] -= rede_velocidade*2
-                if rede_origem[0] < rede_circle[0]:
-                    rede_origem[0] += rede_velocidade/(proporção+0.01)*2
-                if rede_origem[0] > rede_circle[0]:
-                    rede_origem[0] -= rede_velocidade/(proporção+0.01)*2
+                rede.verificador_posicao_cartesiana_primeiro_ciclo(rede_circle, rede_origem, proporcao)
 
                 # Verifica se a rede chegou no seu local para coletar o lixo
                 if rede_origem[1] - rede_circle[1] < 5:
-                    for item in itens_agua:
-                        # pos = item.rect[0], item.rect[1]
-                        if False not in circle_colide(pos, rede_pos, 40): # Se tiver colisão com algum dos itens
-                            pontos_jogada += 1
-                            item.rect.x = LARGURA_TELA
-                            REDE.blit(item.imagem,(random.randint(0,30),random.randint(0,30))) # Coloca os itens na superfície da rede
-                            # teste \/
-                            # print(item.imagem)
+                    rede.net_end_cicle(itens_agua, rede_pos)
                 rede_pos = rede_origem
 
             elif rede_timer > 0:
-                for item in itens_agua:
-                        pos = item.rect[0], item.rect[1]
-                        if False not in circle_colide(pos, rede_pos, 40):
-                            pontos_jogada += 1
-                            REDE.blit(item.imagem,(random.randint(0,40),random.randint(0,40)))
-                            item.rect.x = LARGURA_TELA
+                rede.net_end_cicle(itens_agua, rede_pos)
                 rede_timer -= 1
 
-                proporção = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1))
+                proporcao = abs((abs(jogador_pos[1]) - abs(rede_circle[1]))/(abs(jogador_pos[0]) - abs(rede_circle[0])+0.1))
 
                 # Verificações de posições cartesianas
-                if rede_circle[1] < jogador_pos[1]:
-                    rede_circle[1] += rede_velocidade
-                if rede_circle[1] > jogador_pos[1]:
-                    rede_circle[1] -= rede_velocidade
-                if rede_circle[0] < jogador_pos[0]:
-                    rede_circle[0] += rede_velocidade//(proporção+0.01)
-                if rede_circle[0] > jogador_pos[0]:
-                    rede_circle[0] -= rede_velocidade//(proporção+0.01)
-                # print(rede_circle)
-                # print(rede_timer)
+                rede.verificador_posicao_cartesiana_segundo_ciclo(proporcao, jogador_pos, rede_circle)
+                
                 # Atualiza a posição da rede
                 rede_pos = rede_circle
             if rede_timer == 3: # Final do ciclo da rede
@@ -272,18 +241,8 @@ while JOGO_RODANDO:
         )
         
         # Exibir pontuação
-        TEXTO1 = FONTE_TEXTO_NEGRITO.render(f'Jogador 1:  {jogador1.itens_coletados}', True, CORES["AMARELO"])
-        TEXTO2 = FONTE_TEXTO_NEGRITO.render(f'Jogador 2:  {jogador2.itens_coletados}', True, CORES["VERMELHO"])
-        TEXTO3 = FONTE_TITULO_PEQUENO_NEGRITO.render(f'OBJETIVO', True, CORES["PRETO"])
-        TEXTO_FPS = FONTE_TITULO_PEQUENO_NEGRITO.render(f'FPS: {int(clock.get_fps())}', True, CORES["ROXO"])
-        largura_texto2 = TEXTO2.get_width()
-        largura_texto3 = TEXTO3.get_width()
-        altura_texto_fps = TEXTO_FPS.get_height()
-        TELA.blit(TEXTO1, (10, 10))
-        TELA.blit(TEXTO2, (LARGURA_TELA-largura_texto2-10, 10))
-        TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
-        TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
-        
+        game.Jogo.show_points(clock, jogador1, jogador2)
+
         # Verificador para validar se o objetivo foi alcançado
         if progresso >= OBJETIVO:
             conclusion.Conclusao.tela_vitoria()

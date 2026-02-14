@@ -1,5 +1,5 @@
 import pygame, os, sys
-from configs import *
+from assets.utils.configs import *
 
 class Conclusao:
     def __init__(self, tela): # Inicializa o background da tela de conclusão do jogo.     ||       parâmetro tela -> Superfície do pygame onde o menu será desenhado

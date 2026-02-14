@@ -1,6 +1,6 @@
 import pygame, os
 from sprite_manager import SpriteSheet
-from configs import *
+from assets.utils.configs import *
 
 # Classe dos jogadores
 class Jogador:
