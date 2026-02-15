@@ -1,5 +1,5 @@
 import pygame, os
-from sprite_manager import SpriteSheet
+from entities.sprite_manager import SpriteSheet
 from assets.utils.configs import *
 
 # Classe dos jogadores
@@ -185,18 +185,3 @@ class Jogador:
                 itens_lista.remove(item)  # Remove o item da lista
                 return True
         return False
-    
-    def lançar_rede(self): # Implementação do método de lançar a rede.
-        self.pos_mouse = pygame.mouse.get_pos()
-        self.rede_rect = pygame.Rect(300, 200, 30, 30)
-        self.rede = pygame.Rect(self.rect[0] - 15, self.rect.centery - 15, 30, 30)
-        self.rede.center = self.pos_mouse
-            
-    def desenhar_rede(self, tela): # Implementação do método de desenhar a rede.
-        if self.rede:
-            pygame.draw.circle(tela, (CORES["BRANCO"]), self.rede.center, 30)
-    
-    def criar_item_evento(user_event : int,  event_position : int, event_interval : int, item_type : list):
-        user_event = pygame.USEREVENT + event_position
-        pygame.time.set_timer(user_event, event_interval)
-        item_type = []

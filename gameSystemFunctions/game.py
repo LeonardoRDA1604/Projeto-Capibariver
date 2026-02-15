@@ -84,7 +84,7 @@ class Jogo:
         max_margem = max((len(f) for f in self.margens if f), default=1) # Margens
         return max(max_background, max_margem)
 
-    def desenhar_fundo(self, nivel): # Desenha o frame atual do fundo de acordo com o nível
+    def desenhar_fundo(self, nivel : int): # Desenha o frame atual do fundo de acordo com o nível
         if 0 <= nivel < len(self.backgrounds) and self.backgrounds[nivel]:
             frames = self.backgrounds[nivel]
             frame_atual = frames[self.rio_frame_index % len(frames)]
@@ -118,8 +118,6 @@ class Jogo:
         self.atualizar_scroll()
         self.desenhar_fundo(nivel)
         
-    
-    
     def desenhar_barra_progresso(self, x, y, largura, altura, progresso):
         # Fundo da barra
         pygame.draw.rect(self.tela, CORES["CINZA_CLARO"], (x, y, largura, altura))
@@ -155,3 +153,10 @@ class Jogo:
         TELA.blit(TEXTO3, (LARGURA_TELA//2-(largura_texto3//2), ALTURA_BARRA+10))
         TELA.blit(TEXTO_FPS, (10, ALTURA_TELA-altura_texto_fps - 10))
         
+    def desenharRio():
+        x1 = 0
+        x2 = LARGURA_TELA  # Começa fora da tela, à esquerda
+        y = 0  # Posição vertical do rio visível na parte inferior
+        altura = ALTURA_TELA-(ALTURA_TELA/3) # Altura do retângulo do rio
+        cor = CORES["AZUL"]
+        return pygame.draw.rect(TELA, cor, (x1, y, x2, altura))
